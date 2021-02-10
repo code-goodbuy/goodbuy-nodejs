@@ -5,9 +5,11 @@ const morgan = require("morgan");
 const dotenv = require("dotenv");
 dotenv.config()
 
+const db = process.env.MONGO_URI_LOCAL
+
 //db 
 mongoose
-  .connect(process.env.MONGO_URI, {
+  .connect(db, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
