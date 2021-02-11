@@ -32,3 +32,12 @@ Delete a product:
 ```
 db.product.deleteOne({ name: "Coca Cola"})
 ```
+
+## Connection to the docker image of the database:
+```
+sudo docker exec -it nodeapi_mongodb_1 bash
+```
+Accessing the Docker database from the docker image terminal:
+```
+mongo
+```
