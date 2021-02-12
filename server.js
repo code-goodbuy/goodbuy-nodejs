@@ -1,8 +1,9 @@
 const express = require('express');
 const app = express();
 const mongoose = require("mongoose");
-const bodyParser = require("body-parser")
+const bodyParser = require("body-parser");
 const morgan = require("morgan");
+const expressValidator = require("express-validator");
 const dotenv = require("dotenv");
 dotenv.config()
 
@@ -22,8 +23,9 @@ mongoose
 const productRoutes = require('./routes/product');
 
 //middleware
-app.use(morgan("dev"));
-app.use(bodyParser.json());
+app.use(morgan("dev")); // Logging HTTP Requests and Errors
+app.use(bodyParser.json()); // Parse incoming request bodies
+app.use(expressValidator()); // Validate incoming data
 app.use("/", productRoutes);
 
 const port = process.env.port || 8080;
