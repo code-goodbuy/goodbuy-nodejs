@@ -1,11 +1,11 @@
 const express = require('express');
-const productController = require('../controllers/product');
-const validator = require('../validator');
+const {getAllProducts, createProduct, getProduct} = require('../controllers/product');
+const {createProductValidator} = require('../validator');
 const router = express.Router();
 
-router.get('/', productController.getProducts);
+router.get('/', getAllProducts);
 // only if validation is passed it will continue to the product creation
-router.post('/product', validator.createProductValidator, productController.createProduct);
-
+router.post('/product', createProductValidator, createProduct);
+router.get('/product', getProduct)
 
 module.exports = router;
