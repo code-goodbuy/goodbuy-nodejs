@@ -1,7 +1,7 @@
 const Product = require("../models/product")
 
 exports.getProducts = (req, res) => {
-    res.json({message: "YOUR PRODUCTS WILL BE DISPLAYED SOON"});
+    res.json({message: "YOUR PRODUCTS WILL BE DISPLAYED SOON or not"});
 };
 
 exports.createProduct =  (req, res) => {

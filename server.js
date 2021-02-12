@@ -27,4 +27,4 @@ app.use(bodyParser.json());
 app.use("/", productRoutes);
 
 const port = process.env.port || 8080;
-app.listen(port, () => {console.log(`A Node Js API is listening on port: ${port}`)});
+app.listen(port, () => {console.log(`Your Node Js API is listening on port: ${port}`)});

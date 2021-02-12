@@ -6,6 +6,9 @@ services:
       - "8080:8080"
     depends_on:
       - mongodb
+    volumes:
+      - ./:/usr/src/app
+      - /usr/src/app/node_modules
   mongodb:
     image: mongo
     volumes:
