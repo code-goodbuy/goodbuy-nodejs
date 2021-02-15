@@ -31,23 +31,27 @@ Accessing the Docker database from the docker image terminal:
 ```
 mongo
 ```
+Select the dbs:
+```
+use local_database
+```
 
 ## Mongo local db commands
 
 Insert a product:
 ```
-db.product.insertOne({name: "test_name", brand: "test_brand", corporation: "test_corp", barcode: "123456789", state: "unverified"})
+db.products.insertOne({name: "test_name", brand: "test_brand", corporation: "test_corp", barcode: "123456789", state: "unverified"})
 ```
 Search for all products:
 ```
-db.product.find().pretty()
+db.products.find().pretty()
 ```
 Search for specific product:
 ```
-db.product.find({ name: "test_name"}).pretty()
+db.products.find({ name: "test_name"}).pretty()
 ```
 Delete a product:
 ```
-db.product.deleteOne({ name: "Coca Cola"})
+db.products.deleteOne({ name: "Coca Cola"})
 ```
 
