@@ -1,4 +1,4 @@
-# Goodbuy-nodejs
+# Goodbuy-nodejs.
 
 ## Requirements 
 Docker, Docker-compose, MongoDB 
