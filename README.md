@@ -31,10 +31,6 @@ Accessing the Docker database from the docker image terminal:
 ```
 mongo
 ```
-Select the dbs:
-```
-use local_database
-```
 
 ## Mongo local db commands
 
