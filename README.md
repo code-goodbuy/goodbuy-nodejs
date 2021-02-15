@@ -25,7 +25,7 @@ docker-compose up --build
 
 ## Connection to the docker image of the database:
 ```
-sudo docker exec -it nodeapi_mongodb_1 bash
+docker exec -it goodbuy-nodejs_mongodb_1 bash
 ```
 Accessing the Docker database from the docker image terminal:
 ```
