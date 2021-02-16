@@ -17,3 +17,5 @@ COPY . .
 
 EXPOSE 8080
 CMD [ "npm", "run", "local" ]
+# CMD [ "npm", "run", "dev" ]
+# CMD [ "npm", "run", "prod" ]

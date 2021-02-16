@@ -1,1 +1,1 @@
-{ "DBHost": "mongodb://mongodb:27017/test"}
+{ "DBHost": "mongodb+srv://testuser:testpassword@cluster0.6ib6c.mongodb.net/Dev?retryWrites=true&w=majority" }

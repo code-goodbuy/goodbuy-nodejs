@@ -8,6 +8,8 @@ const config = require("config"); //we load the db location from the JSON files
 
 
 const db = config.DBHost;
+console.log(`THIS IS YOUR DB STRING: ${db}`)
+console.log(`THIS IS YOUR ENV STRING: ${process.env.NODE_ENV}`)
 
 //db 
 mongoose
