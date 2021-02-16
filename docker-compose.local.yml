@@ -1,0 +1,13 @@
+services:
+  backend:
+    depends_on:
+      - mongodb
+    command: "npm run local"
+  mongodb:
+    container_name: goodbuy_database
+    image: mongo
+    volumes:
+      - ./data:/data/db
+    ports:
+      - "27017:27017"
+    command: "--logpath=/dev/null"

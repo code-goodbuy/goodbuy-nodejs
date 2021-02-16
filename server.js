@@ -8,10 +8,8 @@ const config = require("config"); //we load the db location from the JSON files
 
 
 const db = config.DBHost;
-console.log(`THIS IS YOUR DB STRING: ${db}`)
-console.log(`THIS IS YOUR ENV STRING: ${process.env.NODE_ENV}`)
 
-//db 
+//db
 mongoose
   .connect(db, {
     useNewUrlParser: true,
@@ -21,7 +19,7 @@ mongoose
   .then(() => console.log("Database connected!"))
   .catch(err => console.log(err));
 
-// bring in routes 
+// bring in routes
 const productRoutes = require('./routes/product');
 
 //middleware
