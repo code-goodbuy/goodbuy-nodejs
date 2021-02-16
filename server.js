@@ -4,10 +4,10 @@ const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const expressValidator = require("express-validator");
-const dotenv = require("dotenv");
-dotenv.config()
+const config = require("config"); //we load the db location from the JSON files
 
-const db = process.env.MONGO_URI_LOCAL
+
+const db = config.DBHost;
 
 //db 
 mongoose
@@ -28,5 +28,5 @@ app.use(bodyParser.json()); // Parse incoming request bodies
 app.use(expressValidator()); // Validate incoming data
 app.use("/", productRoutes);
 
-const port = process.env.port || 8080;
+const port = 8080;
 app.listen(port, () => {console.log(`Your Node Js API is listening on port: ${port}`)});
