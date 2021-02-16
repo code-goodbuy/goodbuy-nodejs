@@ -5,18 +5,9 @@ Docker, Docker-compose, MongoDB
 
 # Setup for local developement
 
-In the root folder of the project create a file called *.env* and fill it with the following:
-```
-MONGO_URI_LOCAL=mongodb://mongodb:27017/test
-PORT=8080
-```
 Create a nodemodules volume:
 ```
 docker volume create --name nodemodules
-```
-Start your local MongoDB (MAC):
-```
-brew services start mongodb-community@4.4
 ```
 Build and run with Docker-compose:
 ```
