@@ -3,3 +3,4 @@ default.json
 node_modules
 npm-debug.log
 data
+.idea/
