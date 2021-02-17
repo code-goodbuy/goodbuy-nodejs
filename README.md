@@ -54,3 +54,24 @@ Delete a Product:
 ```
 db.products.deleteOne({ name: "Coca Cola"})
 ```
+
+## Push image to dockerhub:
+Requierment account fo
+list all docker images:
+```
+docker images 
+```
+
+we need the image id to tag, example:
+
+```
+docker tag 633778e642b6 dockerhubaccountname/reponame:tagnameofyourchoice
+```
+
+then you can push it:
+
+```
+docker push dockhubaccountname/reponame:tagnameofyourchoice
+```
+
+
