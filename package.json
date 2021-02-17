@@ -4,9 +4,14 @@
   "description": "Node JS Api",
   "main": "index.js",
   "scripts": {
+    "docker_build": "docker build -t goodbuy-nodejs-image .",
+    "docker_test": "docker-compose -f docker-compose.yml -f docker-compose.test.yml up",
+    "docker_local": "docker-compose -f docker-compose.yml -f docker-compose.local.yml up",
+    "docker_dev": "docker-compose up",
     "local": "NODE_ENV=test nodemon server.js",
     "dev": "NODE_ENV=dev nodemon server.js",
-    "prod": "NODE_ENV=default node server.js"
+    "prod": "NODE_ENV=default node server.js",
+    "test": "NODE_ENV=test mocha --timeout 5000"
   },
   "author": "Darjusch Schrand",
   "license": "ISC",
@@ -19,5 +24,10 @@
     "mongoose": "^5.11.15",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.7"
+  },
+  "devDependencies": {
+    "chai": "^4.3.0",
+    "chai-http": "^4.3.0",
+    "mocha": "^8.3.0"
   }
 }

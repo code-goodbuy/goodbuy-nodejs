@@ -13,17 +13,19 @@ $ docker volume create --name nodemodules
 ##Build Docker-Image
 You only need to run "docker build" when you set up the project for the first time OR when a new node packages was added to the *package.json*.
 ```
-$ docker build -t goodbuy-nodejs-image .
+$ npm run docker_build
 ```
-Run with Docker-Compose:
+Run tests using Docker:
 ```
-$ docker-compose -f docker-compose.yml -f docker-compose.local.yml up
+$ npm run docker_test
 ```
-# Local Development on Online Hosted Database
-
-Run with Docker-Compose:
+Run local using Docker:
 ```
-$ docker-compose up
+$ npm run docker_local
+```
+Run dev using Docker:
+```
+$ npm run docker_dev
 ```
 
 ## Connection to the Docker Image of the Database:
@@ -34,6 +36,10 @@ Accessing the Docker database from the docker image terminal:
 ```
 mongo
 ```
+
+### Start your local MongoDB (MAC) for development with out docker:
+
+brew services start mongodb-community@4.4
 
 ## Mongo Local DB Commands
 Insert a Product:

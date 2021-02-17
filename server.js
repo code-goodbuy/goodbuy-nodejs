@@ -29,4 +29,4 @@ app.use(expressValidator()); // Validate incoming data
 app.use("/", productRoutes);
 
 const port = 8080;
-app.listen(port, () => {console.log(`Your Node Js API is listening on port: ${port}`)});
+module.exports = app.listen(port, () => {console.log(`Your Node Js API is listening on port: ${port}`)});
