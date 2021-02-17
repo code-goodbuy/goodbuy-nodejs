@@ -6,11 +6,7 @@ Docker, Docker-compose
 
 
 # Setup for Local Developement
-Create a Nodemodules Volume:
-```
-$ docker volume create --name nodemodules
-```
-##Build Docker-Image
+## Build Docker-Image
 You only need to run "docker build" when you set up the project for the first time OR when a new node packages was added to the *package.json*.
 ```
 $ npm run docker_build
