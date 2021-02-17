@@ -10,8 +10,7 @@ exports.getAllProducts = (req, res) => {
 };
 
 exports.getProduct = (req, res) => {
-    const barcode = req.header('barcode')
-    console.log(barcode)
+    const barcode = req.body.barcode
     const product = Product.find({barcode: barcode})
     .then(product => {
         res.status(200).json({product: product})
