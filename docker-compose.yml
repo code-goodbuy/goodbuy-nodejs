@@ -1,6 +1,8 @@
 version: "2"
 services:
   backend:
+    environment:
+      - NODE_ENV=dev
     container_name: server
     image: goodbuy-nodejs-image
     ports:
@@ -8,4 +10,4 @@ services:
     volumes:
       - ./:/usr/src/app
       - /usr/src/app/node_modules
-    command: "npm run dev"
+    command: "nodemon server.js"

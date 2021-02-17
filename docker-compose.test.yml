@@ -1,8 +1,10 @@
 services:
   backend:
+    environment:
+      - NODE_ENV=test
     depends_on:
       - mongodb
-    command: "npm run test"
+    command: "mocha --timeout 5000"
   mongodb:
     container_name: goodbuy_database
     image: mongo
