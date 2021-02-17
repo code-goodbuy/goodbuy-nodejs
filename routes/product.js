@@ -6,6 +6,6 @@ const router = express.Router();
 router.get('/', getAllProducts);
 // only if validation is passed it will continue to the product creation
 router.post('/product', createProductValidator, createProduct);
-router.get('/product', getProduct)
+router.get('/product/:barcode', getProduct);
 
 module.exports = router;
