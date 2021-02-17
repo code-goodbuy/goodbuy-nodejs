@@ -4,7 +4,7 @@ services:
     environment:
       - NODE_ENV=dev
     container_name: server
-    image: goodbuy-nodejs-image
+    image: goodbuy/goodbuy-nodejs-image
     ports:
       - "8080:8080"
     volumes:

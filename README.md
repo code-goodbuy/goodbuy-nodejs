@@ -3,22 +3,24 @@
 ## Requirements
 Docker, Docker-compose
 
+# Setup Developement
 
-
-# Setup for Local Developement
 ## Build Docker-Image
-You only need to run "docker build" when you set up the project for the first time OR when a new node packages was added to the *package.json*.
+When you added a new node package to the *package.json* you have to build the docker image again.
 ```
 $ npm run docker_build
 ```
+## Run tests:
 Run tests using Docker:
 ```
 $ npm run docker_test
 ```
+## Run local:
 Run local using Docker:
 ```
 $ npm run docker_local
 ```
+## Run dev:
 Run dev using Docker:
 ```
 $ npm run docker_dev
