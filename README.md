@@ -5,11 +5,6 @@ Docker, Docker-compose
 
 # Setup Developement
 
-## Build Docker-Image
-When you added a new node package to the *package.json* you have to build the docker image again.
-```
-$ npm run docker_build
-```
 ## Run tests:
 Run tests using Docker:
 ```
@@ -25,6 +20,30 @@ Run dev using Docker:
 ```
 $ npm run docker_dev
 ```
+## Build Docker-Image
+When you added a new node package to the *package.json* you have to build the docker image again. ( Push the image to docker hub if you know what you are doing. Instructions below. )
+```
+$ npm run docker_build
+```
+## Push image to dockerhub:
+Requierment account to
+list all docker images:
+```
+docker images 
+```
+
+we need the image id to tag, example:
+
+```
+docker tag 633778e642b6 dockerhubaccountname/reponame:tagnameofyourchoice
+```
+
+then you can push it:
+
+```
+docker push dockhubaccountname/reponame:tagnameofyourchoice
+```
+
 
 ## Connection to the Docker Image of the Database:
 ```
@@ -55,25 +74,6 @@ db.products.find({ name: "test_name"}).pretty()
 Delete a Product:
 ```
 db.products.deleteOne({ name: "Coca Cola"})
-```
-
-## Push image to dockerhub:
-Requierment account fo
-list all docker images:
-```
-docker images 
-```
-
-we need the image id to tag, example:
-
-```
-docker tag 633778e642b6 dockerhubaccountname/reponame:tagnameofyourchoice
-```
-
-then you can push it:
-
-```
-docker push dockhubaccountname/reponame:tagnameofyourchoice
 ```
 
 
