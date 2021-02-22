@@ -20,6 +20,10 @@ Run dev using Docker:
 ```
 $ npm run docker_dev
 ```
+## Compile typescript to javascript
+```
+$ npx tsc
+```
 ## Build Docker-Image
 When you added a new node package to the *package.json* you have to build the docker image again. ( Push the image to docker hub if you know what you are doing. Instructions below. )
 ```
