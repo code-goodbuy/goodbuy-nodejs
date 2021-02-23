@@ -1,0 +1,27 @@
+{
+  "summary": {
+    "title": "Threat model for prod backend",
+    "owner": "Anthony"
+  },
+  "detail": {
+    "contributors": [
+      {
+        "name": "Dave"
+      },
+      {
+        "name": "Darjusch"
+      },
+      {
+        "name": "Jongwoo"
+      }
+    ],
+    "diagrams": [
+      {
+        "title": "First Diagram",
+        "thumbnail": "./public/content/images/thumbnail.jpg",
+        "id": 0
+      }
+    ],
+    "reviewer": "Dave"
+  }
+}
