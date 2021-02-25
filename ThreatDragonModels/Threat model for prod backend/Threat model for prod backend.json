@@ -137,8 +137,8 @@
               },
               "vertices": [
                 {
-                  "x": 278,
-                  "y": 219
+                  "x": 280,
+                  "y": 253
                 }
               ],
               "id": "3da70779-7365-4999-b5b2-af7d73b8dc56",
@@ -155,40 +155,6 @@
                 }
               ],
               "z": 5,
-              "hasOpenThreats": false,
-              "attrs": {
-                ".marker-target": {
-                  "class": "marker-target hasNoOpenThreats isInScope"
-                },
-                ".connection": {
-                  "class": "connection hasNoOpenThreats isInScope"
-                }
-              }
-            },
-            {
-              "type": "tm.Flow",
-              "smooth": true,
-              "source": {
-                "id": "2aaa949d-b1e3-4447-894d-624189e0da52"
-              },
-              "target": {
-                "id": "9e5cb7d7-4afd-4b32-9961-9cba06ba1504"
-              },
-              "vertices": [],
-              "id": "42d88b15-2b3d-4919-b2a4-7bbdddaca6b0",
-              "labels": [
-                {
-                  "position": 0.5,
-                  "attrs": {
-                    "text": {
-                      "text": "flow 5",
-                      "font-weight": "400",
-                      "font-size": "small"
-                    }
-                  }
-                }
-              ],
-              "z": 6,
               "hasOpenThreats": false,
               "attrs": {
                 ".marker-target": {
@@ -607,6 +573,27 @@
               ],
               "id": "29fd7ce9-c748-4182-abb4-bdc75466334d",
               "z": 19,
+              "attrs": {}
+            },
+            {
+              "type": "tm.Boundary",
+              "smooth": true,
+              "source": {
+                "x": 986,
+                "y": 542
+              },
+              "target": {
+                "x": 994,
+                "y": 362
+              },
+              "vertices": [
+                {
+                  "x": 904,
+                  "y": 456
+                }
+              ],
+              "id": "34c17cfc-f825-4a58-9a23-0ab6b39ebf41",
+              "z": 20,
               "attrs": {}
             }
           ]
