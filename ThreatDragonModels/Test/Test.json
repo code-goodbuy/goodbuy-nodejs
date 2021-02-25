@@ -1,0 +1,22 @@
+{
+  "summary": {
+    "title": "Test",
+    "owner": "Darjusch",
+    "description": "test"
+  },
+  "detail": {
+    "contributors": [
+      {
+        "name": "Darjusch"
+      }
+    ],
+    "diagrams": [
+      {
+        "title": "Test",
+        "thumbnail": "./public/content/images/thumbnail.jpg",
+        "id": 0
+      }
+    ],
+    "reviewer": "Darjusch"
+  }
+}
