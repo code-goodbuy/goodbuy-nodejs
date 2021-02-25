@@ -178,10 +178,13 @@
               "id": "79173567-a1ee-445b-8567-ea7f9983e735",
               "labels": [
                 {
-                  "position": 0.5,
+                  "position": {
+                    "distance": 0.5367813203485716,
+                    "offset": 0.43818235060898836
+                  },
                   "attrs": {
                     "text": {
-                      "text": "flow 6",
+                      "text": "Queries",
                       "font-weight": "400",
                       "font-size": "small"
                     }
@@ -246,7 +249,7 @@
                   "position": 0.5,
                   "attrs": {
                     "text": {
-                      "text": "flow 8",
+                      "text": "Web App query\nresults",
                       "font-weight": "400",
                       "font-size": "small"
                     }
@@ -345,7 +348,7 @@
                   "position": 0.5,
                   "attrs": {
                     "text": {
-                      "text": "flow 11",
+                      "text": "Message",
                       "font-weight": "400",
                       "font-size": "small"
                     }
@@ -401,61 +404,24 @@
               "type": "tm.Flow",
               "smooth": true,
               "source": {
-                "id": "2d2def3c-a2b1-4f12-b0b0-514abcf0cfaa"
-              },
-              "target": {
-                "id": "0b956087-3024-4f46-acfb-cff1bf67daed"
-              },
-              "vertices": [
-                {
-                  "x": 868,
-                  "y": 520
-                }
-              ],
-              "id": "a08f30d0-c992-4673-be9b-e638ccf86c23",
-              "labels": [
-                {
-                  "position": {
-                    "distance": 0.49921821472455885,
-                    "offset": 2.6861895997577343
-                  },
-                  "attrs": {
-                    "text": {
-                      "text": "flow 13",
-                      "font-weight": "400",
-                      "font-size": "small"
-                    }
-                  }
-                }
-              ],
-              "z": 14,
-              "hasOpenThreats": false,
-              "attrs": {
-                ".marker-target": {
-                  "class": "marker-target hasNoOpenThreats isInScope"
-                },
-                ".connection": {
-                  "class": "connection hasNoOpenThreats isInScope"
-                }
-              }
-            },
-            {
-              "type": "tm.Flow",
-              "smooth": true,
-              "source": {
                 "id": "c087d323-1a3e-44cc-8680-a06b6286e8cb"
               },
               "target": {
                 "id": "b26b66af-ffac-4bdf-9fb9-b86a54a4ee91"
               },
-              "vertices": [],
+              "vertices": [
+                {
+                  "x": 685,
+                  "y": 115
+                }
+              ],
               "id": "a362c96c-9dd2-401d-b5a6-c3870fc8f125",
               "labels": [
                 {
                   "position": 0.5,
                   "attrs": {
                     "text": {
-                      "text": "flow 14",
+                      "text": "Product queries",
                       "font-weight": "400",
                       "font-size": "small"
                     }
@@ -484,7 +450,7 @@
               },
               "vertices": [
                 {
-                  "x": 783,
+                  "x": 798,
                   "y": 144
                 }
               ],
@@ -494,7 +460,7 @@
                   "position": 0.5,
                   "attrs": {
                     "text": {
-                      "text": "flow 15",
+                      "text": "Product queries\nresult",
                       "font-weight": "400",
                       "font-size": "small"
                     }
@@ -525,8 +491,12 @@
               },
               "vertices": [
                 {
-                  "x": 731,
-                  "y": 160
+                  "x": 655,
+                  "y": 156
+                },
+                {
+                  "x": 846,
+                  "y": 166
                 }
               ],
               "id": "9d8f047d-447d-4681-93dd-abca955761a7",
@@ -567,8 +537,8 @@
               },
               "vertices": [
                 {
-                  "x": 717,
-                  "y": 407
+                  "x": 731,
+                  "y": 429
                 }
               ],
               "id": "29fd7ce9-c748-4182-abb4-bdc75466334d",
@@ -719,6 +689,84 @@
               "id": "3547671e-38b4-4d26-a27d-0ba470a21318",
               "z": 24,
               "attrs": {}
+            },
+            {
+              "type": "tm.Flow",
+              "smooth": true,
+              "source": {
+                "id": "2d2def3c-a2b1-4f12-b0b0-514abcf0cfaa"
+              },
+              "target": {
+                "id": "0b956087-3024-4f46-acfb-cff1bf67daed"
+              },
+              "vertices": [
+                {
+                  "x": 868,
+                  "y": 506
+                }
+              ],
+              "id": "77c9357c-6455-416d-a4af-8e62ab55187f",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "flow 22",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 25,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "smooth": true,
+              "source": {
+                "id": "2d2def3c-a2b1-4f12-b0b0-514abcf0cfaa"
+              },
+              "target": {
+                "id": "b26b66af-ffac-4bdf-9fb9-b86a54a4ee91"
+              },
+              "vertices": [
+                {
+                  "x": 921,
+                  "y": 170
+                }
+              ],
+              "id": "0c965b87-bdc1-4a7c-b9d2-753e942bbc8f",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "update products",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 26,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
             }
           ]
         },
