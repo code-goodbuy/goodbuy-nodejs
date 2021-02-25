@@ -147,7 +147,7 @@
                   "position": 0.5,
                   "attrs": {
                     "text": {
-                      "text": "flow 4",
+                      "text": "GET data",
                       "font-weight": "400",
                       "font-size": "small"
                     }
