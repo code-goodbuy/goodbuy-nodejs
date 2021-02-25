@@ -67,7 +67,7 @@
                   "class": "element-shape hasNoOpenThreats isInScope"
                 },
                 "text": {
-                  "text": "Next.js"
+                  "text": "Next.js app"
                 },
                 ".element-text": {
                   "class": "element-text hasNoOpenThreats isInScope"
