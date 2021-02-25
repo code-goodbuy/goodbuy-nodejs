@@ -41,7 +41,7 @@
                   "class": "element-shape hasNoOpenThreats isInScope"
                 },
                 "text": {
-                  "text": "Node.js"
+                  "text": "REST API"
                 },
                 ".element-text": {
                   "class": "element-text hasNoOpenThreats isInScope"
