@@ -17,7 +17,7 @@
     ],
     "diagrams": [
       {
-        "title": "Threadmodel - Goodbuy",
+        "title": "First Diagram",
         "thumbnail": "./public/content/images/thumbnail.jpg",
         "id": 0,
         "diagramJson": {
@@ -41,7 +41,7 @@
                   "class": "element-shape hasNoOpenThreats isInScope"
                 },
                 "text": {
-                  "text": "Backend"
+                  "text": "Node.js"
                 },
                 ".element-text": {
                   "class": "element-text hasNoOpenThreats isInScope"
@@ -67,7 +67,7 @@
                   "class": "element-shape hasNoOpenThreats isInScope"
                 },
                 "text": {
-                  "text": "Frontend"
+                  "text": "Next.js"
                 },
                 ".element-text": {
                   "class": "element-text hasNoOpenThreats isInScope"
@@ -93,7 +93,7 @@
                   "class": "element-shape hasNoOpenThreats isInScope"
                 },
                 "text": {
-                  "text": "DB"
+                  "text": "MongoDB"
                 },
                 ".element-text": {
                   "class": "element-text hasNoOpenThreats isInScope"
@@ -147,7 +147,7 @@
                   "position": 0.5,
                   "attrs": {
                     "text": {
-                      "text": "flow 4",
+                      "text": "GET data",
                       "font-weight": "400",
                       "font-size": "small"
                     }
