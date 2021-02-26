@@ -29,6 +29,10 @@ When you added a new node package to the *package.json* you have to build the do
 ```
 $ npm run docker_build
 ```
+## Log into dockerhub:
+```
+docker login --username=USERNAME
+```
 ## Push image to dockerhub:
 Requierment account to
 list all docker images:
