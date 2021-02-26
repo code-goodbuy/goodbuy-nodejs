@@ -5,6 +5,30 @@ Docker, Docker-compose
 
 # Setup Developement
 
+## Log into dockerhub from terminal:
+```
+docker login --username=USERNAME
+```
+# Without npm installed: 
+
+## Build the image:
+```
+docker build -t goodbuy-nodejs-image .
+```
+## Run the tests:
+```
+docker-compose -f docker-compose.yml -f docker-compose.test.yml up
+```
+## Run the local server:
+```
+docker-compose -f docker-compose.yml -f docker-compose.local.yml up
+```
+## Run the dev server:
+```
+docker-compose up
+```
+# With npm installed: 
+
 ## Run tests:
 Run tests using Docker:
 ```
@@ -28,10 +52,6 @@ $ npx tsc
 When you added a new node package to the *package.json* you have to build the docker image again. ( Push the image to docker hub if you know what you are doing. Instructions below. )
 ```
 $ npm run docker_build
-```
-## Log into dockerhub:
-```
-docker login --username=USERNAME
 ```
 ## Push image to dockerhub:
 Requierment account to
