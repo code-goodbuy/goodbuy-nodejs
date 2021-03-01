@@ -105,6 +105,14 @@
                   "type": "Information disclosure",
                   "description": "Access to the DB credentials and makes unauthorised queries.",
                   "mitigation": "IP restriction (via firewall or other)"
+                },
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "Credentials encryption",
+                  "type": "Information disclosure",
+                  "description": "Credentials of users could be accessed through the DB.",
+                  "mitigation": "Credentials should be encrypted, with a salt."
                 }
               ],
               "attrs": {
