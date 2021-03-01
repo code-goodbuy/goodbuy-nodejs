@@ -35,16 +35,34 @@
               "angle": 0,
               "id": "c087d323-1a3e-44cc-8680-a06b6286e8cb",
               "z": 1,
-              "hasOpenThreats": false,
+              "hasOpenThreats": true,
+              "threats": [
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Repudiation",
+                  "title": "Logging activities",
+                  "description": "Logging all activities to report on hackers attack",
+                  "mitigation": "Logging to external data source, with restricted access"
+                },
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Denial of service",
+                  "title": "DDoS Attack",
+                  "description": "Distributed Denial-of-Service attack to freeze server",
+                  "mitigation": "AWS includes connection restriction, time limits"
+                }
+              ],
               "attrs": {
                 ".element-shape": {
-                  "class": "element-shape hasNoOpenThreats isInScope"
+                  "class": "element-shape hasOpenThreats isInScope"
                 },
                 "text": {
                   "text": "Node.js - REST\nAPI"
                 },
                 ".element-text": {
-                  "class": "element-text hasNoOpenThreats isInScope"
+                  "class": "element-text hasOpenThreats isInScope"
                 }
               }
             },
