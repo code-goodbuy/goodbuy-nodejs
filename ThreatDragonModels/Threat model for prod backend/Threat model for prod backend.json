@@ -184,6 +184,10 @@
                 {
                   "x": 273,
                   "y": 213
+                },
+                {
+                  "x": 312,
+                  "y": 232
                 }
               ],
               "id": "3da70779-7365-4999-b5b2-af7d73b8dc56",
@@ -222,7 +226,7 @@
                   "title": "NoSQL Injection",
                   "type": "Information disclosure",
                   "description": "NoSQL Injection to send unauthorized query and get private information.",
-                  "mitigation": "Validation in the Node.js backend (middleware)"
+                  "mitigation": "Validation in the Node.js backend (middleware) (?) - to check\nValidation in the front end?"
                 }
               ],
               "attrs": {
