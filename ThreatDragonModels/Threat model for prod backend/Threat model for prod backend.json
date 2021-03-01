@@ -314,7 +314,7 @@
                   "position": 0.5,
                   "attrs": {
                     "text": {
-                      "text": "Put Message?",
+                      "text": "PUT Message?",
                       "font-weight": "400",
                       "font-size": "small"
                     }
