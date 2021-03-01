@@ -311,7 +311,10 @@
               "id": "4edae733-4a9d-4510-b213-dd9ed1be3038",
               "labels": [
                 {
-                  "position": 0.5,
+                  "position": {
+                    "distance": 0.5692881885997947,
+                    "offset": -13.187223152750814
+                  },
                   "attrs": {
                     "text": {
                       "text": "PUT Message?",
@@ -350,7 +353,10 @@
               "id": "9d56ab96-6e87-405d-afb2-2757021659dc",
               "labels": [
                 {
-                  "position": 0.5,
+                  "position": {
+                    "distance": 0.5699457117342357,
+                    "offset": 1.8134630972365378
+                  },
                   "attrs": {
                     "text": {
                       "text": "Message",
