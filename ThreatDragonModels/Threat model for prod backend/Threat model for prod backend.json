@@ -100,7 +100,7 @@
                 },
                 {
                   "status": "Open",
-                  "severity": "Medium",
+                  "severity": "High",
                   "title": "Credential theft",
                   "type": "Information disclosure",
                   "description": "Access to the DB credentials and makes unauthorised queries.",
