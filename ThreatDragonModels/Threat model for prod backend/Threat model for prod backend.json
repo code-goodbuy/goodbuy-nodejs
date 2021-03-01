@@ -46,12 +46,12 @@
                   "mitigation": "Logging to external data source, with restricted access"
                 },
                 {
-                  "status": "Open",
+                  "status": "Mitigated",
                   "severity": "High",
                   "type": "Denial of service",
                   "title": "DDoS Attack",
                   "description": "Distributed Denial-of-Service attack to freeze server",
-                  "mitigation": "AWS includes connection restriction, time limits"
+                  "mitigation": "AWS includes DDoS protection by default"
                 }
               ],
               "attrs": {
