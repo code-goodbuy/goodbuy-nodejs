@@ -97,6 +97,14 @@
                   "type": "Information disclosure",
                   "description": "Unauthorized query could be made to the DB.",
                   "mitigation": "Authenticate all queries."
+                },
+                {
+                  "status": "Open",
+                  "severity": "Medium",
+                  "title": "Credential theft",
+                  "type": "Information disclosure",
+                  "description": "Access to the DB credentials and makes unauthorised queries.",
+                  "mitigation": "IP restriction (via firewall or other)"
                 }
               ],
               "attrs": {
