@@ -147,7 +147,7 @@
                   "position": 0.5,
                   "attrs": {
                     "text": {
-                      "text": "GET data",
+                      "text": "Authentication",
                       "font-weight": "400",
                       "font-size": "small"
                     }
@@ -772,6 +772,48 @@
                 }
               ],
               "z": 26,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "smooth": true,
+              "source": {
+                "id": "2aaa949d-b1e3-4447-894d-624189e0da52"
+              },
+              "target": {
+                "id": "9e5cb7d7-4afd-4b32-9961-9cba06ba1504"
+              },
+              "vertices": [
+                {
+                  "x": 256,
+                  "y": 298
+                }
+              ],
+              "id": "e57bca7a-6032-4225-8059-33db4c725fd5",
+              "labels": [
+                {
+                  "position": {
+                    "distance": 0.5084262865979731,
+                    "offset": 0.5165895854261497
+                  },
+                  "attrs": {
+                    "text": {
+                      "text": "",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 27,
               "hasOpenThreats": false,
               "attrs": {
                 ".marker-target": {
