@@ -197,6 +197,14 @@
                   "type": "Information disclosure",
                   "description": "Traffic is going over the open internet and could be subject interception.",
                   "mitigation": "HTTP/S should be provided for security and confidentiality. No HTTP allowed."
+                },
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "NoSQL Injection",
+                  "type": "Information disclosure",
+                  "description": "NoSQL Injection to send unauthorized query and get private information.",
+                  "mitigation": "Validation in the Node.js backend (middleware)"
                 }
               ],
               "attrs": {
