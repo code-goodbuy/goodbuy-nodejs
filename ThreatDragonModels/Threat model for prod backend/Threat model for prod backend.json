@@ -151,7 +151,7 @@
                   },
                   "attrs": {
                     "text": {
-                      "text": "Authentication",
+                      "text": "Web request",
                       "font-weight": "400",
                       "font-size": "small"
                     }
@@ -162,13 +162,15 @@
               "hasOpenThreats": true,
               "isEncrypted": true,
               "isPublicNetwork": true,
-              "protocol": "HTTPS",
+              "protocol": "HTTP/S",
               "threats": [
                 {
                   "status": "Open",
                   "severity": "High",
                   "title": "HTTP/S",
-                  "type": "Information disclosure"
+                  "type": "Information disclosure",
+                  "description": "Traffic is going over the open internet and could be subject to middle man attacks.",
+                  "mitigation": "HTTP/S should be provided for security and confidentiality. No HTTP allowed."
                 }
               ],
               "attrs": {
@@ -827,7 +829,7 @@
                   },
                   "attrs": {
                     "text": {
-                      "text": "",
+                      "text": "Web response",
                       "font-weight": "400",
                       "font-size": "small"
                     }
