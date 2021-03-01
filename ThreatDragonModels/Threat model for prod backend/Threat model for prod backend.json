@@ -52,6 +52,14 @@
                   "title": "DDoS Attack",
                   "description": "Distributed Denial-of-Service attack to freeze server",
                   "mitigation": "AWS includes DDoS protection by default"
+                },
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "type": "Information disclosure",
+                  "title": "File structure exposure",
+                  "description": "Exposing the file structure to get access to crucial information about the infrastructure.",
+                  "mitigation": "Setting permissions, and defining public folders"
                 }
               ],
               "attrs": {
