@@ -88,6 +88,7 @@
               "id": "b26b66af-ffac-4bdf-9fb9-b86a54a4ee91",
               "z": 3,
               "hasOpenThreats": false,
+              "storesCredentials": true,
               "attrs": {
                 ".element-shape": {
                   "class": "element-shape hasNoOpenThreats isInScope"
@@ -137,14 +138,17 @@
               },
               "vertices": [
                 {
-                  "x": 280,
-                  "y": 253
+                  "x": 273,
+                  "y": 213
                 }
               ],
               "id": "3da70779-7365-4999-b5b2-af7d73b8dc56",
               "labels": [
                 {
-                  "position": 0.5,
+                  "position": {
+                    "distance": 0.5378342713991623,
+                    "offset": -0.14673516575599738
+                  },
                   "attrs": {
                     "text": {
                       "text": "Authentication",
@@ -155,13 +159,24 @@
                 }
               ],
               "z": 5,
-              "hasOpenThreats": false,
+              "hasOpenThreats": true,
+              "isEncrypted": true,
+              "isPublicNetwork": true,
+              "protocol": "HTTPS",
+              "threats": [
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "HTTP/S",
+                  "type": "Information disclosure"
+                }
+              ],
               "attrs": {
                 ".marker-target": {
-                  "class": "marker-target hasNoOpenThreats isInScope"
+                  "class": "marker-target hasOpenThreats isInScope"
                 },
                 ".connection": {
-                  "class": "connection hasNoOpenThreats isInScope"
+                  "class": "connection hasOpenThreats isInScope"
                 }
               }
             },
@@ -179,8 +194,8 @@
               "labels": [
                 {
                   "position": {
-                    "distance": 0.5367813203485716,
-                    "offset": 0.43818235060898836
+                    "distance": 0.5170417114036268,
+                    "offset": -2.0942431204043053
                   },
                   "attrs": {
                     "text": {
@@ -210,7 +225,7 @@
               },
               "position": {
                 "x": 1183,
-                "y": 339
+                "y": 338
               },
               "angle": 0,
               "id": "2d2def3c-a2b1-4f12-b0b0-514abcf0cfaa",
