@@ -235,6 +235,14 @@
                   "type": "Information disclosure",
                   "description": "NoSQL Injection to send unauthorized query and get private information.",
                   "mitigation": "Validation in the Node.js backend (middleware) (?) - to check\nValidation in the front end?"
+                },
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "Cross-Site Scripting",
+                  "type": "Spoofing",
+                  "description": "Getting the session cookie for unauthorized access",
+                  "mitigation": "cookie security\nInput validation\nEscaping string input"
                 }
               ],
               "attrs": {
