@@ -87,17 +87,27 @@
               "angle": 0,
               "id": "b26b66af-ffac-4bdf-9fb9-b86a54a4ee91",
               "z": 3,
-              "hasOpenThreats": false,
+              "hasOpenThreats": true,
               "storesCredentials": true,
+              "threats": [
+                {
+                  "status": "Open",
+                  "severity": "High",
+                  "title": "Unauthorized access",
+                  "type": "Information disclosure",
+                  "description": "Unauthorized query could be made to the DB.",
+                  "mitigation": "Authenticate all queries."
+                }
+              ],
               "attrs": {
                 ".element-shape": {
-                  "class": "element-shape hasNoOpenThreats isInScope"
+                  "class": "element-shape hasOpenThreats isInScope"
                 },
                 "text": {
                   "text": "MongoDB"
                 },
                 ".element-text": {
-                  "class": "element-text hasNoOpenThreats isInScope"
+                  "class": "element-text hasOpenThreats isInScope"
                 }
               }
             },
