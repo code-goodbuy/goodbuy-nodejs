@@ -469,7 +469,10 @@
               "id": "a362c96c-9dd2-401d-b5a6-c3870fc8f125",
               "labels": [
                 {
-                  "position": 0.5,
+                  "position": {
+                    "distance": 0.6828534111776001,
+                    "offset": 5.173693042033826
+                  },
                   "attrs": {
                     "text": {
                       "text": "Product queries",
@@ -508,7 +511,10 @@
               "id": "c42d3a50-f9d7-45ef-aab4-65388a467171",
               "labels": [
                 {
-                  "position": 0.5,
+                  "position": {
+                    "distance": 0.4295846396395973,
+                    "offset": -5.3684725159663955
+                  },
                   "attrs": {
                     "text": {
                       "text": "Product queries\nresult",
@@ -558,8 +564,8 @@
               "type": "tm.Boundary",
               "smooth": true,
               "source": {
-                "x": 651,
-                "y": 179
+                "x": 658,
+                "y": 204
               },
               "target": {
                 "x": 654,
@@ -567,8 +573,8 @@
               },
               "vertices": [
                 {
-                  "x": 608,
-                  "y": 263
+                  "x": 635,
+                  "y": 286
                 }
               ],
               "id": "a590ba72-1410-4765-8a9d-326f474f7f30",
@@ -856,6 +862,8 @@
               ],
               "z": 27,
               "hasOpenThreats": false,
+              "isEncrypted": true,
+              "isPublicNetwork": true,
               "attrs": {
                 ".marker-target": {
                   "class": "marker-target hasNoOpenThreats isInScope"
