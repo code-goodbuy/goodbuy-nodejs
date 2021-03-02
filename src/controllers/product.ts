@@ -14,7 +14,11 @@ export const getProduct = (req: Request, res: Response) => {
     const barcode = req.params.barcode
     const product = ProductModel.find({barcode: barcode})
     .then(product => {
-        res.status(200).json({product: product})
+        if (product.length > 0) {
+            res.status(200).json({product: product})
+        } else {
+            res.status(404).json({product: product})
+        }
     })
     .catch(err => console.log(err));
 }
