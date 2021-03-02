@@ -1,15 +1,15 @@
 let mongoose = require("mongoose");
-let Product = require('../models/product');
+let Product = require('../dist/models/product');
 
 let chai = require('chai');
 let chaiHttp = require('chai-http');
-let server = require('../server');
+let server = require('../dist/server');
 let should = chai.should();
 
 
 chai.use(chaiHttp);
 
-describe('Product', () => {
+describe('Product', () => { 
     beforeEach((done) => {
         Product.remove({}, (err) => {
            done();
