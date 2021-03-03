@@ -10,11 +10,9 @@ chai.use(chaiHttp);
 let MyProduct = mongoose.model("Product", productSchema);
 describe("Product", () => {
     beforeEach((done) => {
-        MyProduct.remove({}, (err) => {
-            console.log(err);
-        })
-            .then((res) => console.log(res))
-            .catch((e) => console.log(e))
+        MyProduct.remove({})
+            .then((res) => console.log(res.deletedCount))
+            .catch((err) => console.log(err))
             .finally(() => done());
     });
     /*
