@@ -22,7 +22,7 @@ const getProduct = (req, res) => {
             res.status(200).json({ product: product });
         }
         else {
-            res.status(404).json({ product: product });
+            res.status(204).json({ product: product });
         }
     })
         .catch(err => console.log(err));

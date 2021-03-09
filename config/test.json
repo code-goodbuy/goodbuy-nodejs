@@ -1,1 +1,3 @@
-{ "DBHost": "mongodb://mongodb:27017/test"}
+{
+  "DBHost": "mongodb://mongodb:27017/test"
+}
