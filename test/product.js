@@ -9,9 +9,9 @@ let should = chai.should();
 
 chai.use(chaiHttp);
 
-describe('Product', () => { 
+describe('Product', () => {
     beforeEach((done) => {
-        Product.remove({}, (err) => {
+        Product.default.remove({}, (err) => {
            done();
         });
     });
@@ -22,10 +22,10 @@ describe('Product', () => {
   describe('/POST product', () => {
       it('it should POST a product', (done) => {
           let product = {
-            name: "test_product", 
-            brand: "test_product", 
-            corporation: "test_corp", 
-            barcode: "123456789", 
+            name: "test_product",
+            brand: "test_product",
+            corporation: "test_corp",
+            barcode: "123456789",
             state: "unverified"
           }
         chai.request(server)
@@ -48,11 +48,11 @@ describe('Product', () => {
   */
   describe('/GET/:barcode product', () => {
     it('it should GET the product by the given barcode', (done) => {
-        let product = new Product({
-            name: "test_product", 
-            brand: "test_product", 
-            corporation: "test_corp", 
-            barcode: "999999", 
+        let product = new Product.default({
+            name: "test_product",
+            brand: "test_product",
+            corporation: "test_corp",
+            barcode: "999999",
             state: "unverified"
           });
           product.save((err, product) => {
