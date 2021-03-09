@@ -8,3 +8,4 @@ data
 .idea/
 .DS_Store
 dist/
+scraper/__pycache__/
