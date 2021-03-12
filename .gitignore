@@ -1,4 +1,7 @@
-.env
+dev.json
+default.json
 node_modules
 npm-debug.log
 data
+.idea/
+.DS_Store

@@ -1,6 +1,7 @@
-const Product = require("../models/product")
+import Product from "../models/product";
+import { Request, Response, NextFunction } from 'express';
 
-exports.getAllProducts = (req, res) => {
+export const getAllProducts = (req: Request, res: Response) => {
     const products = Product.find()
     .select("name brand corporation barcode state")
     .then(products => {
@@ -9,9 +10,8 @@ exports.getAllProducts = (req, res) => {
     .catch(err => console.log(err));
 };
 
-exports.getProduct = (req, res) => {
-    const barcode = req.header('barcode')
-    console.log(barcode)
+export const getProduct = (req: Request, res: Response) => {
+    const barcode = req.params.barcode
     const product = Product.find({barcode: barcode})
     .then(product => {
         res.status(200).json({product: product})
@@ -19,7 +19,7 @@ exports.getProduct = (req, res) => {
     .catch(err => console.log(err));
 }
 
-exports.createProduct =  (req, res) => {
+export const createProduct =  (req: Request, res: Response) => {
     const product = new Product(req.body)
     product.save()
     .then(result => {
