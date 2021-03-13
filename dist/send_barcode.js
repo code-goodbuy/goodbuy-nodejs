@@ -2,7 +2,6 @@
 "use strict";
 let amqp = require('amqplib/callback_api');
 amqp.connect(`amqp://${process.env.RABBITMQ_USER}:${process.env.RABBITMQ_USER_PW}@${process.env.RABBITMQ_DEV_HOST}`, function (error0, connection) {
-    console.log("connection", typeof connection);
     if (error0) {
         throw error0;
     }

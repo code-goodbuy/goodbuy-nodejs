@@ -13,15 +13,15 @@ def main():
     channel.queue_declare(queue='buycott', durable=True)
 
     def callback(ch, method, properties, code):
-        print(" [x] Received %r" % code)
+        print(" [!] Received %r" % code)
         scraper = BuycottScraper(code)
         product = scraper.scrape()
-        print("New Product: ", product)
+        print("New Product:\n", json.dumps(product, indent=4, sort_keys=True))
         client = pymongo.MongoClient(
             os.environ['MONGODB_DEV_URI'])
         db = client.test
-        db["products"].insert(product)
-        print("Product successfully saved.")
+        db["products"].insert_one(product)
+        print(" [+] Product successfully saved.")
         print(' [*] Waiting for messages. To exit press CTRL+C')
 
     channel.basic_consume(queue='buycott', on_message_callback=callback, auto_ack=True)
