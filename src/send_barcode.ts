@@ -2,12 +2,21 @@
 
 let amqp = require('amqplib/callback_api');
 
-amqp.connect(`amqp://${process.env.RABBITMQ_USER}:${process.env.RABBITMQ_USER_PW}@${process.env.RABBITMQ_DEV_HOST}`, function(error0: any, connection: any) {
-    console.log("connection", typeof connection)
+interface ChannelType {
+    assertQueue: (queue: string, params: { durable: boolean }) => void
+    sendToQueue: (queue: string, buffer: Buffer) => void
+}
+
+interface ConnectionType {
+    createChannel: (err: (err: Error, ch: ChannelType) => void) => void
+    close: () => void
+}
+
+amqp.connect(`amqp://${process.env.RABBITMQ_USER}:${process.env.RABBITMQ_USER_PW}@${process.env.RABBITMQ_DEV_HOST}`, function(error0: Error, connection: ConnectionType) {
     if (error0) {
         throw error0;
     }
-    connection.createChannel(function(error1: any, channel: any) {
+    connection.createChannel(function(error1, channel) {
         if (error1) {
             throw error1;
         }
