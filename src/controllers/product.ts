@@ -1,8 +1,8 @@
-import Product from "../models/product";
+import ProductModel from "../models/product";
 import { Request, Response, NextFunction } from 'express';
 
 export const getAllProducts = (req: Request, res: Response) => {
-    const products = Product.find()
+    const products = ProductModel.find()
     .select("name brand corporation barcode state")
     .then(products => {
         res.status(200).json({products: products})
@@ -12,7 +12,7 @@ export const getAllProducts = (req: Request, res: Response) => {
 
 export const getProduct = (req: Request, res: Response) => {
     const barcode = req.params.barcode
-    const product = Product.find({barcode: barcode})
+    const product = ProductModel.find({barcode: barcode})
     .then(product => {
         res.status(200).json({product: product})
     })
@@ -20,7 +20,7 @@ export const getProduct = (req: Request, res: Response) => {
 }
 
 export const createProduct =  (req: Request, res: Response) => {
-    const product = new Product(req.body)
+    const product = new ProductModel(req.body)
     product.save()
     .then(result => {
         res.status(200).json({
