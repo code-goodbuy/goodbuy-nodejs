@@ -1,5 +1,7 @@
 dev.json
 default.json
+test.json
+local.json
 node_modules
 npm-debug.log
 data
