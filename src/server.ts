@@ -21,11 +21,13 @@ mongoose
 
 // bring in routes
 import productRoutes from './routes/product';
+import authRoutes from './routes/auth';
 
 //middleware
 app.use(morgan("dev")); // Logging HTTP Requests and Errors
 app.use(bodyParser.json()); // Parse incoming request bodies
 app.use(expressValidator()); // Validate incoming data
+app.use("/", authRoutes);
 app.use("/", productRoutes);
 
 const port = 8080;
