@@ -7,20 +7,16 @@ export const registerUser = (req: Request, res: Response) => {
 
     const userAlreadyExist = UserModel.findOne({ email: email })
         .then(userDoc => {
-            // TODO send status 409 because email already exists clarify with frontend 
-            // TODO should we display this information?
             if (userDoc) return res.status(409).json({
-                message: "This email already exists"
+                message: "User does not exist or password/email is wrong"
             })
             var password: string = req.body.password
             const saltRounds: number = 10;
             var bcrypt = require('bcrypt');
             bcrypt.hash(password, saltRounds, function (err: Error, hash: String) {
-                // TODO send status 500 because something went wrong clarify with frontend
                 if (err) return res.status(500).json({
                     message: "internal server error"
                 });
-                // Store hash in your DB.
                 req.body.password = hash
                 const user = new UserModel(req.body)
                 user.save()
