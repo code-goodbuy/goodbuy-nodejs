@@ -34,7 +34,6 @@ export const registerUser = (req: Request, res: Response) => {
                     })
                     .catch((err: Error) => (console.log(err)));
             })
-            .catch((err: Error)=> console.log(err));
         })
         .catch((err: Error) => console.log(err));
 }
