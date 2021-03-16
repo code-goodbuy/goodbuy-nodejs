@@ -8,7 +8,7 @@
     "docker_test": "docker-compose -f docker-compose.yml -f docker-compose.test.yml up",
     "docker_local": "docker-compose -f docker-compose.yml -f docker-compose.local.yml up",
     "docker_dev": "docker-compose up",
-    "local": "NODE_ENV=local nodemon ./dist/server.js",
+    "local": "NODE_ENV=test nodemon ./dist/server.js",
     "dev": "NODE_ENV=dev node ./dist/server.js",
     "prod": "NODE_ENV=default node ./dist/server.js",
     "test": "NODE_ENV=test mocha --timeout 5000"
@@ -16,6 +16,7 @@
   "author": "Darjusch Schrand",
   "license": "ISC",
   "dependencies": {
+    "bcrypt": "^5.0.1",
     "body-parser": "^1.19.0",
     "config": "^3.3.3",
     "express": "^4.17.1",
