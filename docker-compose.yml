@@ -4,10 +4,10 @@ services:
     environment:
       - NODE_ENV=dev
     container_name: server
-    image: goodbuy/nodejs-webserver:register
+    image: goodbuy/nodejs-webserver
     ports:
       - "80:8080"
     volumes:
       - ./:/usr/src/app
       - /usr/src/app/node_modules
-    command: "nodemon server.js"
+    command: "node dist/server.js"
