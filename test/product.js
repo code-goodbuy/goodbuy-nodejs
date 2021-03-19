@@ -10,11 +10,6 @@ let should = chai.should();
 chai.use(chaiHttp);
 
 describe('Product', () => {
-    beforeEach((done) => {
-        Product.default.remove({}, (err) => {
-           done();
-        });
-    });
 
   /*
   * Test the /POST route
