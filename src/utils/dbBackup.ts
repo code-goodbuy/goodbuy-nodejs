@@ -18,32 +18,42 @@ export function stringToDate(dateString: string | number | Date) {
     return new Date(dateString);
 }
 
-export function generateBackupDir(currentDate: Date) {
-    let backupDir =
+export function generateBackupFolder(currentDate: Date) {
+    let backupFolder=
         currentDate.getFullYear() +
         '-' +
         (currentDate.getMonth() + 1) +
         '-' +
         currentDate.getDate();
-    return backupDir;
-}
+    return backupFolder;
+};
+
+export function generateBackupPath(currentDate: Date) {
+    let newBackupFolder = generateBackupFolder(currentDate);
+    let newBackupPath: fs.PathLike = dbOptions.autoBackupPath + '-mongodump' + newBackupFolder;
+    return newBackupPath;
+};
+
+export function generateOldBackupPath(currentDate: Date) {
+    let beforeDate: Date = _.clone(currentDate);
+    beforeDate.setDate(beforeDate.getDate() - dbOptions.keepLastDaysBackup);
+    let oldBackupDir = generateBackupFolder(currentDate);
+    let oldBackupPath: fs.PathLike = dbOptions.autoBackupPath + 'mongodump-' + oldBackupDir;
+    return oldBackupPath;
+};
 
 export function dbAutoBackup() {
     if (dbOptions.autoBackup) {
         let date = new Date();
-        let beforeDate: Date, oldBackupDir, oldBackupPath: fs.PathLike;
         let db: string = config.get('DBHost');
 
         let currentDate: Date = stringToDate(date);
-        let newBackupDir = generateBackupDir(currentDate);
 
-        let newBackupPath = dbOptions.autoBackupPath + '-mongodump' + newBackupDir;
+        let newBackupPath: fs.PathLike = generateBackupPath(currentDate);
+        let oldBackupPath: fs.PathLike = '';
 
         if(dbOptions.removeOldBackup) {
-            beforeDate = _.clone(currentDate);
-            beforeDate.setDate(beforeDate.getDate() - dbOptions.keepLastDaysBackup);
-            oldBackupDir = generateBackupDir(currentDate);
-            oldBackupPath = dbOptions.autoBackupPath + 'mongodump-' + oldBackupDir;
+            oldBackupPath = generateOldBackupPath(currentDate);
         }
 
         let cmd = 'mongodump --uri ' + db + ' --out ' + newBackupPath;
