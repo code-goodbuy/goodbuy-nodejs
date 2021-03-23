@@ -1,5 +1,6 @@
 import UserModel from '../models/user.model';
 import { Request, Response, NextFunction } from 'express';
+import config from 'config';
 
 export const registerUser = (req: Request, res: Response) => {
     const email: string = req.body.email;
@@ -32,4 +33,40 @@ export const registerUser = (req: Request, res: Response) => {
             })
         })
         .catch((err: Error) => console.log(err));
+}
+
+// Request ( email , password)
+// check if email exist
+// if not react to that
+// check if password matches hash of password 
+// if not react to that
+// if yes return success with jwt token 
+
+export const loginUser = (req: Request, res: Response) => {
+    const email: string = req.body.email
+    const password: string = req.body.password
+    const bcrypt = require('bcrypt')
+    const user = UserModel.findOne({ email: email })
+        .then(user => {
+            if (user === null) {
+                return res.status(409).json({ message: "User does not exist or password/email is wrong" })
+            }
+            bcrypt.compare(password, user.password, function (err: Error, result: Boolean) {
+                if (result) {
+                    const accessTokenSecret: String = config.get("ACCESS_TOKEN_SECRET")
+                    var jwt = require('jsonwebtoken');
+                    const accessToken = jwt.sign({email: email}, accessTokenSecret, { expiresIn: '168h' })
+                    return res.status(200).json(
+                        { "jwtAccessToken": accessToken })
+                }
+                else {
+                    return res.status(409).json({ message: "User does not exist or password/email is wrong" })
+                }
+            })
+        })
+        .catch(err => {
+            console.log(err)
+            return res.status(501).json({ message: "internal server error" })
+        }
+        );
 }
