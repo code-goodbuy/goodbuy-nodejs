@@ -24,13 +24,13 @@ import productRoutes from './routes/product';
 import authRoutes from './routes/auth';
 
 // We can also define if we want to allow GET / POST etc. for each route, domain etc.
-var corsOptions = {
-  origin: '*.vercel.app',
-  optionsSuccessStatus: 200 // For legacy browser support
-}
+// var corsOptions = {
+//   origin: '*.vercel.app',
+//   optionsSuccessStatus: 200 // For legacy browser support
+// }
 
 //middleware
-app.use(cors(corsOptions));
+app.use(cors());
 app.use(morgan("dev")); // Logging HTTP Requests and Errors
 app.use(bodyParser.json()); // Parse incoming request bodies
 app.use(expressValidator()); // Validate incoming data

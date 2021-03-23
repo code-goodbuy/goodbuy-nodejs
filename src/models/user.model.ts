@@ -2,10 +2,6 @@ import mongoose from 'mongoose';
 import User from './user.interface';
 
 const userSchema = new mongoose.Schema({
-    _id: {
-        type: String,
-        required: "No id",
-    },
     username: {
         type: String,
         required: "No username",
