@@ -24,7 +24,8 @@
     "mongodb": "^3.6.4",
     "mongoose": "^5.11.15",
     "morgan": "^1.10.0",
-    "nodemon": "^2.0.7"
+    "nodemon": "^2.0.7",
+    "npx": "^10.2.2"
   },
   "devDependencies": {
     "@types/config": "0.0.38",
