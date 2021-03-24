@@ -4,7 +4,7 @@
 	"description": "Node JS Api",
 	"main": "./dist/server.js",
 	"scripts": {
-		"docker_build": "docker build -t goodbuy/nodejs-webserver .",
+		"docker_build_and_push": "docker build -t goodbuy/nodejs-webserver . && docker push goodbuy/nodejs-webserver",
 		"docker_test": "docker-compose -f docker-compose.yml -f docker-compose.test.yml up",
 		"docker_local": "docker-compose -f docker-compose.yml -f docker-compose.local.yml up",
 		"docker_dev": "docker-compose up",
@@ -16,6 +16,8 @@
 	"author": "Darjusch Schrand",
 	"license": "ISC",
 	"dependencies": {
+		"@types/amqplib": "^0.5.17",
+		"amqplib": "^0.7.1",
 		"bcrypt": "^5.0.1",
 		"body-parser": "^1.19.0",
 		"config": "^3.3.3",
@@ -26,7 +28,6 @@
 		"mongodb": "^3.6.4",
 		"mongoose": "^5.11.15",
 		"morgan": "^1.10.0",
-		"nodemon": "^2.0.7",
 		"npx": "^10.2.2"
 	},
 	"devDependencies": {
@@ -39,6 +40,7 @@
 		"chai": "^4.3.0",
 		"chai-http": "^4.3.0",
 		"mocha": "^8.3.0",
+		"nodemon": "^2.0.7",
 		"ts-node": "^9.1.1",
 		"typescript": "^4.2.2"
 	}
