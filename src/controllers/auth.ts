@@ -35,13 +35,6 @@ export const registerUser = (req: Request, res: Response) => {
         .catch((err: Error) => console.log(err));
 }
 
-// Request ( email , password)
-// check if email exist
-// if not react to that
-// check if password matches hash of password 
-// if not react to that
-// if yes return success with jwt token 
-
 export const loginUser = (req: Request, res: Response) => {
     const email: string = req.body.email
     const password: string = req.body.password
