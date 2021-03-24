@@ -68,7 +68,7 @@ describe('Authentication', () => {
     describe('/POST login', () => {
         it('should fail because the email doesnt exist', (done) => {
             let loginData = {
-                "email": "testmail123@test.de",
+"email": "testmail123@test.de",
                 "password": "Test_pass1!",
             }
             chai.request(server)
@@ -95,6 +95,48 @@ describe('Authentication', () => {
                 res.body.should.have.property('message').eql("User does not exist or password/email is wrong");
                 done();
             })
+        })
+    })
+    describe('/POST product', () => {
+        it('should fail because of missing authentication token', (done) => {
+            let product = {
+                name: "test_product",
+                brand: "test_product",
+                corporation: "test_corp",
+                barcode: "123456789",
+                state: "unverified"
+            }
+            chai.request(server)
+            .post('/product')
+            .send(product)
+            .end((err, res) => {
+                res.should.have.status(401);
+                res.body.should.have.property('message').eql("JWT is missing, access denied");
+                done();
+            })     
+        })
+    })
+    describe('/POST product', () => {
+        it('should fail because of manipulated authentication token', (done) => {
+            let product = {
+                name: "test_product",
+                brand: "test_product",
+                corporation: "test_corp",
+                barcode: "123456789",
+                state: "unverified"
+            }
+            chai.request(server)
+            .post('/product')
+            .set({ "Authorization": `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFkbWluQHRlc3QuZGUiLCJpYXQiOjE2MTY1ODI3MjksImV4cCI6MTYxNzE4NzUyOX0.SXWuVkQu1fz0eCfLzN1E93TtZEYsoR60KB_UywiqIQ0`})
+            .send(product)
+            .end((err, res) => {
+                res.should.have.status(401);
+                res.body.should.have.property('err').eql({
+                    "name": "JsonWebTokenError",
+                    "message": "invalid signature"
+                });
+                done();
+            })     
         })
     })
 })
