@@ -14,7 +14,7 @@ describe('Authentication', () => {
                 "_id": "12345",
                 "username": "test_user",
                 "email": "testmail@test.de",
-                "password": "test_pass1!",
+                "password": "Test_pass1!",
                 "acceptedTerms": true,
                 "hasRequiredAge": true
             }
@@ -34,7 +34,7 @@ describe('Authentication', () => {
                 "_id": "54321",
                 "username": "test_user",
                 "email": "testmail@test.de",
-                "password": "test_pass1!",
+                "password": "Test_pass1!",
                 "acceptedTerms": true,
                 "hasRequiredAge": true
             }
@@ -46,6 +46,55 @@ describe('Authentication', () => {
                     res.body.should.have.property('message').eql("User does not exist or password/email is wrong");
                     done();
                 })
+        })
+    })
+
+    describe('/POST login', () => {
+        it('should login a user', (done) => {
+            let loginData = {
+                "email": "testmail@test.de",
+                "password": "Test_pass1!",
+            }
+            chai.request(server)
+            .post('/login')
+            .send(loginData)
+            .end((err, res) => {
+                res.should.have.status(200);
+                res.body.should.have.property('jwtAccessToken');
+                done();
+            })
+        })
+    })
+    describe('/POST login', () => {
+        it('should fail because the email doesnt exist', (done) => {
+            let loginData = {
+                "email": "testmail123@test.de",
+                "password": "Test_pass1!",
+            }
+            chai.request(server)
+            .post('/login')
+            .send(loginData)
+            .end((err, res) => {
+                res.should.have.status(409);
+                res.body.should.have.property('message').eql("User does not exist or password/email is wrong");
+                done();
+            })
+        })
+    })
+    describe('/POST login', () => {
+        it('should fail because the password is wrong', (done) => {
+            let loginData = {
+                "email": "testmail@test.de",
+                "password": "Wrong_pass1!",
+            }
+            chai.request(server)
+            .post('/login')
+            .send(loginData)
+            .end((err, res) => {
+                res.should.have.status(409);
+                res.body.should.have.property('message').eql("User does not exist or password/email is wrong");
+                done();
+            })
         })
     })
 })
