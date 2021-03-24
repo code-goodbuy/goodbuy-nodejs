@@ -4,6 +4,7 @@ FROM node:14
 RUN mkdir -p /usr/src/app
 WORKDIR /usr/src/app
 
+# TODO: Shoulnd't be necessary to install it seperatly
 RUN npm install -g nodemon
 
 # Install dependencies
