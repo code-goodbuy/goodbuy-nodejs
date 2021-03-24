@@ -46,7 +46,7 @@ export const loginUser = (req: Request, res: Response) => {
             }
             bcrypt.compare(password, user.password, function (err: Error, result: Boolean) {
                 if (result) {
-                    const accessTokenSecret: String = config.get("ACCESS_TOKEN_SECRET")
+                    const accessTokenSecret: string = config.get("ACCESS_TOKEN_SECRET")
                     var jwt = require('jsonwebtoken');
                     const accessToken = jwt.sign({email: email}, accessTokenSecret, { expiresIn: '168h' })
                     return res.status(200).json(
@@ -63,3 +63,17 @@ export const loginUser = (req: Request, res: Response) => {
         }
         );
 }
+
+export const authenticateToken = (req: any, res: Response, next: NextFunction) => {
+    const authHeader = req.headers['authorization']
+    const token = authHeader && authHeader.split(' ')[1]
+    if (token == null) return res.status(401).json({ message: "JWT is missing, access denied"})
+    const accessTokenSecret: string = config.get("ACCESS_TOKEN_SECRET")
+    var jwt = require('jsonwebtoken');
+    jwt.verify(token, accessTokenSecret, (err: Error, user: typeof UserModel) => {
+        if (err) return res.status(401).json({ err })
+        req.user = user
+        next()
+    })
+}
+ 
