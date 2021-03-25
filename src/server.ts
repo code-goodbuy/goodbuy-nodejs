@@ -23,12 +23,6 @@ mongoose
 import productRoutes from './routes/product';
 import authRoutes from './routes/auth';
 
-// We can also define if we want to allow GET / POST etc. for each route, domain etc.
-// var corsOptions = {
-//   origin: '*.vercel.app',
-//   optionsSuccessStatus: 200 // For legacy browser support
-// }
-
 //middleware
 app.use(cors());
 app.use(morgan("dev")); // Logging HTTP Requests and Errors
