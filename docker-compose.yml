@@ -4,10 +4,7 @@ services:
     environment:
       - NODE_ENV=dev
     container_name: server
-    image: goodbuy/cors
+    image: goodbuy/nodejs-webserver
     ports:
       - "80:8080"
-    volumes:
-      - ./:/usr/src/app
-      - /usr/src/app/node_modules
     command: "node dist/server.js"
