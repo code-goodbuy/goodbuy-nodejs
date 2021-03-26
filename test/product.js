@@ -25,7 +25,7 @@ describe('Product', () => {
             state: "unverified"
           }
           const accessTokenSecret = config.get("ACCESS_TOKEN_SECRET")
-          var jwt = require('jsonwebtoken');
+          const jwt = require('jsonwebtoken');
           const accessToken = jwt.sign({email: "testmail@test.de"}, accessTokenSecret, { expiresIn: '168h' })
         chai.request(server)
             .post('/product')
