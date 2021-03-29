@@ -27,6 +27,10 @@ const userSchema = new mongoose.Schema({
     hasRequiredAge: {
         type: Boolean,
         required: "No hasRequiredAge",
+    },
+    tokenVersion: {
+        type: Number,
+        required: "Missing tokenVersion",
     }
 })
 
