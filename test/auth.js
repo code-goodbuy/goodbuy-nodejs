@@ -11,12 +11,13 @@ describe('Authentication', () => {
     describe('/POST register', () => {
         it('should register a user', (done) => {
             let user = {
-                "_id": "12345",
                 "username": "test_user",
                 "email": "testmail@test.de",
                 "password": "Test_pass1!",
                 "acceptedTerms": true,
-                "hasRequiredAge": true
+                "hasRequiredAge": true,
+                "tokenVersion": 0
+
             }
             chai.request(server)
                 .post('/register')
@@ -31,12 +32,13 @@ describe('Authentication', () => {
     describe('/POST register', () => {
         it('should return that the user with that email already exist(409)', (done) => {
             let user = {
-                "_id": "54321",
                 "username": "test_user",
                 "email": "testmail@test.de",
                 "password": "Test_pass1!",
                 "acceptedTerms": true,
-                "hasRequiredAge": true
+                "hasRequiredAge": true,
+                "tokenVersion": 0
+
             }
             chai.request(server)
                 .post('/register')
@@ -68,7 +70,7 @@ describe('Authentication', () => {
     describe('/POST login', () => {
         it('should fail because the email doesnt exist', (done) => {
             let loginData = {
-"email": "testmail123@test.de",
+                "email": "testmail123@test.de",
                 "password": "Test_pass1!",
             }
             chai.request(server)
