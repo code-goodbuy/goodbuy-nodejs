@@ -1,3 +1,4 @@
+require('./test/rabbitmq');
 require('./test/product');
 require('./test/auth');
 require('./test/cleanup');

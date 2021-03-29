@@ -3,6 +3,7 @@ FROM node:14
 # Create app directory
 WORKDIR /usr/src/app
 
+# TODO: Shoulnd't be necessary to install it seperatly
 RUN npm install -g nodemon
 
 # Install dependencies

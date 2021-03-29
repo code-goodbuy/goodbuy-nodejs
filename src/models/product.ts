@@ -4,7 +4,7 @@ import IProduct from './product.interface'
 const productSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: "No name",
+        required: "No name error message",
         min: 2,
         max: 50,
     },
@@ -28,7 +28,7 @@ const productSchema = new mongoose.Schema({
     },
     state: {
         type: String,
-        required: "No state",
+        required: "No state error message",
         min: 3,
         max: 20,
     },
