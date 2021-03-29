@@ -6,6 +6,7 @@ import morgan from "morgan";
 import expressValidator from "express-validator";
 import config from "config"; //we load the db location from the JSON files
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 
 const db: string = config.get("DBHost");
 
@@ -25,6 +26,7 @@ import authRoutes from './routes/auth';
 
 //middleware
 app.use(cors());
+app.use(cookieParser());
 app.use(morgan("dev")); // Logging HTTP Requests and Errors
 app.use(bodyParser.json()); // Parse incoming request bodies
 app.use(expressValidator()); // Validate incoming data
