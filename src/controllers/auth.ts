@@ -2,7 +2,7 @@ import UserModel from '../models/user.model';
 import User from '../models/user.interface';
 import { Request, Response, NextFunction } from 'express';
 import config from 'config';
-import { sign } from 'jsonwebtoken';
+import { sign, verify } from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 
 export const registerUser = (req: Request, res: Response) => {
@@ -80,6 +80,23 @@ export const authenticateToken = (req: any, res: Response, next: NextFunction) =
         req.user = user
         next()
     })
+}
+
+export const authenticateRefreshToken = (req: Request, res: Response, next: NextFunction) => {
+    const token = req.cookies.jid;
+    if (token == null) return res.status(401).json({ message: "JWT Refresh Token is missing, access denied"})
+    let payload: any = null
+    const refreshTokenSecret: string = config.get("REFRESH_TOKEN_SECRET")
+    try {
+        payload = verify(token, refreshTokenSecret)
+        return res.status(200).json({
+            accessToken: createAccessToken(req.body.email)
+        })
+    }
+    catch(err) {
+        console.log(err)
+        return res.status(401).json({ err })
+    }
 }
 
 export const createAccessToken = (email: string) => {
