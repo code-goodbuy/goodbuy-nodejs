@@ -1,6 +1,9 @@
 import UserModel from '../models/user.model';
+import User from '../models/user.interface';
 import { Request, Response, NextFunction } from 'express';
 import config from 'config';
+import { sign } from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
 
 export const registerUser = (req: Request, res: Response) => {
     const email: string = req.body.email;
@@ -13,7 +16,6 @@ export const registerUser = (req: Request, res: Response) => {
             })
             let password: string = req.body.password
             const saltRounds: number = 10;
-            const bcrypt = require('bcrypt');
             bcrypt.hash(password, saltRounds, function (err: Error, hash: String) {
                 if (err) return res.status(500).json({
                     message: "internal server error"
@@ -38,7 +40,7 @@ export const registerUser = (req: Request, res: Response) => {
 export const loginUser = (req: Request, res: Response) => {
     const email: string = req.body.email
     const password: string = req.body.password
-    const bcrypt = require('bcrypt')
+    const tokenVersion: number = req.body.tokenVersion
     const user = UserModel.findOne({ email: email })
         .then(user => {
             if (user === null) {
@@ -46,9 +48,12 @@ export const loginUser = (req: Request, res: Response) => {
             }
             bcrypt.compare(password, user.password, function (err: Error, result: Boolean) {
                 if (result) {
-                    const accessTokenSecret: string = config.get("ACCESS_TOKEN_SECRET")
-                    const jwt = require('jsonwebtoken');
-                    const accessToken = jwt.sign({email: email}, accessTokenSecret, { expiresIn: '168h' })
+                    res.cookie('jid', createRefreshToken(email, tokenVersion), 
+                    {
+                        httpOnly: true,
+                        path: '/refresh_token'
+                    })
+                    const accessToken = createAccessToken(email)
                     return res.status(200).json(
                         { "jwtAccessToken": accessToken })
                 }
@@ -70,10 +75,20 @@ export const authenticateToken = (req: any, res: Response, next: NextFunction) =
     if (token == null) return res.status(401).json({ message: "JWT is missing, access denied"})
     const accessTokenSecret: string = config.get("ACCESS_TOKEN_SECRET")
     const jwt = require('jsonwebtoken');
-    jwt.verify(token, accessTokenSecret, (err: Error, user: typeof UserModel) => {
+    jwt.verify(token, accessTokenSecret, (err: Error, user: User) => {
         if (err) return res.status(401).json({ err })
         req.user = user
         next()
     })
 }
- 
+
+export const createAccessToken = (email: string) => {
+    const accessTokenSecret: string = config.get("ACCESS_TOKEN_SECRET")
+    return sign({email: email}, accessTokenSecret, { expiresIn: '15m' })
+}
+
+
+export const createRefreshToken = (email: string, tokenVersion: number) => {
+    const refreshTokenSecret: string = config.get("REFRESH_TOKEN_SECRET")
+    return sign({email: email, tokenVersion: tokenVersion}, refreshTokenSecret, { expiresIn: '168h' })
+}
