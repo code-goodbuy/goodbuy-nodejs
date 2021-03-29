@@ -109,3 +109,11 @@ export const createRefreshToken = (email: string, tokenVersion: number) => {
     const refreshTokenSecret: string = config.get("REFRESH_TOKEN_SECRET")
     return sign({email: email, tokenVersion: tokenVersion}, refreshTokenSecret, { expiresIn: '168h' })
 }
+
+export const revokeRefreshToken = (req: Request, res: Response) => {
+    let tokenVersion: number = req.body.tokenVersion
+    tokenVersion += 1
+    return res.status(200).json({
+        message: "Revoked refresh_token successfully"
+    })
+}
