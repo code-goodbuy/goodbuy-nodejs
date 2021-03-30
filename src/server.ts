@@ -16,6 +16,7 @@ const metricsMiddleware = promBundle({
   includeUp: true,
 });
 import job from "./utils/dbCronBackup"
+import job from "./utils/dbCronJob"
 
 let db = "";
 
@@ -35,7 +36,7 @@ mongoose
   .then(async connection => {
       app.listen(app.get("port"), () => {
           console.log("Database connected!");
-          job.backupDB()
+          job.backupDB();
       });
       app.on('close', () => {
           app.removeAllListeners();

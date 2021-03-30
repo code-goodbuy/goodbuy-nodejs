@@ -4,6 +4,7 @@ import {ExecException} from "child_process";
 const _ = require('lodash');
 const exec = require('child_process').exec;
 const path = require('path');
+import { uploadFileToS3 } from "./aws";
 
 const backupDirPath = path.join(__dirname, 'db-backup');
 
@@ -19,20 +20,14 @@ export function stringToDate(dateString: string | number | Date) {
 }
 
 export function generateBackupFolder(currentDate: Date) {
-    let backupFolder=
-        currentDate.getFullYear() +
-        '-' +
-        (currentDate.getMonth() + 1) +
-        '-' +
-        currentDate.getDate();
-    return backupFolder;
-};
+    return currentDate.getFullYear() + '-' + (currentDate.getMonth() + 1) + '-' + currentDate.getDate();
+}
 
 export function generateBackupPath(currentDate: Date) {
     let newBackupFolder = generateBackupFolder(currentDate);
     let newBackupPath: fs.PathLike = dbOptions.autoBackupPath + '-mongodump' + newBackupFolder;
     return newBackupPath;
-};
+}
 
 export function generateOldBackupPath(currentDate: Date) {
     let beforeDate: Date = _.clone(currentDate);
@@ -40,7 +35,7 @@ export function generateOldBackupPath(currentDate: Date) {
     let oldBackupDir = generateBackupFolder(currentDate);
     let oldBackupPath: fs.PathLike = dbOptions.autoBackupPath + 'mongodump-' + oldBackupDir;
     return oldBackupPath;
-};
+}
 
 export function dbAutoBackup() {
     if (dbOptions.autoBackup) {
@@ -56,11 +51,11 @@ export function dbAutoBackup() {
             oldBackupPath = generateOldBackupPath(currentDate);
         }
 
-        let cmd = 'mongodump --uri ' + db + ' --out ' + newBackupPath;
+        let cmd = 'mongodump --uri ' + db + ' --gzip --archive=' + newBackupPath + '.gz';
+        // let cmd = 'mongodump --uri ' + db + ' --out ' + newBackupPath;
 
-        exec(cmd, (error: ExecException, stdout: any, stderr: any) => {
-            if (_.isEmpty(error.toString())) {
-                // check for remove old backup after keeping # of days given in configuration.
+        exec(cmd, (error: ExecException, stdin: string, stderr: string) => {
+            if (_.isEmpty(error)) {
                 if (dbOptions.removeOldBackup) {
                     if (fs.existsSync(oldBackupPath)) {
                         exec('rm -rf ' + oldBackupPath);
@@ -70,5 +65,4 @@ export function dbAutoBackup() {
         });
     }
 }
-
 
