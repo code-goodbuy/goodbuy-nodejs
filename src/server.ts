@@ -27,7 +27,7 @@ import authRoutes from './routes/auth';
 //middleware
 app.use(cors());
 app.use(cookieParser());
-app.use(morgan("dev")); // Logging HTTP Requests and Errors
+app.use(morgan("dev",{ skip: (req, res) => process.env.NODE_ENV === 'test' })); // Logging HTTP Requests and Errors
 app.use(bodyParser.json()); // Parse incoming request bodies
 app.use(expressValidator()); // Validate incoming data
 app.use("/", authRoutes);
