@@ -32,7 +32,7 @@ describe('Authentication', () => {
                     done();
                 })
         })
-        it('should return that the user with that email already exist(409)', (done) => {
+        it('should return that the user with that email already exist', (done) => {
             let user = {
                 "username": "test_user",
                 "email": "testmail123@test.de",
