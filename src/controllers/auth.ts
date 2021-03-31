@@ -96,7 +96,6 @@ export const authenticateRefreshToken = (req: Request, res: Response, next: Next
         })
     }
     catch(err) {
-        console.log(err)
         return res.status(401).json({ err })
     }
 }
@@ -113,6 +112,8 @@ export const createRefreshToken = (email: string, tokenVersion: number) => {
 }
 
 export const revokeRefreshToken = (req: Request, res: Response) => {
+    // Todo read the tokenVersion and email from the refreshToken
+    // Tests will have to be updated accordingly
     let newTokenVersion: number = req.body.tokenVersion
     let email: string = req.body.email
     if (email == null) {
