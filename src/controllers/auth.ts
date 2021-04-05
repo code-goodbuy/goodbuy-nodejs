@@ -4,6 +4,19 @@ import { Request, Response, NextFunction } from 'express';
 import config from 'config';
 import { sign, verify } from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
+import client from 'prom-client';
+
+const registerCounter = new client.Counter({
+  name: 'total_user_registered',
+  help: 'The total number of registered Users'
+});
+
+// const histogram = new client.Histogram({
+//   name: 'node_request_duartion_seconds',
+//   help: 'Histogram for the duration in seconds',
+//   buckets: [1, 2, 5, 6, 10]
+// });
+
 
 export const registerUser = (req: Request, res: Response) => {
     const email: string = req.body.email;
@@ -24,9 +37,12 @@ export const registerUser = (req: Request, res: Response) => {
                 const user = new UserModel(req.body)
                 user.save()
                     .then(success => {
-                        if (success) return res.status(200).json({
-                            message: "User was successfully created"
-                        })
+                        if (success) {
+                            registerCounter.inc()
+                            return res.status(200).json({
+                                message: "User was successfully created"
+                            })
+                        } 
                         return res.status(500).json({
                             message: "internal server error"
                         })
