@@ -7,6 +7,16 @@ import expressValidator from "express-validator";
 import config from "config"; //we load the db location from the JSON files
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
+import promBundle from "express-prom-bundle";
+const metricsMiddleware = promBundle({
+  autoregister: true,
+  includeStatusCode: true,
+  includePath: true,
+  includeMethod: true,
+  includeUp: true,
+});
+
+
 
 const db: string = config.get("DBHost");
 
@@ -27,9 +37,10 @@ import authRoutes from './routes/auth';
 //middleware
 app.use(cors());
 app.use(cookieParser());
-app.use(morgan("dev",{ skip: (req, res) => process.env.NODE_ENV === 'test' })); // Logging HTTP Requests and Errors
+app.use(morgan("dev" ,{ skip: (req, res) => process.env.NODE_ENV === 'test' })); // Logging HTTP Requests and Errors
 app.use(bodyParser.json()); // Parse incoming request bodies
 app.use(expressValidator()); // Validate incoming data
+app.use(metricsMiddleware); // Prometheus logging
 app.use("/", authRoutes);
 app.use("/", productRoutes);
 
