@@ -6,11 +6,12 @@ node_js:
 
 services:
   - docker
-  # - mongodb 
+  - mongodb 
 
-before-install: 
-  - docker run mongo
+# before-install: 
+
 script:  
+  - sleep 15
   - mocha tests.js --timeout 5000
 
 after_success:
