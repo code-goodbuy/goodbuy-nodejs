@@ -1,0 +1,21 @@
+sudo: required
+
+language: node_js
+node_js:
+  - 14
+
+services:
+  - docker 
+
+before-install: 
+  - docker build -t goodbuy/nodejs-webserver:travis .
+
+script:
+  - npx tsc
+  
+  - npm run test
+
+after_success:
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+
+  - docker push goodbuy/nodejs-webserver:travis
