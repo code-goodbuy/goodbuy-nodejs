@@ -9,12 +9,13 @@ services:
   # - mongodb 
 
 before-install: 
-  - docker build -t goodbuy/nodejs-webserver:travis .
-
+  - docker run mongo
 script:  
-  - npm run goodbuy/nodejs-webserver:travis mocha tests.js --timeout 5000
+  - mocha tests.js --timeout 5000
 
 after_success:
+  - docker build -t goodbuy/nodejs-webserver:travis .
+
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
 
   - docker push goodbuy/nodejs-webserver:travis

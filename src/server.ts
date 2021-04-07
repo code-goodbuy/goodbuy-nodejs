@@ -7,17 +7,23 @@ import expressValidator from "express-validator";
 import config from "config"; //we load the db location from the JSON files
 import cors from 'cors';
 
-const db: string = config.get("DBHost");
+let db = "";
 
-//db
+if (process.env.DBHost) {
+  const db = process.env.DBHost
+}
+else if(config.get("DBHost")){
+  const db: string = config.get("DBHost")
+}
 mongoose
-  .connect(db, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-  })
-  .then(() => console.log("Database connected!"))
-  .catch(err => console.log(err));
+.connect(db, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useCreateIndex: true,
+})
+.then(() => console.log("Database connected!"))
+.catch(err => console.log(err));
+
 
 // bring in routes
 import productRoutes from './routes/product';
