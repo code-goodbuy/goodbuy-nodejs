@@ -2,6 +2,7 @@ version: "2"
 services:
   backend:
     environment:
+      # Set environment variables in travis
       - NODE_ENV=dev
     container_name: server
     image: goodbuy/nodejs-webserver:prometheus
