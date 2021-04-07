@@ -12,6 +12,7 @@ services:
 
 script:  
   - sleep 15
+  - npx tsc
   - mocha tests.js --timeout 5000
 
 after_success:
