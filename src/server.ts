@@ -8,18 +8,19 @@ import config from "config"; //we load the db location from the JSON files
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 
-const db: string = config.get("DBHost");
+if(process.env.DBhost){
+  const db: string = process.env.DBhost;
 
-//db
-mongoose
-  .connect(db, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-  })
-  .then(() => console.log("Database connected!"))
-  .catch(err => console.log(err));
-
+  //db
+  mongoose
+    .connect(db, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useCreateIndex: true,
+    })
+    .then(() => console.log("Database connected!"))
+    .catch(err => console.log(err));
+  }
 // bring in routes
 import productRoutes from './routes/product';
 import authRoutes from './routes/auth';

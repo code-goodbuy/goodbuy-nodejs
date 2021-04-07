@@ -45,16 +45,16 @@ export const loginUser = (req: Request, res: Response) => {
             if (user === null) {
                 return res.status(409).json({ message: "User does not exist or password/email is wrong" })
             }
-            if(user.tokenVersion == null) {
-                return res.status(401).json({ message: "Missing Token Version"})
+            if (user.tokenVersion == null) {
+                return res.status(401).json({ message: "Missing Token Version" })
             }
             bcrypt.compare(password, user.password, function (err: Error, result: Boolean) {
                 if (result) {
-                    res.cookie('jid', createRefreshToken(email, user.tokenVersion), 
-                    {
-                        httpOnly: true,
-                        path: '/refresh_token'
-                    })
+                    res.cookie('jid', createRefreshToken(email, user.tokenVersion),
+                        {
+                            httpOnly: true,
+                            path: '/refresh_token'
+                        })
                     const accessToken = createAccessToken(email)
                     return res.status(200).json(
                         { "jwtAccessToken": accessToken })
@@ -74,60 +74,70 @@ export const loginUser = (req: Request, res: Response) => {
 export const authenticateToken = (req: Request, res: Response, next: NextFunction) => {
     const authHeader = req.headers['authorization']
     const token = authHeader && authHeader.split(' ')[1]
-    if (token == null) return res.status(401).json({ message: "JWT is missing, access denied"})
-    const accessTokenSecret: string = config.get("ACCESS_TOKEN_SECRET")
-    const jwt = require('jsonwebtoken');
-    jwt.verify(token, accessTokenSecret, (err: Error, user: User) => {
-        if (err) return res.status(401).json({ err })
-        req.body.user = user
-        next()
-    })
+    if (token == null) return res.status(401).json({ message: "JWT is missing, access denied" })
+    if (process.env.ACCESS_TOKEN_SECRET) {
+        const accessTokenSecret: string = process.env.ACCESS_TOKEN_SECRET
+        const jwt = require('jsonwebtoken');
+        jwt.verify(token, accessTokenSecret, (err: Error, user: User) => {
+            if (err) return res.status(401).json({ err })
+            req.body.user = user
+            next()
+        })
+    }
 }
 
 export const authenticateRefreshToken = (req: Request, res: Response, next: NextFunction) => {
     const token = req.cookies.jid;
-    if (token == null) return res.status(401).json({ message: "JWT Refresh Token is missing, access denied"})
+    if (token == null) return res.status(401).json({ message: "JWT Refresh Token is missing, access denied" })
     let payload: any = null
-    const refreshTokenSecret: string = config.get("REFRESH_TOKEN_SECRET")
-    try {
-        payload = verify(token, refreshTokenSecret)
-        return res.status(200).json({
-            accessToken: createAccessToken(req.body.email)
-        })
+    if (process.env.REFRESH_TOKEN_SECRET) {
+        const refreshTokenSecret: string = process.env.REFRESH_TOKEN_SECRET
+        try {
+            payload = verify(token, refreshTokenSecret)
+            return res.status(200).json({
+                accessToken: createAccessToken(req.body.email)
+            })
+        }
+        catch (err) {
+            return res.status(401).json({ err })
+        }
     }
-    catch(err) {
-        return res.status(401).json({ err })
-    }
+
 }
 
 export const createAccessToken = (email: string) => {
-    const accessTokenSecret: string = config.get("ACCESS_TOKEN_SECRET")
-    return sign({email: email}, accessTokenSecret, { expiresIn: '5m' })
+    if (process.env.ACCESS_TOKEN_SECRET) {
+        const accessTokenSecret: string = process.env.ACCESS_TOKEN_SECRET
+        return sign({ email: email }, accessTokenSecret, { expiresIn: '5m' })
+    }
 }
 
 
 export const createRefreshToken = (email: string, tokenVersion: number) => {
-    const refreshTokenSecret: string = config.get("REFRESH_TOKEN_SECRET")
-    return sign({email: email, tokenVersion: tokenVersion}, refreshTokenSecret, { expiresIn: '168h' })
+    if(process.env.REFRESH_TOKEN_SECRET){
+        const refreshTokenSecret: string = process.env.REFRESH_TOKEN_SECRET
+        return sign({ email: email, tokenVersion: tokenVersion }, refreshTokenSecret, { expiresIn: '168h' })
+    }
 }
 
 export const revokeRefreshToken = (req: Request, res: Response) => {
     // Todo read the tokenVersion and email from the refreshToken
     // Tests will have to be updated accordingly
+    console.log(req.cookies.jid)
     let newTokenVersion: number = req.body.tokenVersion
     let email: string = req.body.email
     if (email == null) {
-        return res.status(401).json({ message: "Missing Email"})
+        return res.status(401).json({ message: "Missing Email" })
     }
     if (newTokenVersion == null) {
-        return res.status(401).json({ message: "Missing Token Version"})
-     }
+        return res.status(401).json({ message: "Missing Token Version" })
+    }
     newTokenVersion += 1
-    try{
+    try {
         let updatedUser = UserModel.updateOne(
-            {email: email}, 
-            {tokenVersion: newTokenVersion}
-            )
+            { email: email },
+            { tokenVersion: newTokenVersion }
+        )
         return res.status(200).json({
             message: "Revoked refresh_token successfully"
         })
