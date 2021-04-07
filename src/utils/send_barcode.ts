@@ -14,7 +14,8 @@ interface ConnectionType {
     close: () => void
 }
 
-const rabbit_user = config.get("RABBITMQ_USER") || process.env.RABBITMQ_USER
+const rabbit_user = process.env.RABBITMQ_USER || config.get("RABBITMQ_USER")
+console.log(rabbit_user)
 const rabbit_pass = config.get("RABBITMQ_USER_PW") || process.env.RABBITMQ_USER_PW
 const rabbit_host = config.get("RABBITMQ_DEV_HOST") ||process.env.RABBITMQ_DEV_HOST
 const rabbit_port = config.get("RABBITMQ_PORT") ||process.env.RABBITMQ_PORT
