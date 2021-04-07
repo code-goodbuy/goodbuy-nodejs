@@ -6,11 +6,10 @@ node_js:
 
 services:
   - docker
-  - mongodb 
+  - mongodb
 
-# before-install: 
 
-script:  
+script:
   - sleep 15
   - npx tsc
   - mocha tests.js --timeout 5000
@@ -21,3 +20,15 @@ after_success:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
 
   - docker push goodbuy/nodejs-webserver:travis
+
+deploy:
+  provider: elasticbeanstalk
+  region: eu-central-1
+  app: docker-loginapp
+  env: Dockerloginapp-env
+  bucket_name: elasticbeanstalk-eu-central-1-861910211422
+  bucket_path: docker-loginapp
+  on:
+    branch: enhancement/local_without_docker
+  access_key_id: $AWS_ACCESS_KEY
+  secret_access_key: $AWS_SECRET_KEY
