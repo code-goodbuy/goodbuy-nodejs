@@ -3,6 +3,10 @@ sudo: required
 services:
   - docker 
 
+env:
+  - DBHost=$DBHost
+  - ACCESS_TOKEN_SECRET=$ACCESS_TOKEN_SECRET
+  - REFRESH_TOKEN_SECRET=$REFRESH_TOKEN_SECRET
 before-install: 
   - docker build -t goodbuy/nodejs-webserver:travis .
 
