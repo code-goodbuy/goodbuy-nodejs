@@ -9,9 +9,9 @@
 		"docker_local": "docker-compose -f docker-compose.yml -f docker-compose.local.yml up",
 		"docker_dev": "docker-compose up",
 		"local": "NODE_ENV=local nodemon ./dist/server.js",
-		"dev": "NODE_ENV=dev node ./dist/server.js",
+		"dev": "node ./dist/server.js",
 		"prod": "NODE_ENV=default node ./dist/server.js",
-		"test": "NODE_ENV=test mocha tests.js --timeout 5000"
+		"test": "mocha tests.js --timeout 5000"
 	},
 	"author": "Darjusch Schrand",
 	"license": "ISC",
