@@ -9,12 +9,6 @@ services:
   - mongodb 
 
 # before-install: 
-env:
-  - RABBITMQ_DEV_HOST="18.194.28.180"
-  - RABBITMQ_PORT="5672"
-  - RABBITMQ_USER="guest"
-  - RABBITMQ_USER_PW="guest"
-  - MONGODB_DEV_URI="mongodb+srv://dev-backend:NBiLdPhQWAxqO4PK@dev-db-goodbuy.0iqtx.mongodb.net/dev?retryWrites=true&w=majority"
 
 script:  
   - sleep 15
