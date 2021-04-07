@@ -1,8 +1,8 @@
 version: "2"
 services:
   backend:
-    environment:
-      - NODE_ENV=test
+    # environment:
+    #   - NODE_ENV=test
     depends_on:
       - mongodb
     command: "npm run test" # TODO: break the loop to package.json
