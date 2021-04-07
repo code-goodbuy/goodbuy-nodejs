@@ -10,10 +10,10 @@ import cors from 'cors';
 let db = "";
 
 if (process.env.DBHost) {
-  const db = process.env.DBHost
+  db = process.env.DBHost
 }
 else if(config.get("DBHost")){
-  const db: string = config.get("DBHost")
+  db = config.get("DBHost")
 }
 console.log("JFOEJOGEWGEWOJEGs")
 console.log(db)
