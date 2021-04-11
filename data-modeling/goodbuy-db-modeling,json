@@ -174,6 +174,9 @@
                     "foreignField": [
                         "3dc7bd00-9b19-11eb-8b24-af62e469055e",
                         "47af98b0-9b19-11eb-8b24-af62e469055e"
+                    ],
+                    "childRelationships": [
+                        "ec543d80-9b1e-11eb-8b24-af62e469055e"
                     ]
                 },
                 {
@@ -350,6 +353,11 @@
                     "childRelationships": [
                         "784e6270-9b1a-11eb-8b24-af62e469055e",
                         "9cd6cd30-9b1a-11eb-8b24-af62e469055e"
+                    ],
+                    "foreignCollection": "3323f640-9b17-11eb-8b24-af62e469055e",
+                    "foreignField": [
+                        "3323f640-9b17-11eb-8b24-af62e469055e",
+                        "3c2801a0-9b17-11eb-8b24-af62e469055e"
                     ]
                 },
                 {
@@ -658,13 +666,25 @@
             "childCollection": "a6fd8370-9b16-11eb-8b24-af62e469055e"
         },
         {
-            "name": "New Relationship",
+            "name": "one user have many reviews",
             "relationshipType": "",
-            "parentField": [],
+            "parentField": [
+                [
+                    "3323f640-9b17-11eb-8b24-af62e469055e",
+                    "3c2801a0-9b17-11eb-8b24-af62e469055e"
+                ]
+            ],
             "parentCardinality": "1",
-            "childField": [],
-            "childCardinality": "1",
-            "GUID": "fba01740-9b1a-11eb-8b24-af62e469055e"
+            "childField": [
+                [
+                    "3dc7bd00-9b19-11eb-8b24-af62e469055e",
+                    "47af98b0-9b19-11eb-8b24-af62e469055e"
+                ]
+            ],
+            "childCardinality": "n",
+            "GUID": "ec543d80-9b1e-11eb-8b24-af62e469055e",
+            "parentCollection": "3323f640-9b17-11eb-8b24-af62e469055e",
+            "childCollection": "3dc7bd00-9b19-11eb-8b24-af62e469055e"
         }
     ],
     "users": [],
@@ -714,8 +734,8 @@
         "6ef66ab0-9b1a-11eb-8b24-af62e469055e": "state",
         "784e6270-9b1a-11eb-8b24-af62e469055e": "one review has one user",
         "9cd6cd30-9b1a-11eb-8b24-af62e469055e": "one review has many products",
-        "fba01740-9b1a-11eb-8b24-af62e469055e": "New Relationship",
-        "d2a2a9b0-9b1b-11eb-8b24-af62e469055e": "New view"
+        "d2a2a9b0-9b1b-11eb-8b24-af62e469055e": "New view",
+        "ec543d80-9b1e-11eb-8b24-af62e469055e": "one user have many reviews"
     },
     "definitions": {
         "type": "definitions",
@@ -732,9 +752,9 @@
         {
             "GUID": "de8f2f00-9b1b-11eb-8b24-af62e469055e",
             "type": "annotation",
-            "value": "- product barcode\n- potential product info related to the subject 'goodbuy'?\n- product collection will be most busy part: more indexing needed(?)",
+            "value": "- barcode will be most busy field\n- potential product info related to the subject 'goodbuy'?\n- product collection will be most busy part in general: more sharding/indexing needed(?)",
             "disableInitialFocus": true,
-            "name": "product",
+            "name": "product note",
             "bucketId": "9dc3e920-9b16-11eb-8b24-af62e469055e"
         },
         {
@@ -761,7 +781,7 @@
     "creationTS": "2021-04-11T22:38:04.779Z",
     "GUID": "947dcbb0-9b16-11eb-8b24-af62e469055e",
     "isLineageEnabled": false,
-    "lastModifTS": "2021-04-11T23:21:21.588Z",
+    "lastModifTS": "2021-04-11T23:40:22.716Z",
     "persistenceSchemaVersion": "4",
     "isCreatedByPlugin": true,
     "pluginInformation": {
@@ -822,8 +842,8 @@
                     },
                     {
                         "GUID": "3dc7bd00-9b19-11eb-8b24-af62e469055e",
-                        "x": 868.3333333333342,
-                        "y": 609.3333333333346,
+                        "x": 897.3333333333342,
+                        "y": 503.3333333333346,
                         "width": 247,
                         "height": 257,
                         "color": {
@@ -853,8 +873,8 @@
                 ],
                 "buckets": [
                     {
-                        "x": 204,
-                        "y": 206,
+                        "x": 252,
+                        "y": 192,
                         "GUID": "9dc3e920-9b16-11eb-8b24-af62e469055e"
                     }
                 ],
@@ -880,8 +900,8 @@
                 "decorativeSymbols": [
                     {
                         "GUID": "de8f2f00-9b1b-11eb-8b24-af62e469055e",
-                        "x": 244,
-                        "y": 822,
+                        "x": 292,
+                        "y": 810,
                         "height": 128,
                         "width": 332,
                         "color": {
@@ -910,10 +930,10 @@
                     },
                     {
                         "GUID": "10e8bd90-9b1c-11eb-8b24-af62e469055e",
-                        "x": 490,
-                        "y": 246,
-                        "height": 78,
-                        "width": 414,
+                        "x": 493,
+                        "y": 232,
+                        "height": 76,
+                        "width": 407,
                         "color": {
                             "hsl": {
                                 "h": 206.57142857142858,
@@ -940,8 +960,8 @@
                     },
                     {
                         "GUID": "38089c10-9b1c-11eb-8b24-af62e469055e",
-                        "x": 866,
-                        "y": 890,
+                        "x": 894,
+                        "y": 771,
                         "height": 120,
                         "width": 293
                     }
