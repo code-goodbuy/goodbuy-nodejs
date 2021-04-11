@@ -714,7 +714,8 @@
         "6ef66ab0-9b1a-11eb-8b24-af62e469055e": "state",
         "784e6270-9b1a-11eb-8b24-af62e469055e": "one review has one user",
         "9cd6cd30-9b1a-11eb-8b24-af62e469055e": "one review has many products",
-        "fba01740-9b1a-11eb-8b24-af62e469055e": "New Relationship"
+        "fba01740-9b1a-11eb-8b24-af62e469055e": "New Relationship",
+        "d2a2a9b0-9b1b-11eb-8b24-af62e469055e": "New view"
     },
     "definitions": {
         "type": "definitions",
@@ -727,15 +728,40 @@
         "GUID": "947dcbb2-9b16-11eb-8b24-af62e469055e"
     },
     "sources": [],
-    "decorativeSymbols": [],
+    "decorativeSymbols": [
+        {
+            "GUID": "de8f2f00-9b1b-11eb-8b24-af62e469055e",
+            "type": "annotation",
+            "value": "- product barcode\n- potential product info related to the subject 'goodbuy'?\n- product collection will be most busy part: more indexing needed(?)",
+            "disableInitialFocus": true,
+            "name": "product",
+            "bucketId": "9dc3e920-9b16-11eb-8b24-af62e469055e"
+        },
+        {
+            "GUID": "10e8bd90-9b1c-11eb-8b24-af62e469055e",
+            "type": "annotation",
+            "value": "- terms and condition will be many versions due to legal issue\n- users will have each every version when they agree with it",
+            "disableInitialFocus": true,
+            "name": "t&s",
+            "bucketId": "9dc3e920-9b16-11eb-8b24-af62e469055e"
+        },
+        {
+            "GUID": "38089c10-9b1c-11eb-8b24-af62e469055e",
+            "type": "annotation",
+            "value": "- user and product are embedded(?) in review collection\n- one review have one user(author)\n- one review have many product\n",
+            "disableInitialFocus": true,
+            "name": "review",
+            "bucketId": "9dc3e920-9b16-11eb-8b24-af62e469055e"
+        }
+    ],
     "dbVersion": "v4.4",
     "dbVendor": "MongoDB",
-    "hideModelViews": true,
+    "hideModelViews": false,
     "appTarget": "MONGODB",
     "creationTS": "2021-04-11T22:38:04.779Z",
     "GUID": "947dcbb0-9b16-11eb-8b24-af62e469055e",
     "isLineageEnabled": false,
-    "lastModifTS": "2021-04-11T23:10:32.220Z",
+    "lastModifTS": "2021-04-11T23:21:21.588Z",
     "persistenceSchemaVersion": "4",
     "isCreatedByPlugin": true,
     "pluginInformation": {
@@ -750,41 +776,85 @@
                 "erd": [
                     {
                         "GUID": "a6fd8370-9b16-11eb-8b24-af62e469055e",
-                        "x": 127.7380952380951,
-                        "y": 364.50000000000017,
+                        "x": 293.73809523809507,
+                        "y": 632.5000000000002,
                         "width": 221,
                         "height": 159,
-                        "color": {}
+                        "color": {
+                            "hsl": {
+                                "h": 3.789473684210526,
+                                "s": 0.904761904761905,
+                                "l": 0.5882352941176471,
+                                "a": 1
+                            },
+                            "hex": "#f54337",
+                            "rgb": {
+                                "r": 245,
+                                "g": 67,
+                                "b": 55,
+                                "a": 1
+                            },
+                            "hsv": {
+                                "h": 3.789473684210526,
+                                "s": 0.7755102040816326,
+                                "v": 0.9607843137254902,
+                                "a": 1
+                            },
+                            "oldHue": 206.57142857142858,
+                            "source": "hex"
+                        }
                     },
                     {
                         "GUID": "3323f640-9b17-11eb-8b24-af62e469055e",
-                        "x": 409.1666666666667,
-                        "y": 248.8333333333334,
+                        "x": 575.1666666666667,
+                        "y": 516.8333333333334,
                         "width": 227,
                         "height": 117,
                         "color": {}
                     },
                     {
                         "GUID": "5d6b5380-9b17-11eb-8b24-af62e469055e",
-                        "x": 402.90476190476136,
-                        "y": 80,
+                        "x": 568.9047619047614,
+                        "y": 348,
                         "width": 240,
                         "height": 89,
                         "color": {}
                     },
                     {
                         "GUID": "3dc7bd00-9b19-11eb-8b24-af62e469055e",
-                        "x": 702.3333333333342,
-                        "y": 341.3333333333347,
+                        "x": 868.3333333333342,
+                        "y": 609.3333333333346,
                         "width": 247,
                         "height": 257,
-                        "color": {}
+                        "color": {
+                            "hsl": {
+                                "h": 206.57142857142858,
+                                "s": 0,
+                                "l": 0.4666666666666667,
+                                "a": 1
+                            },
+                            "hex": "#777777",
+                            "rgb": {
+                                "r": 119,
+                                "g": 119,
+                                "b": 119,
+                                "a": 1
+                            },
+                            "hsv": {
+                                "h": 206.57142857142858,
+                                "s": 0,
+                                "v": 0.4666666666666667,
+                                "a": 1
+                            },
+                            "oldHue": 206.57142857142858,
+                            "source": "hex"
+                        }
                     }
                 ],
                 "buckets": [
                     {
-                        "x": 87.7380952380951,
-                        "y": 40,
+                        "x": 204,
+                        "y": 206,
                         "GUID": "9dc3e920-9b16-11eb-8b24-af62e469055e"
                     }
                 ],
@@ -807,7 +877,75 @@
                     "defaultLinkLength": 300
                 },
                 "diagramViews": [],
-                "decorativeSymbols": [],
+                "decorativeSymbols": [
+                    {
+                        "GUID": "de8f2f00-9b1b-11eb-8b24-af62e469055e",
+                        "x": 244,
+                        "y": 822,
+                        "height": 128,
+                        "width": 332,
+                        "color": {
+                            "hsl": {
+                                "h": 3.789473684210526,
+                                "s": 0.904761904761905,
+                                "l": 0.5882352941176471,
+                                "a": 1
+                            },
+                            "hex": "#f54337",
+                            "rgb": {
+                                "r": 245,
+                                "g": 67,
+                                "b": 55,
+                                "a": 1
+                            },
+                            "hsv": {
+                                "h": 3.789473684210526,
+                                "s": 0.7755102040816326,
+                                "v": 0.9607843137254902,
+                                "a": 1
+                            },
+                            "oldHue": 3.789473684210526,
+                            "source": "hex"
+                        }
+                    },
+                    {
+                        "GUID": "10e8bd90-9b1c-11eb-8b24-af62e469055e",
+                        "x": 490,
+                        "y": 246,
+                        "height": 78,
+                        "width": 414,
+                        "color": {
+                            "hsl": {
+                                "h": 206.57142857142858,
+                                "s": 0.8974358974358974,
+                                "l": 0.5411764705882353,
+                                "a": 1
+                            },
+                            "hex": "#2196f3",
+                            "rgb": {
+                                "r": 33,
+                                "g": 150,
+                                "b": 243,
+                                "a": 1
+                            },
+                            "hsv": {
+                                "h": 206.57142857142858,
+                                "s": 0.8641975308641976,
+                                "v": 0.9529411764705882,
+                                "a": 1
+                            },
+                            "oldHue": 206.57142857142858,
+                            "source": "hex"
+                        }
+                    },
+                    {
+                        "GUID": "38089c10-9b1c-11eb-8b24-af62e469055e",
+                        "x": 866,
+                        "y": 890,
+                        "height": 120,
+                        "width": 293
+                    }
+                ],
                 "nestedCollectionsLayout": "horizontal",
                 "options": []
             },
