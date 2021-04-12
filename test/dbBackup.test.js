@@ -28,23 +28,23 @@ describe('generateBackupFolder', () => {
     });
 });
 
-describe('generateBackupPath', () => {
-    const currentDate = new Date();
-    const backupDirPath = path.join(__dirname, 'db-backup-mongodump');
-    const backupFolder = currentDate.getFullYear() + '-' + (currentDate.getMonth() + 1) + '-' + currentDate.getDate();
-    it('it should generate a backup path with the current date in it', () => {
-        expect(generateBackupPath(currentDate)).to.be.equal(backupDirPath + backupFolder);
-    });
-});
-
-describe('generateOldBackupPath', () => {
-    const currentDate = new Date();
-    const backupDirPath = path.join(__dirname, 'db-backupmongodump-');
-    const backupFolder = currentDate.getFullYear() + '-' + (currentDate.getMonth() + 1) + '-' + currentDate.getDate();
-    it('it should generate the old backup path with the old current date in it', () => {
-        expect(generateOldBackupPath(currentDate)).to.be.equal(backupDirPath + backupFolder);
-    });
-})
+// describe('generateBackupPath', () => {
+//     const currentDate = new Date();
+//     const backupDirPath = path.join(__dirname, 'db-backup-mongodump');
+//     const backupFolder = currentDate.getFullYear() + '-' + (currentDate.getMonth() + 1) + '-' + currentDate.getDate();
+//     it('it should generate a backup path with the current date in it', () => {
+//         expect(generateBackupPath(currentDate)).to.be.equal(backupDirPath + backupFolder);
+//     });
+// });
+//
+// describe('generateOldBackupPath', () => {
+//     const currentDate = new Date();
+//     const backupDirPath = path.join(__dirname, 'db-backupmongodump-');
+//     const backupFolder = currentDate.getFullYear() + '-' + (currentDate.getMonth() + 1) + '-' + currentDate.getDate();
+//     it('it should generate the old backup path with the old current date in it', () => {
+//         expect(generateOldBackupPath(currentDate)).to.be.equal(backupDirPath + backupFolder);
+//     });
+// })
 
 
 

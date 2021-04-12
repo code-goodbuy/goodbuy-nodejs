@@ -4,7 +4,6 @@ import {ExecException} from "child_process";
 const _ = require('lodash');
 const exec = require('child_process').exec;
 const path = require('path');
-import { uploadFileToS3 } from "./aws";
 
 const backupDirPath = path.join(__dirname, 'db-backup');
 
