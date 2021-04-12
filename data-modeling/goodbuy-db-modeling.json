@@ -15,10 +15,13 @@
                         "name": false,
                         "code": false
                     },
-                    "foreignCollection": "3dc7bd00-9b19-11eb-8b24-af62e469055e",
+                    "foreignCollection": "3323f640-9b17-11eb-8b24-af62e469055e",
                     "foreignField": [
-                        "3dc7bd00-9b19-11eb-8b24-af62e469055e",
-                        "47af98b0-9b19-11eb-8b24-af62e469055e"
+                        "3323f640-9b17-11eb-8b24-af62e469055e",
+                        "3c2801a0-9b17-11eb-8b24-af62e469055e"
+                    ],
+                    "childRelationships": [
+                        "68a4e8a0-9b7c-11eb-bc5d-dd8ece1c4357"
                     ]
                 },
                 {
@@ -63,10 +66,7 @@
                     "error": {
                         "name": false,
                         "code": false
-                    },
-                    "childRelationships": [
-                        "63c1d5a0-9b18-11eb-8b24-af62e469055e"
-                    ]
+                    }
                 },
                 {
                     "type": "string",
@@ -176,7 +176,8 @@
                         "47af98b0-9b19-11eb-8b24-af62e469055e"
                     ],
                     "childRelationships": [
-                        "ec543d80-9b1e-11eb-8b24-af62e469055e"
+                        "ec543d80-9b1e-11eb-8b24-af62e469055e",
+                        "ea291b50-9b7a-11eb-bc5d-dd8ece1c4357"
                     ]
                 },
                 {
@@ -189,11 +190,6 @@
                         "name": false,
                         "code": false
                     },
-                    "foreignCollection": "a6fd8370-9b16-11eb-8b24-af62e469055e",
-                    "foreignField": [
-                        "a6fd8370-9b16-11eb-8b24-af62e469055e",
-                        "df5a6080-9b16-11eb-8b24-af62e469055e"
-                    ],
                     "childRelationships": [
                         "a9815d40-9b18-11eb-8b24-af62e469055e"
                     ]
@@ -387,28 +383,6 @@
                             }
                         },
                         {
-                            "type": "string",
-                            "name": "user_name",
-                            "hackoladeMeta": {},
-                            "isActivated": true,
-                            "GUID": "e75cd300-9b19-11eb-8b24-af62e469055e",
-                            "error": {
-                                "name": false,
-                                "code": false
-                            }
-                        },
-                        {
-                            "type": "string",
-                            "name": "email",
-                            "hackoladeMeta": {},
-                            "isActivated": true,
-                            "GUID": "ea441470-9b19-11eb-8b24-af62e469055e",
-                            "error": {
-                                "name": false,
-                                "code": false
-                            }
-                        },
-                        {
                             "type": "boolean",
                             "name": "accepted_terms",
                             "hackoladeMeta": {},
@@ -549,6 +523,68 @@
             },
             "GUID": "3dc7bd00-9b19-11eb-8b24-af62e469055e",
             "bucketId": "9dc3e920-9b16-11eb-8b24-af62e469055e"
+        },
+        {
+            "collectionName": "corporation",
+            "type": "object",
+            "properties": [
+                {
+                    "type": "objectId",
+                    "name": "_id",
+                    "hackoladeMeta": {},
+                    "isActivated": true,
+                    "GUID": "31a26b70-9b7c-11eb-bc5d-dd8ece1c4357",
+                    "error": {
+                        "name": false,
+                        "code": false
+                    },
+                    "foreignCollection": "a6fd8370-9b16-11eb-8b24-af62e469055e",
+                    "foreignField": [
+                        "a6fd8370-9b16-11eb-8b24-af62e469055e",
+                        "c5e09e30-9b16-11eb-8b24-af62e469055e"
+                    ]
+                },
+                {
+                    "type": "string",
+                    "name": "rating",
+                    "hackoladeMeta": {},
+                    "isActivated": true,
+                    "GUID": "35c735f0-9b7c-11eb-bc5d-dd8ece1c4357",
+                    "error": {
+                        "name": false,
+                        "code": false
+                    }
+                },
+                {
+                    "type": "string",
+                    "name": "comment",
+                    "hackoladeMeta": {},
+                    "isActivated": true,
+                    "GUID": "3c634200-9b7c-11eb-bc5d-dd8ece1c4357",
+                    "error": {
+                        "name": false,
+                        "code": false
+                    }
+                }
+            ],
+            "definitions": {
+                "type": "definitions",
+                "properties": [],
+                "GUID": "2c3eadc0-9b7b-11eb-bc5d-dd8ece1c4357"
+            },
+            "isActivated": true,
+            "validationLevel": "Off",
+            "validationAction": "Warn",
+            "storageEngineName": "WiredTiger",
+            "collectionUsers": [],
+            "indexes": [],
+            "collation": {},
+            "sharding": {
+                "unique": true,
+                "collation": "null"
+            },
+            "GUID": "2c3c3cc0-9b7b-11eb-bc5d-dd8ece1c4357",
+            "bucketId": "9dc3e920-9b16-11eb-8b24-af62e469055e"
         }
     ],
     "buckets": [
@@ -559,7 +595,8 @@
                 "a6fd8370-9b16-11eb-8b24-af62e469055e",
                 "3323f640-9b17-11eb-8b24-af62e469055e",
                 "5d6b5380-9b17-11eb-8b24-af62e469055e",
-                "3dc7bd00-9b19-11eb-8b24-af62e469055e"
+                "3dc7bd00-9b19-11eb-8b24-af62e469055e",
+                "2c3c3cc0-9b7b-11eb-bc5d-dd8ece1c4357"
             ],
             "backgroundColor": {
                 "r": 216,
@@ -579,28 +616,6 @@
     ],
     "views": [],
     "relationships": [
-        {
-            "name": "many products has many user",
-            "relationshipType": "",
-            "parentField": [
-                [
-                    "a6fd8370-9b16-11eb-8b24-af62e469055e",
-                    "df5a6080-9b16-11eb-8b24-af62e469055e"
-                ]
-            ],
-            "parentCardinality": "n",
-            "childField": [
-                [
-                    "3323f640-9b17-11eb-8b24-af62e469055e",
-                    "3e1308c0-9b17-11eb-8b24-af62e469055e"
-                ]
-            ],
-            "childCardinality": "n",
-            "GUID": "63c1d5a0-9b18-11eb-8b24-af62e469055e",
-            "parentCollection": "a6fd8370-9b16-11eb-8b24-af62e469055e",
-            "childCollection": "3323f640-9b17-11eb-8b24-af62e469055e",
-            "description": "Many user can have many products"
-        },
         {
             "name": "one user has many terms&conditions",
             "relationshipType": "",
@@ -685,6 +700,48 @@
             "GUID": "ec543d80-9b1e-11eb-8b24-af62e469055e",
             "parentCollection": "3323f640-9b17-11eb-8b24-af62e469055e",
             "childCollection": "3dc7bd00-9b19-11eb-8b24-af62e469055e"
+        },
+        {
+            "name": "one user has many product",
+            "relationshipType": "",
+            "parentField": [
+                [
+                    "3323f640-9b17-11eb-8b24-af62e469055e",
+                    "3c2801a0-9b17-11eb-8b24-af62e469055e"
+                ]
+            ],
+            "parentCardinality": "1",
+            "childField": [
+                [
+                    "a6fd8370-9b16-11eb-8b24-af62e469055e",
+                    "c5e09e30-9b16-11eb-8b24-af62e469055e"
+                ]
+            ],
+            "childCardinality": "n",
+            "GUID": "ea291b50-9b7a-11eb-bc5d-dd8ece1c4357",
+            "parentCollection": "3323f640-9b17-11eb-8b24-af62e469055e",
+            "childCollection": "a6fd8370-9b16-11eb-8b24-af62e469055e"
+        },
+        {
+            "name": "one product has one corporation",
+            "relationshipType": "",
+            "parentField": [
+                [
+                    "a6fd8370-9b16-11eb-8b24-af62e469055e",
+                    "c5e09e30-9b16-11eb-8b24-af62e469055e"
+                ]
+            ],
+            "parentCardinality": "1",
+            "childField": [
+                [
+                    "2c3c3cc0-9b7b-11eb-bc5d-dd8ece1c4357",
+                    "31a26b70-9b7c-11eb-bc5d-dd8ece1c4357"
+                ]
+            ],
+            "childCardinality": "1",
+            "GUID": "68a4e8a0-9b7c-11eb-bc5d-dd8ece1c4357",
+            "parentCollection": "a6fd8370-9b16-11eb-8b24-af62e469055e",
+            "childCollection": "2c3c3cc0-9b7b-11eb-bc5d-dd8ece1c4357"
         }
     ],
     "users": [],
@@ -713,15 +770,12 @@
         "34d29b30-9b18-11eb-8b24-af62e469055e": "some attr",
         "36833160-9b18-11eb-8b24-af62e469055e": "another attr",
         "40508030-9b18-11eb-8b24-af62e469055e": "...",
-        "63c1d5a0-9b18-11eb-8b24-af62e469055e": "many products has many user",
         "a9815d40-9b18-11eb-8b24-af62e469055e": "one user has many terms&conditions",
         "3dc7bd00-9b19-11eb-8b24-af62e469055e": "review",
         "47af98b0-9b19-11eb-8b24-af62e469055e": "_id",
         "58909490-9b19-11eb-8b24-af62e469055e": "created_at",
         "e09486d0-9b19-11eb-8b24-af62e469055e": "user",
         "e38c4300-9b19-11eb-8b24-af62e469055e": "_id",
-        "e75cd300-9b19-11eb-8b24-af62e469055e": "user_name",
-        "ea441470-9b19-11eb-8b24-af62e469055e": "email",
         "ef906f00-9b19-11eb-8b24-af62e469055e": "accepted_terms",
         "f329e970-9b19-11eb-8b24-af62e469055e": "has_required_age",
         "116181f0-9b1a-11eb-8b24-af62e469055e": "review_body",
@@ -735,7 +789,13 @@
         "784e6270-9b1a-11eb-8b24-af62e469055e": "one review has one user",
         "9cd6cd30-9b1a-11eb-8b24-af62e469055e": "one review has many products",
         "d2a2a9b0-9b1b-11eb-8b24-af62e469055e": "New view",
-        "ec543d80-9b1e-11eb-8b24-af62e469055e": "one user have many reviews"
+        "ec543d80-9b1e-11eb-8b24-af62e469055e": "one user have many reviews",
+        "ea291b50-9b7a-11eb-bc5d-dd8ece1c4357": "one user has many product",
+        "2c3c3cc0-9b7b-11eb-bc5d-dd8ece1c4357": "corporation",
+        "31a26b70-9b7c-11eb-bc5d-dd8ece1c4357": "_id",
+        "35c735f0-9b7c-11eb-bc5d-dd8ece1c4357": "rating",
+        "3c634200-9b7c-11eb-bc5d-dd8ece1c4357": "comment",
+        "68a4e8a0-9b7c-11eb-bc5d-dd8ece1c4357": "one product has one corporation"
     },
     "definitions": {
         "type": "definitions",
@@ -781,7 +841,7 @@
     "creationTS": "2021-04-11T22:38:04.779Z",
     "GUID": "947dcbb0-9b16-11eb-8b24-af62e469055e",
     "isLineageEnabled": false,
-    "lastModifTS": "2021-04-11T23:40:22.716Z",
+    "lastModifTS": "2021-04-12T10:49:23.213Z",
     "persistenceSchemaVersion": "4",
     "isCreatedByPlugin": true,
     "pluginInformation": {
@@ -790,6 +850,7 @@
     "applicationInformation": {
         "version": "4.3.16"
     },
+    "hackoladeMeta": {},
     "settings": {
         "centralPane": {
             "dbLevel": {
@@ -834,8 +895,8 @@
                     },
                     {
                         "GUID": "5d6b5380-9b17-11eb-8b24-af62e469055e",
-                        "x": 568.9047619047614,
-                        "y": 348,
+                        "x": 567.571428571428,
+                        "y": 363.9999999999999,
                         "width": 240,
                         "height": 89,
                         "color": {}
@@ -845,7 +906,7 @@
                         "x": 897.3333333333342,
                         "y": 503.3333333333346,
                         "width": 247,
-                        "height": 257,
+                        "height": 229,
                         "color": {
                             "hsl": {
                                 "h": 206.57142857142858,
@@ -869,12 +930,42 @@
                             "oldHue": 206.57142857142858,
                             "source": "hex"
                         }
+                    },
+                    {
+                        "GUID": "2c3c3cc0-9b7b-11eb-bc5d-dd8ece1c4357",
+                        "x": 310.4444376627603,
+                        "y": 484.4444376627602,
+                        "width": 188,
+                        "height": 75,
+                        "color": {
+                            "hsl": {
+                                "h": 3.789473684210526,
+                                "s": 0.904761904761905,
+                                "l": 0.5882352941176471,
+                                "a": 1
+                            },
+                            "hex": "#f54337",
+                            "rgb": {
+                                "r": 245,
+                                "g": 67,
+                                "b": 55,
+                                "a": 1
+                            },
+                            "hsv": {
+                                "h": 3.789473684210526,
+                                "s": 0.7755102040816326,
+                                "v": 0.9607843137254902,
+                                "a": 1
+                            },
+                            "oldHue": 206.57142857142858,
+                            "source": "hex"
+                        }
                     }
                 ],
                 "buckets": [
                     {
                         "x": 252,
-                        "y": 192,
+                        "y": 237.3333333333332,
                         "GUID": "9dc3e920-9b16-11eb-8b24-af62e469055e"
                     }
                 ],
@@ -930,8 +1021,8 @@
                     },
                     {
                         "GUID": "10e8bd90-9b1c-11eb-8b24-af62e469055e",
-                        "x": 493,
-                        "y": 232,
+                        "x": 486.33333333333337,
+                        "y": 277.3333333333332,
                         "height": 76,
                         "width": 407,
                         "color": {
