@@ -20,7 +20,7 @@ const metricsMiddleware = promBundle({
 
 if(process.env.DBhost){
   const db: string = process.env.DBhost;
-
+  console.log("HELLOOOOO")
   //db
   mongoose
     .connect(db, {
