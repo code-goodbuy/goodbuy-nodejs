@@ -19,7 +19,7 @@ const metricsMiddleware = promBundle({
 
 
 const db: string = config.get("DBHost");
-
+console.log("Delete me ")
 //db
 mongoose
   .connect(db, {
