@@ -14,8 +14,13 @@ interface ConnectionType {
     close: () => void
 }
 
+const rabbit_user = process.env.RABBITMQ_USER || config.get("RABBITMQ_USER")
+const rabbit_pass = process.env.RABBITMQ_USER_PW ||  config.get("RABBITMQ_USER_PW")
+const rabbit_host =  process.env.RABBITMQ_DEV_HOST || config.get("RABBITMQ_DEV_HOST")
+const rabbit_port =  process.env.RABBITMQ_PORT || config.get("RABBITMQ_PORT")
+
 export function sendBarcodeToRabbitMQ(barcode: string) {
-    amqp.connect(`amqp://${process.env.RABBITMQ_USER}:${process.env.RABBITMQ_USER_PW}@${process.env.RABBITMQ_DEV_HOST}:${process.env.RABBITMQ_PORT}`, function(error0: Error, connection: ConnectionType) {
+    amqp.connect(`amqp://${rabbit_user}:${rabbit_pass}@${rabbit_host}:${rabbit_port}`, function(error0: Error, connection: ConnectionType) {
         if (error0) {
             throw error0;
         }

@@ -2,9 +2,11 @@ version: "2"
 services:
   backend:
     environment:
+      # Set environment variables in travis
       - NODE_ENV=dev
+      - DBHost=$DBHost
     container_name: server
-    image: goodbuy/nodejs-webserver
+    image: goodbuy/nodejs-webserver:dev
     ports:
       - "80:8080"
     command: "node dist/server.js"
