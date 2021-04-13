@@ -81,7 +81,7 @@ export const authenticateToken = (req: Request, res: Response, next: NextFunctio
         jwt.verify(token, accessTokenSecret, (err: Error, user: User) => {
             if (err) return res.status(401).json({ err })
             req.body.user = user
-            next()
+            next();
         })
     }
 }
