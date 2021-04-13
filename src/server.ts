@@ -16,11 +16,8 @@ const metricsMiddleware = promBundle({
   includeUp: true,
 });
 
-
-
 if(process.env.DBhost){
   const db: string = process.env.DBhost;
-  console.log("HELLOOOOO")
   //db
   mongoose
     .connect(db, {
