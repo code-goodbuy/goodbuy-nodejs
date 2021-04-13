@@ -11,7 +11,7 @@
 		"local": "NODE_ENV=test nodemon ./dist/server.js",
 		"dev": "node ./dist/server.js",
 		"prod": "NODE_ENV=default node ./dist/server.js",
-		"test": "NODE_ENV=test mocha tests.js --timeout 5000"
+		"test": "NODE_ENV=test mocha tests.js --exit --timeout 5000"
 	},
 	"author": "Darjusch Schrand",
 	"license": "ISC",
