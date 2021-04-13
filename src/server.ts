@@ -24,8 +24,7 @@ if (process.env.DBHost) {
 else if(config.get("DBHost")){
   db = config.get("DBHost")
 }
-console.log("JFOEJOGEWGEWOJEGs")
-console.log(db)
+
 mongoose
 .connect(db, {
   useNewUrlParser: true,
