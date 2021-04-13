@@ -1,7 +1,5 @@
 services:
   backend:
-    environment:
-      - NODE_ENV=local_dev
     depends_on:
       - mongodb
     command: "nodemon server.js"

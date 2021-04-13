@@ -2,9 +2,14 @@ version: "2"
 services:
   backend:
     environment:
-      # Set environment variables in travis
-      - NODE_ENV=dev
+      - ACCESS_TOKEN_SECRET="$ACCESS_TOKEN_SECRET"
       - DBHost=$DBHost
+      - MONGODB_DEV_URI=$MONGODB_DEV_URI
+      - RABBITMQ_DEV_HOST=$RABBITMQ_DEV_HOST
+      - RABBITMQ_PORT=$RABBITMQ_PORT
+      - RABBITMQ_USER=$RABBITMQ_USER
+      - RABBITMQ_USER_PW=$RABBITMQ_USER_PW
+      - REFRESH_TOKEN_SECRET=$REFRESH_TOKEN_SECRET
     container_name: server
     image: goodbuy/nodejs-webserver:dev
     ports:
