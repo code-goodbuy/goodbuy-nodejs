@@ -39,7 +39,13 @@ export function generateOldBackupPath(currentDate: Date) {
 export function dbAutoBackup() {
     if (dbOptions.autoBackup) {
         let date = new Date();
-        let db: string = config.get('DBHost');
+        let db: string = ""
+
+        if (process.env.DBHost) {
+            db = process.env.DBHost;
+        } else {
+            console.log("DBHost not define in dbBackup.ts")
+        }
 
         let currentDate: Date = stringToDate(date);
 
