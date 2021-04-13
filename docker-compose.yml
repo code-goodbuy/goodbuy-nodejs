@@ -4,6 +4,7 @@ services:
     environment:
       # Set environment variables in travis
       - NODE_ENV=dev
+      - DBHost=$DBHost
     container_name: server
     image: goodbuy/nodejs-webserver:dev
     ports:
