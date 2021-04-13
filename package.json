@@ -8,10 +8,10 @@
 		"docker_test": "docker-compose -f docker-compose.yml -f docker-compose.test.yml up",
 		"docker_local": "docker-compose -f docker-compose.yml -f docker-compose.local.yml up",
 		"docker_dev": "docker-compose up",
-		"local": "NODE_ENV=test nodemon ./dist/server.js",
+		"local": "nodemon ./dist/server.js",
 		"dev": "node ./dist/server.js",
-		"prod": "NODE_ENV=default node ./dist/server.js",
-		"test": "NODE_ENV=test mocha tests.js --exit --timeout 5000"
+		"prod": "node ./dist/server.js",
+		"test": "mocha tests.js --timeout 5000 --exit"
 	},
 	"author": "Darjusch Schrand",
 	"license": "ISC",
