@@ -21,9 +21,6 @@ let db = "";
 if (process.env.DBHost) {
   db = process.env.DBHost
 }
-else if(config.get("DBHost")){
-  db = config.get("DBHost")
-}
 
 mongoose
 .connect(db, {

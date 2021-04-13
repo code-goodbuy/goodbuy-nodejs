@@ -24,7 +24,7 @@ describe('Product', () => {
             barcode: "123456789",
             state: "unverified"
           }
-          const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET || config.get("ACCESS_TOKEN_SECRET")
+          const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET
           const jwt = require('jsonwebtoken');
           const accessToken = jwt.sign({email: "testmail@test.de"}, accessTokenSecret, { expiresIn: '168h' })
         chai.request(server)
