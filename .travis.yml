@@ -1,16 +1,22 @@
 sudo: required
 
-services:
-  - docker 
+language: node_js
+node_js:
+  - 14
 
-before-install: 
-  - docker build -t goodbuy/nodejs-webserver:dev .
+services:
+  - docker
+  - mongodb
+
 
 script:
-  - docker-compose -f docker-compose.yml -f docker-compose.test.yml up
+  - sleep 15
+  - npx tsc
+  - mocha tests.js --timeout 5000
 
 after_success:
+  - docker build -t goodbuy/nodejs-webserver:dev .
+
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
 
   - docker push goodbuy/nodejs-webserver:dev
-  
