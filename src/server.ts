@@ -15,7 +15,6 @@ const metricsMiddleware = promBundle({
   includeMethod: true,
   includeUp: true,
 });
-import job from "./utils/dbCronBackup"
 import job from "./utils/dbCronJob"
 
 let db = "";
