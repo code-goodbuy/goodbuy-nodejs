@@ -2,10 +2,12 @@ version: "2"
 services:
   backend:
     environment:
-      # Set environment variables in travis
-      - NODE_ENV=dev
       - DBHost=$DBHost
-    container_name: server
+      - RABBITMQ_USER=$RABBITMQ_USER
+      - RABBITMQ_USER_PW=$RABBITMQ_USER_PW
+      - RABBITMQ_DEV_HOST=$RABBITMQ_DEV_HOST
+      - RABBITMQ_PORT=$RABBITMQ_PORT    
+      container_name: server
     image: goodbuy/nodejs-webserver:dev
     ports:
       - "80:8080"
