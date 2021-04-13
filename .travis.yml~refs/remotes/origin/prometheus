@@ -1,0 +1,22 @@
+sudo: required
+
+language: node_js
+node_js:
+  - 14
+
+services:
+  - docker
+  - mongodb
+
+
+script:
+  - sleep 15
+  - npx tsc
+  - mocha tests.js --timeout 5000
+
+after_success:
+  - docker build -t goodbuy/nodejs-webserver:dev .
+
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+
+  - docker push goodbuy/nodejs-webserver:dev
