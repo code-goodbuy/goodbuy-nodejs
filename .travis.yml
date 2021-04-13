@@ -1,0 +1,21 @@
+sudo: required
+
+services:
+  - docker 
+
+env:
+  - DBHost=$DBHost
+  - ACCESS_TOKEN_SECRET=$ACCESS_TOKEN_SECRET
+  - REFRESH_TOKEN_SECRET=$REFRESH_TOKEN_SECRET
+before-install: 
+  - docker build -t goodbuy/nodejs-webserver:travis .
+
+script:
+  # Set environment variables in travis
+  - docker-compose -f docker-compose.yml -f docker-compose.test.yml up
+
+after_success:
+  # Set environment variables in travis
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+
+  - docker push goodbuy/nodejs-webserver:travis

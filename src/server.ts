@@ -16,20 +16,18 @@ const metricsMiddleware = promBundle({
   includeUp: true,
 });
 
-
-
-const db: string = config.get("DBHost");
-console.log("Delete me ")
-//db
-mongoose
-  .connect(db, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-  })
-  .then(() => console.log("Database connected!"))
-  .catch(err => console.log(err));
-
+if(process.env.DBhost){
+  const db: string = process.env.DBhost;
+  //db
+  mongoose
+    .connect(db, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useCreateIndex: true,
+    })
+    .then(() => console.log("Database connected!"))
+    .catch(err => console.log(err));
+  }
 // bring in routes
 import productRoutes from './routes/product';
 import authRoutes from './routes/auth';

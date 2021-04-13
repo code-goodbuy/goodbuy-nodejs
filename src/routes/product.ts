@@ -5,7 +5,7 @@ import { createProductValidator } from '../validator/product';
 const router = express.Router();
 
 router.get('/', getAllProducts);
-router.post('/product', authenticateToken ,createProductValidator, createProduct);
+router.post('/product', authenticateToken, createProductValidator, createProduct);
 router.get('/product/:barcode', getProduct);
 
 export default router;
