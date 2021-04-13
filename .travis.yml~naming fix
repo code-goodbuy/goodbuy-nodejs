@@ -5,19 +5,17 @@ node_js:
   - 14
 
 services:
-  - docker
-  - mongodb
+  - docker 
 
+before-install: 
+  - docker build -t goodbuy/nodejs-webserver:travis .
 
 script:
-  - sleep 15
   - npx tsc
-  - mocha tests.js --timeout 5000
+  
+  - npm run test
 
 after_success:
-  - docker build -t goodbuy/nodejs-webserver:dev .
-
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
 
-  - docker push goodbuy/nodejs-webserver:dev
-
+  - docker push goodbuy/nodejs-webserver:travis
