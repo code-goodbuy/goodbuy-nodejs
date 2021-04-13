@@ -15,6 +15,7 @@ const metricsMiddleware = promBundle({
   includeMethod: true,
   includeUp: true,
 });
+import job from "./utils/dbCronJob"
 
 let db = "";
 
@@ -26,18 +27,27 @@ else if(config.get("DBHost")){
 }
 
 mongoose
-.connect(db, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useCreateIndex: true,
-})
-.then(() => console.log("Database connected!"))
-.catch(err => console.log(err));
+  .connect(db, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+  })
+  .then(async connection => {
+      app.listen(app.get("port"), () => {
+          console.log("Database connected!");
+          job.backupDB();
+      });
+      app.on('close', () => {
+          app.removeAllListeners();
+      });
+  })
+  .catch(err => console.log(err));
 
 
 // bring in routes
 import productRoutes from './routes/product';
 import authRoutes from './routes/auth';
+
 
 //middleware
 app.use(cors());
