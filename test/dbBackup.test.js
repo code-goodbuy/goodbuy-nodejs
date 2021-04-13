@@ -9,15 +9,15 @@ let chai = require('chai');
 let expect = chai.expect;
 
 describe('StringToDate', () => {
-    it('it should convert a string to Date', () => {
+    it('it should convert a string to Date', (done) => {
         expect(stringToDate('2021 08 21')).to.be.a('Date');
         done();
     });
-    it('it should convert a number to Date', () => {
+    it('it should convert a number to Date', (done) => {
         expect(stringToDate(20210821)).to.be.a('Date');
         done();
     });
-    it('it should convert a Date to Date', () => {
+    it('it should convert a Date to Date', (done) => {
         expect(stringToDate(Date.now())).to.be.a('Date');
         done();
     });
@@ -26,7 +26,7 @@ describe('StringToDate', () => {
 describe('generateBackupFolder', () => {
     const currentDate = new Date();
     const backupFolder = currentDate.getFullYear() + '-' + (currentDate.getMonth() + 1) + '-' + currentDate.getDate();
-    it('it should generate a backup folder with the date in the name', () => {
+    it('it should generate a backup folder with the date in the name', (done) => {
         expect(generateBackupFolder(currentDate)).to.be.equal(backupFolder);
         done();
     });
