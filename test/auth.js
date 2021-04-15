@@ -210,13 +210,6 @@ describe('Authentication', () => {
             done();
             })
         })
-        it('the logout should have incremented the tokenVersion', (done) => {
-            const user = UserModel.default.findOne({ email: "testmail123@test.de" })
-            .then(user => {
-                user.tokenVersion.should.eql(1);
-            }) 
-            done();
-        })
     })
    
 })
