@@ -15,7 +15,7 @@ export const registerUser = (req: Request, res: Response) => {
     // send better responses 
     const email: string = req.body.email;
     const password: string = req.body.password;
-
+    // Should probably also check if username already exists but that is not important right now
     const userAlreadyExist = UserModel.findOne({ email: email })
         .then(userDoc => {
             if (userDoc) return res.status(409).json({
@@ -28,7 +28,14 @@ export const registerUser = (req: Request, res: Response) => {
                     message: "internal server error"
                 });
                 req.body.password = hash
-                const user = new UserModel(req.body)
+                const user = new UserModel({
+                    username: req.body.username,
+                    email:  req.body.email,
+                    password: req.body.password,
+                    acceptedTerms: req.body.acceptedTerms,
+                    hasRequiredAge: req.body.hasRequiredAge,
+                    tokenVersion: 0
+                    })
                 user.save()
                     .then(success => {
                         if (success) {
@@ -169,7 +176,6 @@ export const revokeRefreshToken = (req: Request, res: Response, next: NextFuncti
                                 })
                             }
                             )
-
                         }
                         catch (err) {
                             console.log(err)
