@@ -1,13 +1,9 @@
-let mongoose = require("mongoose");
 let Product = require('../dist/models/product');
 
 let chai = require('chai');
 let chaiHttp = require('chai-http');
 let server = require('../dist/server');
-const { token } = require("morgan");
-let should = chai.should();
-let config = require('config');
-
+let jwt = require('jsonwebtoken')
 chai.use(chaiHttp);
 
 describe('Product', () => {
@@ -18,15 +14,15 @@ describe('Product', () => {
   describe('/POST product', () => {
       it('it should POST a product', (done) => {
           let product = {
-            name: "test_product",
-            brand: "test_product",
-            corporation: "test_corp",
+            name: "testproduct",
+            brand: "testproduct",
+            corporation: "testcorp",
             barcode: "123456789",
             state: "unverified"
           }
           const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET
-          const jwt = require('jsonwebtoken');
-          const accessToken = jwt.sign({email: "testmail@test.de"}, accessTokenSecret, { expiresIn: '168h' })
+          console.log(accessTokenSecret)
+          const accessToken = jwt.sign({email: "testmail123@test.de"}, accessTokenSecret, { expiresIn: '5m' })
         chai.request(server)
             .post('/product')
             .set({ "Authorization": `Bearer ${accessToken}`})
@@ -49,10 +45,10 @@ describe('Product', () => {
   describe('/GET/:barcode product', () => {
     it('it should GET the product by the given barcode', (done) => {
         let product = new Product.default({
-            name: "test_product",
-            brand: "test_product",
-            corporation: "test_corp",
-            barcode: "999999",
+            name: "testproduct",
+            brand: "testproduct",
+            corporation: "testcorp",
+            barcode: "99999999",
             state: "unverified"
           });
           product.save((err, product) => {

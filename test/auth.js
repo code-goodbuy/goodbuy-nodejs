@@ -1,13 +1,10 @@
-let mongoose = require("mongoose");
 let UserModel = require('../dist/models/user.model');
-const { createAccessToken, createRefreshToken } = require('../dist/controllers/auth')
+const { createRefreshToken } = require('../dist/controllers/auth')
 let chai = require('chai');
 let chaiHttp = require('chai-http');
 let chaiCookie = require('chai-expected-cookie');
 let server = require('../dist/server');
-const { exception } = require("console");
 let expect = chai.expect;
-let should = chai.should()
 chai.use(chaiHttp);
 chai.use(chaiCookie);
 
@@ -15,13 +12,12 @@ describe('Authentication', () => {
     describe('/POST register', () => {
         it('should register a user', (done) => {
             let user = {
-                "username": "test_user",
+                "username": "testuser",
                 "email": "testmail123@test.de",
                 "password": "Test_pass1!",
                 "acceptedTerms": true,
                 "hasRequiredAge": true,
                 "tokenVersion": 0
-
             }
             chai.request(server)
                 .post('/register')
@@ -34,7 +30,7 @@ describe('Authentication', () => {
         })
         it('should return that the user with that email already exist', (done) => {
             let user = {
-                "username": "test_user",
+                "username": "testuser",
                 "email": "testmail123@test.de",
                 "password": "Test_pass1!",
                 "acceptedTerms": true,
@@ -100,9 +96,9 @@ describe('Authentication', () => {
     describe('/POST product', () => {
         it('should fail because of missing authentication token', (done) => {
             let product = {
-                name: "test_product",
-                brand: "test_product",
-                corporation: "test_corp",
+                name: "testproduct",
+                brand: "testproduct",
+                corporation: "testcorp",
                 barcode: "123456789",
                 state: "unverified"
             }
@@ -117,9 +113,9 @@ describe('Authentication', () => {
         })
         it('should fail because of manipulated authentication token', (done) => {
             let product = {
-                name: "test_product",
-                brand: "test_product",
-                corporation: "test_corp",
+                name: "testproduct",
+                brand: "testproduct",
+                corporation: "testcorp",
                 barcode: "123456789",
                 state: "unverified"
             }
@@ -151,28 +147,17 @@ describe('Authentication', () => {
             .send(loginData)
             .end((err, res) => {
                 res.should.have.status(401);
-                res.body.should.have.property('err').eql({
-                    "name": "JsonWebTokenError",
-                    "message": "invalid signature"
-                });                
+                res.body.should.have.property('message').eql('Invalid refresh token');                
             done();
             })
         })
         it('should logout a user', (done) => {
-            let tokenVer = 1
-            let loginData = {
-                "username": "dmar2io",
-                "email": "testmail123@test.de",
-                "password": "Test_pass1!",
-                "acceptedTerms": true,
-                "hasRequiredAge": true,
-                "tokenVersion": tokenVer
-            }
-            const accessToken = createAccessToken("testmail123@test.de")
+            const refreshToken = createRefreshToken("testmail123@test.de", 0)
+            const cookieValue =  'jid=' + JSON.stringify(refreshToken)
             chai.request(server)
             .post('/logout')
-            .set({ "Authorization": `Bearer ${accessToken}`})
-            .send(loginData)
+            .set('Cookie', cookieValue)
+            .send()
             .end((err, res) => {
                 res.should.have.status(200);   
             done();
