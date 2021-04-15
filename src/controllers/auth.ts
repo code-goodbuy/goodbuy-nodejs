@@ -5,8 +5,8 @@ import bcrypt from 'bcrypt';
 import client from 'prom-client';
 
 const registerCounter = new client.Counter({
-  name: 'total_user_registered',
-  help: 'The total number of registered Users'
+    name: 'total_user_registered',
+    help: 'The total number of registered Users'
 });
 
 export const registerUser = (req: Request, res: Response) => {
@@ -36,7 +36,7 @@ export const registerUser = (req: Request, res: Response) => {
                             return res.status(200).json({
                                 message: "User was successfully created"
                             })
-                        } 
+                        }
                         return res.status(500).json({
                             message: "internal server error"
                         })
@@ -86,14 +86,14 @@ export const authenticateToken = (req: Request, res: Response, next: NextFunctio
     if (token == null) return res.status(401).json({ message: "JWT is missing, access denied" })
     if (process.env.ACCESS_TOKEN_SECRET) {
         const accessTokenSecret: string = process.env.ACCESS_TOKEN_SECRET
-        try{
+        try {
             let payload: any = null
             payload = verify(token, accessTokenSecret)
-            if(payload){     
+            if (payload) {
                 next()
-            } 
+            }
         }
-        catch(err) {
+        catch (err) {
             return res.status(401).json({ err })
         }
 
@@ -108,11 +108,22 @@ export const authenticateRefreshToken = (req: Request, res: Response, next: Next
         const refreshTokenSecret: string = process.env.REFRESH_TOKEN_SECRET
         try {
             payload = verify(token, refreshTokenSecret)
-            if(payload){
-                return res.status(200).json({
-                    accessToken: createAccessToken(payload.email)
+            const tokenVersion = payload.tokenVersion
+            const user = UserModel.findOne({ email: payload.email })
+                .then(user => {
+                    if (user?.tokenVersion === tokenVersion) {
+                        return res.status(200).json({
+                            accessToken: createAccessToken(payload.email)
+                        })
+                    }
+                    else {
+                        return res.status(401).json({ message: "Invalid refresh token version" })
+                    }
                 })
-            }
+                .catch(err => {
+                    console.log(err)
+                    return res.status(500).json({ message: "Internal server error" })
+                })
         }
         catch (err) {
             return res.status(401).json({ err })
@@ -129,7 +140,7 @@ export const createAccessToken = (email: string) => {
 }
 
 export const createRefreshToken = (email: string, tokenVersion: number) => {
-    if(process.env.REFRESH_TOKEN_SECRET){
+    if (process.env.REFRESH_TOKEN_SECRET) {
         const refreshTokenSecret: string = process.env.REFRESH_TOKEN_SECRET
         return sign({ email: email, tokenVersion: tokenVersion }, refreshTokenSecret, { expiresIn: '168h' })
     }
@@ -141,22 +152,41 @@ export const revokeRefreshToken = (req: Request, res: Response, next: NextFuncti
         const refreshTokenSecret: string = process.env.REFRESH_TOKEN_SECRET
         try {
             let payload: any = verify(token, refreshTokenSecret)
-            try {
-                let newTokenVersion: number = payload.tokenVersion +1
-                let updatedUser = UserModel.updateOne(
-                    { email: payload.email },
-                    { tokenVersion:  newTokenVersion}
-                )
-                return res.status(200).json({
-                    message: "Revoked refresh_token successfully"
+            const tokenVersion = payload.tokenVersion
+            const user = UserModel.findOne({ email: payload.email })
+                .then(user => {
+                    if (user?.tokenVersion === tokenVersion) {
+                        try {
+                            let newTokenVersion: number = tokenVersion + 1
+                            console.log(newTokenVersion)
+                            let updatedUser = UserModel.updateOne(
+                                { email: payload.email },
+                                { tokenVersion: newTokenVersion }
+                            )
+                            .then(() => {
+                                return res.status(200).json({
+                                    message: "Revoked refresh_token successfully"
+                                })
+                            }
+                            )
+
+                        }
+                        catch (err) {
+                            console.log(err)
+                            return res.status(500).json({
+                                message: "Problem with revoking the token"
+                            })
+                        }
+                    }
+                    else {
+                        return res.status(401).json({ message: "Invalid refresh token version" })
+                    }
                 })
-            }
-            catch (err) {
-                console.log(err)
-                return res.status(500).json({
-                    message: "Problem with revoking the token"
+                .catch(err => {
+                    console.log(err)
+                    return res.status(500).json({ message: "Internal server error" })
                 })
-            }    }
+        }
         catch (err) {
             console.log(err)
             return res.status(401).json({
