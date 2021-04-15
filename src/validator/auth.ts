@@ -19,7 +19,6 @@ export const createUserValidator = (req: Request , res: Response, next: NextFunc
     });
     req.check('acceptedTerms', "acceptedTerms is missing").notEmpty().isBoolean()
     req.check('hasRequiredAge', "hasRequiredAge is missing").notEmpty().isBoolean()
-    req.check('tokenVersion', 'tokenVersion is missing').notEmpty().isNumeric()
     // check for errors
     const errors = req.validationErrors();
     // if error occur show the first one as they happen

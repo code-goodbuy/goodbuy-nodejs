@@ -16,9 +16,8 @@ describe('Authentication', () => {
                 "email": "testmail123@test.de",
                 "password": "Test_pass1!",
                 "acceptedTerms": true,
-                "hasRequiredAge": true,
-                "tokenVersion": 0
-            }
+                "hasRequiredAge": true
+             }
             chai.request(server)
                 .post('/register')
                 .send(user)
@@ -35,7 +34,6 @@ describe('Authentication', () => {
                 "password": "Test_pass1!",
                 "acceptedTerms": true,
                 "hasRequiredAge": true,
-                "tokenVersion": 0
 
             }
             chai.request(server)
@@ -133,8 +131,57 @@ describe('Authentication', () => {
             })     
         })
     })
-    // Todo send the tokenVersion and the email in the refresh cookie
-    // i think if we have the refresh cookie here we dont need to change anything
+    describe('/refresh_token', () => {
+        it('should fail because the refresh token is missing', (done) => {
+            chai.request(server)
+            .post('/refresh_token')
+            .send()
+            .end((err, res) => {
+                res.should.have.status(401);
+                res.body.should.have.property('message').eql( "JWT Refresh Token is missing, access denied");
+                done();
+            })
+        })
+        it('should fail because the refresh token is invalid', (done) => {
+            chai.request(server)
+            .post('/refresh_token')
+            .set('Cookie', "jid=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RtYWlsMTIzQHRlc3QuZGUiLCJ0b2tlblZlcnNpb24iOjExMTUsImlhdCI6MTYxNzExNTMzNiwiZXhwIjoxNjE3NzIwMTM2fQ.cj51uRNpOc0UgX-SsF0uhcnBHkJD2hVvNgLa4QVg21o")
+            .send()
+            .end((err, res) => {
+                res.should.have.status(401);
+                res.body.should.have.property('err').eql({
+                    "name": "JsonWebTokenError",
+                    "message": "invalid signature"
+                });
+                done();
+            })
+
+        })
+        it('should succeed and return a new accessToken', (done) => {
+            let refreshToken = createRefreshToken("testmail123@test.de", 0)
+            chai.request(server)
+            .post('/refresh_token')
+            .set('Cookie', `jid=${refreshToken}`)
+            .send()
+            .end((err, res) => {
+                res.should.have.status(200);
+                res.body.should.have.property('accessToken');
+                done();
+            })
+        })
+        it('should fail because the token verion is invalid', (done) => {
+            let refreshToken = createRefreshToken("testmail123@test.de", 2)
+            chai.request(server)
+            .post('/refresh_token')
+            .set('Cookie', `jid=${refreshToken}`)
+            .send()
+            .end((err, res) => {
+                res.should.have.status(401);
+                res.body.should.have.property("message").eql("Invalid refresh token version");
+                done();
+            })
+        })
+    })
     describe('/Logout user', () => {
         it('should fail because the jwt is invalid', (done) => {
             let loginData = {
@@ -163,50 +210,13 @@ describe('Authentication', () => {
             done();
             })
         })
-        it('the logout should have incremented the tokenVersion', () => {
+        it('the logout should have incremented the tokenVersion', (done) => {
             const user = UserModel.default.findOne({ email: "testmail123@test.de" })
             .then(user => {
-                user.tokenVersion.should.eql(tokenVer +1);
-            })     
+                user.tokenVersion.should.eql(1);
+            }) 
+            done();
         })
     })
-    describe('/refresh_token', () => {
-        it('should fail because the refresh token is missing', (done) => {
-            chai.request(server)
-            .post('/refresh_token')
-            .send()
-            .end((err, res) => {
-                res.should.have.status(401);
-                res.body.should.have.property('message').eql( "JWT Refresh Token is missing, access denied");
-                done();
-            })
-        })
-        it('should fail because the refresh token is invalid', (done) => {
-            chai.request(server)
-            .post('/refresh_token')
-            .set('Cookie', "jid=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3RtYWlsMTIzQHRlc3QuZGUiLCJ0b2tlblZlcnNpb24iOjExMTUsImlhdCI6MTYxNzExNTMzNiwiZXhwIjoxNjE3NzIwMTM2fQ.cj51uRNpOc0UgX-SsF0uhcnBHkJD2hVvNgLa4QVg21o")
-            .send()
-            .end((err, res) => {
-                res.should.have.status(401);
-                res.body.should.have.property('err').eql({
-                    "name": "JsonWebTokenError",
-                    "message": "invalid signature"
-                });
-                done();
-            })
-
-        })
-        it('should succeed and return a new accessToken', (done) => {
-            let refreshToken = createRefreshToken("testmail123@test.de", 2)
-            chai.request(server)
-            .post('/refresh_token')
-            .set('Cookie', `jid=${refreshToken}`)
-            .send()
-            .end((err, res) => {
-                res.should.have.status(200);
-                res.body.should.have.property('accessToken');
-                done();
-            })
-        })
-    })
+   
 })
