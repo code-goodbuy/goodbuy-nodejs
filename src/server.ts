@@ -4,7 +4,6 @@ import mongoose from "mongoose";
 import bodyParser from "body-parser";
 import morgan from "morgan";
 import expressValidator from "express-validator";
-import config from "config"; //we load the db location from the JSON files
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import promBundle from "express-prom-bundle";
@@ -50,7 +49,7 @@ import authRoutes from './routes/auth';
 app.use(cors());
 app.use(cookieParser());
 app.use(morgan("dev" ,{ skip: (req, res) => process.env.NODE_ENV === 'test' })); // Logging HTTP Requests and Errors
-app.use(bodyParser.json()); // Parse incoming request bodies
+app.use(bodyParser.json({limit: 1000, type: "application/json"})); // The size limit of request in bytes + content type 
 app.use(expressValidator()); // Validate incoming data
 app.use(metricsMiddleware); // Prometheus logging
 app.use("/", authRoutes);
