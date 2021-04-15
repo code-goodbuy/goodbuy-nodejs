@@ -21,7 +21,6 @@ describe('Product', () => {
             state: "unverified"
           }
           const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET
-          console.log(accessTokenSecret)
           const accessToken = jwt.sign({email: "testmail123@test.de"}, accessTokenSecret, { expiresIn: '5m' })
         chai.request(server)
             .post('/product')
