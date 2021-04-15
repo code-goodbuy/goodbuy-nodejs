@@ -16,7 +16,7 @@ export const createProductValidator = (req: Request , res: Response, next: NextF
         min:2, 
         max:50,
     });
-    req.check('barcode', "Barcode is invalid").notEmpty().isString()
+    req.check('barcode', "Barcode is invalid").notEmpty().isString().isNumeric()
     req.check('barcode', "Barcode must be between 4 to 18 Characters").isLength({
         min:4, 
         max:18,
@@ -25,6 +25,22 @@ export const createProductValidator = (req: Request , res: Response, next: NextF
     req.check('state', "Product state must be between 3 and 20 Characters").isLength({
         min:3, 
         max:20,
+    });
+    // check for errors
+    const errors = req.validationErrors();
+    // if error occur show the first one as they happen
+    if (errors) {
+        const firstError = errors.map((error: { msg: string; }) => error.msg)[0];
+        return res.status(400).json({ error: firstError });
+    }
+    // proceed to next middleware
+    next();
+}
+export const getProductValidator = (req: Request , res: Response, next: NextFunction) => {
+    req.check('barcode', "Barcode is invalid").notEmpty().isString().isNumeric()
+    req.check('barcode', "Barcode must be between 4 to 18 Characters").isLength({
+        min:8, 
+        max:13,
     });
     // check for errors
     const errors = req.validationErrors();
