@@ -1,12 +1,12 @@
 import ProductModel from "../models/product";
 import { Request, Response, NextFunction } from 'express';
-import { sendBarcodeToRabbitMQ } from "../utils/send_barcode";
+import { sendEanToRabbitMQ } from "../utils/send_ean";
 
 // Todo review all inputs and validate them same as in auth.ts 
 // Create some kind of product and user validator that acts as a middleware
 export const getAllProducts = (req: Request, res: Response) => {
     const products = ProductModel.find().limit(5)
-    .select("name brand corporation barcode state")
+    .select("name brand corporation ean state")
     .then(products => {
         res.status(200).json({products: products})
     })
@@ -14,15 +14,15 @@ export const getAllProducts = (req: Request, res: Response) => {
 };
 
 export const getProduct = (req: Request, res: Response) => {
-    const barcode = req.params.barcode
-    const product = ProductModel.find({barcode: barcode})
+    const ean = req.params.ean
+    const product = ProductModel.find({ean: ean})
     .then(product => {
         if (product.length > 0) {
             res.status(200).json({product: product})
         } else {
             res.status(204).json({product: product})
             console.log("Product gets scraped")
-            sendBarcodeToRabbitMQ(barcode)
+            sendEanToRabbitMQ(ean)
         }
     })
     .catch(err => console.log(err));
