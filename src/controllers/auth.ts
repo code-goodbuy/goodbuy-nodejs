@@ -1,10 +1,10 @@
 import UserModel from '../models/user.model';
 import User from '../models/user.interface';
 import { Request, Response, NextFunction } from 'express';
-import config from 'config';
 import { sign, verify } from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import client from 'prom-client';
+import { sendConfirmationEmail } from './email';
 
 const registerCounter = new client.Counter({
   name: 'total_user_registered',
@@ -34,20 +34,38 @@ export const registerUser = (req: Request, res: Response) => {
                     message: "internal server error"
                 });
                 req.body.password = hash
-                const user = new UserModel(req.body)
-                user.save()
-                    .then(success => {
-                        if (success) {
-                            registerCounter.inc()
-                            return res.status(200).json({
-                                message: "User was successfully created"
-                            })
-                        } 
-                        return res.status(500).json({
-                            message: "internal server error"
+                // TODO add this on EC2 and travis
+                let confirmationCode = ""
+                if(process.env.EMAIL_CONFIRMATION_SECRET){
+                    confirmationCode = sign({email: req.body.email}, process.env.EMAIL_CONFIRMATION_SECRET)
+                    const user = new UserModel({
+                        username: req.body.username,
+                        email:  req.body.email,
+                        password: req.body.password,
+                        acceptedTerms: req.body.acceptedTerms,
+                        hasRequiredAge: req.body.hasRequiredAge,
+                        tokenVersion: 0,
+                        active: false,
+                        confirmationCode: confirmationCode
                         })
-                    })
-                    .catch((err: Error) => (console.log(err)));
+                        user.save()
+                        .then(success => {
+                            if (success) {
+                                sendConfirmationEmail(req.body.username, req.body.email, confirmationCode)
+                                registerCounter.inc()
+                                return res.status(200).json({
+                                    message: "User was successfully created, please check your email"
+                                })
+                            } 
+                            return res.status(500).json({
+                                message: "internal server error"
+                            })
+                        })
+                        .catch((err: Error) => (console.log(err)));
+                }
+                else {
+                    console.log("Confirmation secret not found")
+                }
             })
         })
         .catch((err: Error) => console.log(err));
@@ -63,6 +81,11 @@ export const loginUser = (req: Request, res: Response) => {
             }
             if (user.tokenVersion == null) {
                 return res.status(401).json({ message: "Missing Token Version" })
+            }
+            if (user.active != true) {
+                return res.status(401).send({
+                message: "Pending Account. Please Verify Your Email!",
+                });
             }
             bcrypt.compare(password, user.password, function (err: Error, result: Boolean) {
                 if (result) {
