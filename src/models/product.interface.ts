@@ -2,7 +2,7 @@ interface IProduct {
     name: string;
     brand: string;
     corporation: string;
-    barcode: string;
+    ean: string;
     state: string;
 }
 

@@ -6,6 +6,6 @@ const router = express.Router();
 
 router.get('/products', getAllProducts);
 router.post('/product', authenticateToken, createProductValidator, createProduct);
-router.get('/product/:barcode', getProduct);
+router.get('/product/:ean', getProduct);
 
 export default router;

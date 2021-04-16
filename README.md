@@ -93,7 +93,7 @@ brew services start mongodb-community@4.4
 ## Mongo Local DB Commands
 Insert a Product:
 ```
-db.products.insertOne({name: "test_name", brand: "test_brand", corporation: "test_corp", barcode: "123456789", state: "unverified"})
+db.products.insertOne({name: "test_name", brand: "test_brand", corporation: "test_corp", ean: "123456789", state: "unverified"})
 ```
 Search for all Products:
 ```
