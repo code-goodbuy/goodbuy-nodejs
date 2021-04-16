@@ -3,7 +3,7 @@ interface User {
     email: string;
     password: string;
     hasRequiredAge: boolean;
-    tokenVersion: boolean;
+    tokenVersion: number;
 }
 
 export default User;
