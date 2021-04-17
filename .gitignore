@@ -10,3 +10,4 @@ data
 dist/
 scraper/__pycache__/
 config/
+log/
