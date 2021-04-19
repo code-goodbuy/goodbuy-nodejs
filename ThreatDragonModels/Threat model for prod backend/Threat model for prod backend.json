@@ -113,43 +113,43 @@
               "angle": 0,
               "id": "b26b66af-ffac-4bdf-9fb9-b86a54a4ee91",
               "z": 3,
-              "hasOpenThreats": true,
+              "hasOpenThreats": false,
               "storesCredentials": true,
               "threats": [
                 {
-                  "status": "Open",
+                  "status": "Mitigated",
                   "severity": "High",
                   "title": "Unauthorized access",
                   "type": "Information disclosure",
-                  "description": "Unauthorized query could be made to the DB.",
-                  "mitigation": "Authenticate all queries."
+                  "description": "An unauthorized query could be made to the DB.",
+                  "mitigation": "Solved:\n- We implemented users which only have role-based access\n\nAuthenticate all queries."
                 },
                 {
-                  "status": "Open",
+                  "status": "Mitigated",
                   "severity": "High",
                   "title": "Credential theft",
                   "type": "Information disclosure",
                   "description": "Access to the DB credentials and makes unauthorised queries.",
-                  "mitigation": "IP restriction (via firewall or other)"
+                  "mitigation": "Solved:\n- Restricted IPs\n\nIP restriction (via firewall or other)"
                 },
                 {
-                  "status": "Open",
+                  "status": "Mitigated",
                   "severity": "High",
                   "title": "Credentials encryption",
                   "type": "Information disclosure",
-                  "description": "Credentials of users could be accessed through the DB.",
+                  "description": "Solved:\n- Passwords are hashed and salted\n\nCredentials should be encrypted, with salt.",
                   "mitigation": "Credentials should be encrypted, with a salt."
                 }
               ],
               "attrs": {
                 ".element-shape": {
-                  "class": "element-shape hasOpenThreats isInScope"
+                  "class": "element-shape hasNoOpenThreats isInScope"
                 },
                 "text": {
                   "text": "MongoDB"
                 },
                 ".element-text": {
-                  "class": "element-text hasOpenThreats isInScope"
+                  "class": "element-text hasNoOpenThreats isInScope"
                 }
               }
             },
@@ -902,9 +902,118 @@
               "angle": 0,
               "id": "c33102ca-15b1-4df1-baa1-127f8a811c95",
               "z": 31,
+              "hasOpenThreats": false,
               "attrs": {
+                ".element-shape": {
+                  "class": "element-shape hasNoOpenThreats isInScope"
+                },
                 "text": {
-                  "text": "process 22"
+                  "text": "Grafana /\nPrometheus"
+                },
+                ".element-text": {
+                  "class": "element-text hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "smooth": true,
+              "source": {
+                "id": "b07d80f4-2283-44a1-b135-72b60aa5e297"
+              },
+              "target": {
+                "id": "c33102ca-15b1-4df1-baa1-127f8a811c95"
+              },
+              "vertices": [],
+              "id": "15fc8cba-fa09-4856-8120-47ddd6a7ca89",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "GET / Metrics",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 32,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "smooth": true,
+              "source": {
+                "id": "0b956087-3024-4f46-acfb-cff1bf67daed"
+              },
+              "target": {
+                "id": "c33102ca-15b1-4df1-baa1-127f8a811c95"
+              },
+              "vertices": [],
+              "id": "29f1d152-2376-48d6-a687-198bd88f4db5",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "GET / Metrics",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 33,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "smooth": true,
+              "source": {
+                "id": "c087d323-1a3e-44cc-8680-a06b6286e8cb"
+              },
+              "target": {
+                "id": "c33102ca-15b1-4df1-baa1-127f8a811c95"
+              },
+              "vertices": [],
+              "id": "073bb579-aa69-4a2e-81fc-4bed4ee04bb1",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "GET / Metrics",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 34,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
                 }
               }
             }
