@@ -11,3 +11,5 @@ services:
     ports:
       - "27017:27017"
     command: "--logpath=/dev/null"
+  watchtower:
+    command: --monitor-only --interval 30
