@@ -7,5 +7,5 @@ router.post('/register', registerUser);
 router.post('/login', loginUser);
 router.post('/refresh_token', authenticateRefreshToken);
 router.post('/logout', authenticateToken, revokeRefreshToken);
-router.get('/confirm_email/:confirmationCode', confirmUser);
+router.post('/confirm_email/:confirmationCode', confirmUser);
 export default router;
