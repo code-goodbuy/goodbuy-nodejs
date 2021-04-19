@@ -1,27 +1,21 @@
 import UserModel from '../models/user.model';
-import User from '../models/user.interface';
 import { Request, Response, NextFunction } from 'express';
-import config from 'config';
 import { sign, verify } from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
 import client from 'prom-client';
 
 const registerCounter = new client.Counter({
-  name: 'total_user_registered',
-  help: 'The total number of registered Users'
+    name: 'total_user_registered',
+    help: 'The total number of registered Users'
 });
 
-// const histogram = new client.Histogram({
-//   name: 'node_request_duartion_seconds',
-//   help: 'Histogram for the duration in seconds',
-//   buckets: [1, 2, 5, 6, 10]
-// });
-
-
 export const registerUser = (req: Request, res: Response) => {
+
+    // we have to send a email that bestätigt that it is ur email
+    // send better responses 
     const email: string = req.body.email;
     const password: string = req.body.password;
-
+    // Should probably also check if username already exists but that is not important right now
     const userAlreadyExist = UserModel.findOne({ email: email })
         .then(userDoc => {
             if (userDoc) return res.status(409).json({
@@ -34,7 +28,14 @@ export const registerUser = (req: Request, res: Response) => {
                     message: "internal server error"
                 });
                 req.body.password = hash
-                const user = new UserModel(req.body)
+                const user = new UserModel({
+                    username: req.body.username,
+                    email:  req.body.email,
+                    password: req.body.password,
+                    acceptedTerms: req.body.acceptedTerms,
+                    hasRequiredAge: req.body.hasRequiredAge,
+                    tokenVersion: 0
+                    })
                 user.save()
                     .then(success => {
                         if (success) {
@@ -42,7 +43,7 @@ export const registerUser = (req: Request, res: Response) => {
                             return res.status(200).json({
                                 message: "User was successfully created"
                             })
-                        } 
+                        }
                         return res.status(500).json({
                             message: "internal server error"
                         })
@@ -69,7 +70,6 @@ export const loginUser = (req: Request, res: Response) => {
                     res.cookie('jid', createRefreshToken(email, user.tokenVersion),
                         {
                             httpOnly: true,
-                            path: '/refresh_token'
                         })
                     const accessToken = createAccessToken(email)
                     return res.status(200).json(
@@ -93,12 +93,17 @@ export const authenticateToken = (req: Request, res: Response, next: NextFunctio
     if (token == null) return res.status(401).json({ message: "JWT is missing, access denied" })
     if (process.env.ACCESS_TOKEN_SECRET) {
         const accessTokenSecret: string = process.env.ACCESS_TOKEN_SECRET
-        const jwt = require('jsonwebtoken');
-        jwt.verify(token, accessTokenSecret, (err: Error, user: User) => {
-            if (err) return res.status(401).json({ err })
-            req.body.user = user
-            next();
-        })
+        try {
+            let payload: any = null
+            payload = verify(token, accessTokenSecret)
+            if (payload) {
+                next()
+            }
+        }
+        catch (err) {
+            return res.status(401).json({ err })
+        }
+
     }
 }
 
@@ -110,9 +115,22 @@ export const authenticateRefreshToken = (req: Request, res: Response, next: Next
         const refreshTokenSecret: string = process.env.REFRESH_TOKEN_SECRET
         try {
             payload = verify(token, refreshTokenSecret)
-            return res.status(200).json({
-                accessToken: createAccessToken(req.body.email)
-            })
+            const tokenVersion = payload.tokenVersion
+            const user = UserModel.findOne({ email: payload.email })
+                .then(user => {
+                    if (user?.tokenVersion === tokenVersion) {
+                        return res.status(200).json({
+                            accessToken: createAccessToken(payload.email)
+                        })
+                    }
+                    else {
+                        return res.status(401).json({ message: "Invalid refresh token version" })
+                    }
+                })
+                .catch(err => {
+                    console.log(err)
+                    return res.status(500).json({ message: "Internal server error" })
+                })
         }
         catch (err) {
             return res.status(401).json({ err })
@@ -128,40 +146,59 @@ export const createAccessToken = (email: string) => {
     }
 }
 
-
 export const createRefreshToken = (email: string, tokenVersion: number) => {
-    if(process.env.REFRESH_TOKEN_SECRET){
+    if (process.env.REFRESH_TOKEN_SECRET) {
         const refreshTokenSecret: string = process.env.REFRESH_TOKEN_SECRET
         return sign({ email: email, tokenVersion: tokenVersion }, refreshTokenSecret, { expiresIn: '168h' })
     }
 }
 
-export const revokeRefreshToken = (req: Request, res: Response) => {
-    // Todo read the tokenVersion and email from the refreshToken
-    // Tests will have to be updated accordingly
-    console.log(req.cookies.jid)
-    let newTokenVersion: number = req.body.tokenVersion
-    let email: string = req.body.email
-    if (email == null) {
-        return res.status(401).json({ message: "Missing Email" })
-    }
-    if (newTokenVersion == null) {
-        return res.status(401).json({ message: "Missing Token Version" })
-    }
-    newTokenVersion += 1
-    try {
-        let updatedUser = UserModel.updateOne(
-            { email: email },
-            { tokenVersion: newTokenVersion }
-        )
-        return res.status(200).json({
-            message: "Revoked refresh_token successfully"
-        })
-    }
-    catch (err) {
-        console.log(err)
-        return res.status(500).json({
-            message: "Problem with revoking the token"
-        })
+export const revokeRefreshToken = (req: Request, res: Response, next: NextFunction) => {
+    let token = req.cookies.jid
+    if (process.env.REFRESH_TOKEN_SECRET) {
+        const refreshTokenSecret: string = process.env.REFRESH_TOKEN_SECRET
+        try {
+            let payload: any = verify(token, refreshTokenSecret)
+            const tokenVersion = payload.tokenVersion
+            const user = UserModel.findOne({ email: payload.email })
+                .then(user => {
+                    if (user?.tokenVersion === tokenVersion) {
+                        try {
+                            let newTokenVersion: number = tokenVersion + 1
+                            console.log(newTokenVersion)
+                            let updatedUser = UserModel.updateOne(
+                                { email: payload.email },
+                                { tokenVersion: newTokenVersion }
+                            )
+                            .then(() => {
+                                return res.status(200).json({
+                                    message: "Revoked refresh_token successfully"
+                                })
+                            }
+                            )
+                        }
+                        catch (err) {
+                            console.log(err)
+                            return res.status(500).json({
+                                message: "Problem with revoking the token"
+                            })
+                        }
+                    }
+                    else {
+                        return res.status(401).json({ message: "Invalid refresh token version" })
+                    }
+                })
+                .catch(err => {
+                    console.log(err)
+                    return res.status(500).json({ message: "Internal server error" })
+                })
+        }
+        catch (err) {
+            console.log(err)
+            return res.status(401).json({
+                message: "Invalid refresh token"
+            })
+        }
+
     }
 }

@@ -1,6 +1,6 @@
+require('./test/auth');
 require('./test/rabbitmq');
 require('./test/product');
-require('./test/auth');
 require('./test/dbBackup.test');
 require('./test/cleanup');
 
