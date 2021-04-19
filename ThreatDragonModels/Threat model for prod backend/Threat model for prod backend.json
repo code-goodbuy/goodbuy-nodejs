@@ -81,8 +81,8 @@
                 "height": 100
               },
               "position": {
-                "x": 326,
-                "y": 208
+                "x": 355,
+                "y": 219
               },
               "angle": 0,
               "id": "2aaa949d-b1e3-4447-894d-624189e0da52",
@@ -160,8 +160,8 @@
                 "height": 80
               },
               "position": {
-                "x": 47,
-                "y": 219
+                "x": 91,
+                "y": 449
               },
               "angle": 0,
               "id": "9e5cb7d7-4afd-4b32-9961-9cba06ba1504",
@@ -188,16 +188,7 @@
               "target": {
                 "id": "2aaa949d-b1e3-4447-894d-624189e0da52"
               },
-              "vertices": [
-                {
-                  "x": 273,
-                  "y": 213
-                },
-                {
-                  "x": 312,
-                  "y": 232
-                }
-              ],
+              "vertices": [],
               "id": "3da70779-7365-4999-b5b2-af7d73b8dc56",
               "labels": [
                 {
@@ -788,8 +779,8 @@
               },
               "vertices": [
                 {
-                  "x": 256,
-                  "y": 298
+                  "x": 205,
+                  "y": 295
                 }
               ],
               "id": "e57bca7a-6032-4225-8059-33db4c725fd5",
@@ -828,23 +819,117 @@
                 "height": 100
               },
               "position": {
-                "x": 554,
-                "y": 353
+                "x": 516,
+                "y": 419
               },
               "angle": 0,
               "id": "b07d80f4-2283-44a1-b135-72b60aa5e297",
               "z": 28,
-              "hasOpenThreats": false,
+              "hasOpenThreats": true,
               "outOfScope": false,
+              "threats": [
+                {
+                  "status": "Open",
+                  "severity": "Medium",
+                  "title": "Showing Fallback Page",
+                  "type": "Information disclosure",
+                  "description": "Since we still have the initial Nginx page active, externals could get that information",
+                  "mitigation": "Replace it with a basic page that welcomes the visitor to our API."
+                },
+                {
+                  "status": "Open",
+                  "severity": "Medium",
+                  "title": "Stop using root!",
+                  "type": "Elevation of privilege",
+                  "description": "In order to configure and set up the infrastructure, we used the root user. We need to create a user which does the configuration and also starts the process.",
+                  "mitigation": "- User with limited rights is created and in use."
+                }
+              ],
               "attrs": {
                 ".element-shape": {
-                  "class": "element-shape hasNoOpenThreats isInScope"
+                  "class": "element-shape hasOpenThreats isInScope"
                 },
                 "text": {
                   "text": "Nginx"
                 },
                 ".element-text": {
-                  "class": "element-text hasNoOpenThreats isInScope"
+                  "class": "element-text hasOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "smooth": true,
+              "source": {
+                "id": "b07d80f4-2283-44a1-b135-72b60aa5e297"
+              },
+              "target": {
+                "id": "c087d323-1a3e-44cc-8680-a06b6286e8cb"
+              },
+              "vertices": [],
+              "id": "403d2331-85c4-4bb7-9bb2-bfa504a114d8",
+              "labels": [
+                {
+                  "position": 0.5,
+                  "attrs": {
+                    "text": {
+                      "text": "flow 21",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 29,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Flow",
+              "smooth": true,
+              "source": {
+                "id": "c087d323-1a3e-44cc-8680-a06b6286e8cb"
+              },
+              "target": {
+                "id": "b07d80f4-2283-44a1-b135-72b60aa5e297"
+              },
+              "vertices": [
+                {
+                  "x": 603,
+                  "y": 337
+                }
+              ],
+              "id": "f9e4c57d-1549-498e-89d5-cff29ffb6afe",
+              "labels": [
+                {
+                  "position": {
+                    "distance": 0.4939214415898419,
+                    "offset": -5.466117190781241
+                  },
+                  "attrs": {
+                    "text": {
+                      "text": "flow 22",
+                      "font-weight": "400",
+                      "font-size": "small"
+                    }
+                  }
+                }
+              ],
+              "z": 30,
+              "hasOpenThreats": false,
+              "attrs": {
+                ".marker-target": {
+                  "class": "marker-target hasNoOpenThreats isInScope"
+                },
+                ".connection": {
+                  "class": "connection hasNoOpenThreats isInScope"
                 }
               }
             }
