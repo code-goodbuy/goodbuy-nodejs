@@ -35,15 +35,15 @@
               "angle": 0,
               "id": "c087d323-1a3e-44cc-8680-a06b6286e8cb",
               "z": 1,
-              "hasOpenThreats": true,
+              "hasOpenThreats": false,
               "threats": [
                 {
-                  "status": "Open",
+                  "status": "Mitigated",
                   "severity": "High",
                   "type": "Repudiation",
-                  "title": "Logging activities",
+                  "title": "Logging activities of hacker",
                   "description": "Logging all activities to report on hackers attack",
-                  "mitigation": "Logging to external data source, with restricted access"
+                  "mitigation": "Solved:\nLoggin implemented with AWS Cloud Watch\n\nLogging to an external data source, with restricted access"
                 },
                 {
                   "status": "Mitigated",
@@ -54,23 +54,23 @@
                   "mitigation": "AWS includes DDoS protection by default"
                 },
                 {
-                  "status": "Open",
+                  "status": "Mitigated",
                   "severity": "High",
                   "type": "Information disclosure",
                   "title": "File structure exposure",
                   "description": "Exposing the file structure to get access to crucial information about the infrastructure.",
-                  "mitigation": "Setting permissions, and defining public folders"
+                  "mitigation": "Solved:\n- We don't serve anything else than the API\n\n\nSetting permissions, and defining public folders"
                 }
               ],
               "attrs": {
                 ".element-shape": {
-                  "class": "element-shape hasOpenThreats isInScope"
+                  "class": "element-shape hasNoOpenThreats isInScope"
                 },
                 "text": {
                   "text": "Node.js - REST\nAPI"
                 },
                 ".element-text": {
-                  "class": "element-text hasOpenThreats isInScope"
+                  "class": "element-text hasNoOpenThreats isInScope"
                 }
               }
             },
@@ -254,22 +254,17 @@
               "target": {
                 "id": "b07d80f4-2283-44a1-b135-72b60aa5e297"
               },
-              "vertices": [
-                {
-                  "x": 525,
-                  "y": 362
-                }
-              ],
+              "vertices": [],
               "id": "79173567-a1ee-445b-8567-ea7f9983e735",
               "labels": [
                 {
                   "position": {
-                    "distance": 0.5170417114036268,
-                    "offset": -2.0942431204043053
+                    "distance": 0.5604395452609449,
+                    "offset": -6.140922593031788
                   },
                   "attrs": {
                     "text": {
-                      "text": "Web App query\nresults",
+                      "text": "Web Req",
                       "font-weight": "400",
                       "font-size": "small"
                     }
@@ -277,23 +272,24 @@
                 }
               ],
               "z": 7,
-              "hasOpenThreats": true,
+              "hasOpenThreats": false,
               "isEncrypted": true,
               "isPublicNetwork": true,
               "threats": [
                 {
-                  "status": "Open",
+                  "status": "Mitigated",
                   "severity": "High",
                   "title": "HTTP/S",
-                  "type": "Information disclosure"
+                  "type": "Information disclosure",
+                  "mitigation": "Solved:\n- Nginx with certificate"
                 }
               ],
               "attrs": {
                 ".marker-target": {
-                  "class": "marker-target hasOpenThreats isInScope"
+                  "class": "marker-target hasNoOpenThreats isInScope"
                 },
                 ".connection": {
-                  "class": "connection hasOpenThreats isInScope"
+                  "class": "connection hasNoOpenThreats isInScope"
                 }
               }
             },
@@ -304,8 +300,8 @@
                 "height": 100
               },
               "position": {
-                "x": 1183,
-                "y": 338
+                "x": 911,
+                "y": 500
               },
               "angle": 0,
               "id": "2d2def3c-a2b1-4f12-b0b0-514abcf0cfaa",
@@ -344,7 +340,7 @@
                   "position": 0.5,
                   "attrs": {
                     "text": {
-                      "text": "Web Req",
+                      "text": "Web App query\nresults",
                       "font-weight": "400",
                       "font-size": "small"
                     }
@@ -399,12 +395,7 @@
               "target": {
                 "id": "0b956087-3024-4f46-acfb-cff1bf67daed"
               },
-              "vertices": [
-                {
-                  "x": 690,
-                  "y": 372
-                }
-              ],
+              "vertices": [],
               "id": "4edae733-4a9d-4510-b213-dd9ed1be3038",
               "labels": [
                 {
@@ -414,7 +405,7 @@
                   },
                   "attrs": {
                     "text": {
-                      "text": "PUT Message?",
+                      "text": "AMQP Prot.",
                       "font-weight": "400",
                       "font-size": "small"
                     }
@@ -423,8 +414,8 @@
               ],
               "z": 11,
               "hasOpenThreats": false,
-              "isEncrypted": true,
-              "isPublicNetwork": true,
+              "isEncrypted": false,
+              "isPublicNetwork": false,
               "attrs": {
                 ".marker-target": {
                   "class": "marker-target hasNoOpenThreats isInScope"
@@ -458,7 +449,7 @@
                   },
                   "attrs": {
                     "text": {
-                      "text": "Message",
+                      "text": "AMQP Prot.",
                       "font-weight": "400",
                       "font-size": "small"
                     }
@@ -467,8 +458,8 @@
               ],
               "z": 12,
               "hasOpenThreats": false,
-              "isEncrypted": true,
-              "isPublicNetwork": true,
+              "isEncrypted": false,
+              "isPublicNetwork": false,
               "attrs": {
                 ".marker-target": {
                   "class": "marker-target hasNoOpenThreats isInScope"
@@ -487,19 +478,14 @@
               "target": {
                 "id": "2d2def3c-a2b1-4f12-b0b0-514abcf0cfaa"
               },
-              "vertices": [
-                {
-                  "x": 968,
-                  "y": 409
-                }
-              ],
+              "vertices": [],
               "id": "804da8b1-65c4-4dff-892e-89fb9abc1609",
               "labels": [
                 {
                   "position": 0.5,
                   "attrs": {
                     "text": {
-                      "text": "Scraper query",
+                      "text": "AMQP Prot.",
                       "font-weight": "400",
                       "font-size": "small"
                     }
@@ -651,39 +637,10 @@
                 {
                   "x": 531,
                   "y": 228
-                },
-                {
-                  "x": 455,
-                  "y": 359
                 }
               ],
               "id": "a590ba72-1410-4765-8a9d-326f474f7f30",
               "z": 18,
-              "attrs": {}
-            },
-            {
-              "type": "tm.Boundary",
-              "smooth": true,
-              "source": {
-                "x": 1235,
-                "y": 493
-              },
-              "target": {
-                "x": 1235,
-                "y": 285
-              },
-              "vertices": [
-                {
-                  "x": 1126,
-                  "y": 424
-                },
-                {
-                  "x": 1150,
-                  "y": 301
-                }
-              ],
-              "id": "34c17cfc-f825-4a58-9a23-0ab6b39ebf41",
-              "z": 20,
               "attrs": {}
             },
             {
@@ -697,21 +654,20 @@
               },
               "vertices": [
                 {
-                  "x": 1034,
-                  "y": 486
-                },
-                {
-                  "x": 868,
-                  "y": 506
+                  "x": 848,
+                  "y": 609
                 }
               ],
               "id": "77c9357c-6455-416d-a4af-8e62ab55187f",
               "labels": [
                 {
-                  "position": 0.5,
+                  "position": {
+                    "distance": 0.42910523088727776,
+                    "offset": -32.85424888734789
+                  },
                   "attrs": {
                     "text": {
-                      "text": "Scraper query results",
+                      "text": "AMQP Prot.",
                       "font-weight": "400",
                       "font-size": "small"
                     }
@@ -740,8 +696,8 @@
               },
               "vertices": [
                 {
-                  "x": 921,
-                  "y": 170
+                  "x": 936,
+                  "y": 101
                 }
               ],
               "id": "0c965b87-bdc1-4a7c-b9d2-753e942bbc8f",
@@ -750,7 +706,7 @@
                   "position": 0.5,
                   "attrs": {
                     "text": {
-                      "text": "update products",
+                      "text": "Query",
                       "font-weight": "400",
                       "font-size": "small"
                     }
@@ -873,7 +829,7 @@
                   "position": 0.5,
                   "attrs": {
                     "text": {
-                      "text": "flow 21",
+                      "text": "Web req.",
                       "font-weight": "400",
                       "font-size": "small"
                     }
@@ -902,20 +858,20 @@
               },
               "vertices": [
                 {
-                  "x": 603,
-                  "y": 337
+                  "x": 612,
+                  "y": 318
                 }
               ],
               "id": "f9e4c57d-1549-498e-89d5-cff29ffb6afe",
               "labels": [
                 {
                   "position": {
-                    "distance": 0.4939214415898419,
-                    "offset": -5.466117190781241
+                    "distance": 0.46599273344922165,
+                    "offset": 1.2628789624234442
                   },
                   "attrs": {
                     "text": {
-                      "text": "flow 22",
+                      "text": "Web resp.",
                       "font-weight": "400",
                       "font-size": "small"
                     }
@@ -930,6 +886,25 @@
                 },
                 ".connection": {
                   "class": "connection hasNoOpenThreats isInScope"
+                }
+              }
+            },
+            {
+              "type": "tm.Process",
+              "size": {
+                "width": 100,
+                "height": 100
+              },
+              "position": {
+                "x": 484,
+                "y": 660
+              },
+              "angle": 0,
+              "id": "c33102ca-15b1-4df1-baa1-127f8a811c95",
+              "z": 31,
+              "attrs": {
+                "text": {
+                  "text": "process 22"
                 }
               }
             }
