@@ -16,7 +16,7 @@ export const createProductValidator = (req: Request , res: Response, next: NextF
         min:2, 
         max:50,
     });
-    req.check('ean', "Ean is missing").notEmpty()
+    req.check('ean', "Ean is missing").notEmpty().isString().isNumeric()
     req.check('ean', "Ean must be between 4 to 18 Characters").isLength({
         min:4, 
         max:18,
