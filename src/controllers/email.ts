@@ -11,7 +11,7 @@ const transport = nodemailer.createTransport({
       pass: process.env.EMAIL_PASS,
     },
   });
-  
+  // TODO change this to the vercel domain
   export const sendConfirmationEmail = (username: string, email: string, confirmationCode: string) => {
       console.log("Check");
       transport.sendMail({
