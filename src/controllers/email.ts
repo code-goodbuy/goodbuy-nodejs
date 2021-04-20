@@ -11,7 +11,6 @@ const transport = nodemailer.createTransport({
       pass: process.env.EMAIL_PASS,
     },
   });
-  // TODO change this to the vercel domain
   export const sendConfirmationEmail = (username: string, email: string, confirmationCode: string) => {
       console.log("Check");
       transport.sendMail({
@@ -21,7 +20,7 @@ const transport = nodemailer.createTransport({
         html: `<h1>Email Confirmation</h1>
             <h2>Hello ${username}</h2>
             <p>Thank you for subscribing. Please confirm your email by clicking on the following link</p>
-            <a href=http://localhost:8080/confirm_email/${confirmationCode}> Click here</a>
+            <a href=https://goodbuy.vercel.app/verify?token=${confirmationCode}> Click here</a>
             </div>`,
       }).catch((err: Error) => console.log(err));
     };
