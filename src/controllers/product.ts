@@ -2,6 +2,8 @@ import ProductModel from "../models/product";
 import { Request, Response, NextFunction } from 'express';
 import { sendBarcodeToRabbitMQ } from "../utils/send_barcode";
 
+// Todo review all inputs and validate them same as in auth.ts 
+// Create some kind of product and user validator that acts as a middleware
 export const getAllProducts = (req: Request, res: Response) => {
     const products = ProductModel.find()
     .select("name brand corporation barcode state")

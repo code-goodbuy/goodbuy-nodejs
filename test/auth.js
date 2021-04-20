@@ -1,13 +1,10 @@
-let mongoose = require("mongoose");
 let UserModel = require('../dist/models/user.model');
-const { createAccessToken, createRefreshToken } = require('../dist/controllers/auth')
+const { createRefreshToken } = require('../dist/controllers/auth')
 let chai = require('chai');
 let chaiHttp = require('chai-http');
 let chaiCookie = require('chai-expected-cookie');
 let server = require('../dist/server');
-const { exception } = require("console");
 let expect = chai.expect;
-let should = chai.should()
 chai.use(chaiHttp);
 chai.use(chaiCookie);
 
@@ -15,14 +12,12 @@ describe('Authentication', () => {
     describe('/POST register', () => {
         it('should register a user', (done) => {
             let user = {
-                "username": "test_user",
+                "username": "testuser",
                 "email": "testmail123@test.de",
                 "password": "Test_pass1!",
                 "acceptedTerms": true,
-                "hasRequiredAge": true,
-                "tokenVersion": 0
-
-            }
+                "hasRequiredAge": true
+             }
             chai.request(server)
                 .post('/register')
                 .send(user)
@@ -34,12 +29,11 @@ describe('Authentication', () => {
         })
         it('should return that the user with that email already exist', (done) => {
             let user = {
-                "username": "test_user",
+                "username": "testuser",
                 "email": "testmail123@test.de",
                 "password": "Test_pass1!",
                 "acceptedTerms": true,
                 "hasRequiredAge": true,
-                "tokenVersion": 0
 
             }
             chai.request(server)
@@ -122,9 +116,9 @@ describe('Authentication', () => {
     describe('/POST product', () => {
         it('should fail because of missing authentication token', (done) => {
             let product = {
-                name: "test_product",
-                brand: "test_product",
-                corporation: "test_corp",
+                name: "testproduct",
+                brand: "testproduct",
+                corporation: "testcorp",
                 barcode: "123456789",
                 state: "unverified"
             }
@@ -139,9 +133,9 @@ describe('Authentication', () => {
         })
         it('should fail because of manipulated authentication token', (done) => {
             let product = {
-                name: "test_product",
-                brand: "test_product",
-                corporation: "test_corp",
+                name: "testproduct",
+                brand: "testproduct",
+                corporation: "testcorp",
                 barcode: "123456789",
                 state: "unverified"
             }
@@ -156,54 +150,6 @@ describe('Authentication', () => {
                     "message": "invalid signature"
                 });
                 done();
-            })     
-        })
-    })
-    // Todo send the tokenVersion and the email in the refresh cookie
-    // i think if we have the refresh cookie here we dont need to change anything
-    describe('/Logout user', () => {
-        it('should fail because the jwt is invalid', (done) => {
-            let loginData = {
-                "email": "testmail@test.de",
-                "password": "Test_pass1!",
-            }
-            chai.request(server)
-            .post('/logout')
-            .set({ "Authorization": `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3R1c2VyQHRlc3QuZGUiLCJpYXQiOjE2MTY1ODI3MjksImV4cCI6MTYxNzE4NzUyOX0.PBf0yNGC705vwFkvbMH1vCyUa--V1adrWfIK6GBvfOk`})
-            .send(loginData)
-            .end((err, res) => {
-                res.should.have.status(401);
-                res.body.should.have.property('err').eql({
-                    "name": "JsonWebTokenError",
-                    "message": "invalid signature"
-                });                
-            done();
-            })
-        })
-        it('should logout a user', (done) => {
-            let tokenVer = 1
-            let loginData = {
-                "username": "dmar2io",
-                "email": "testmail123@test.de",
-                "password": "Test_pass1!",
-                "acceptedTerms": true,
-                "hasRequiredAge": true,
-                "tokenVersion": tokenVer
-            }
-            const accessToken = createAccessToken("testmail123@test.de")
-            chai.request(server)
-            .post('/logout')
-            .set({ "Authorization": `Bearer ${accessToken}`})
-            .send(loginData)
-            .end((err, res) => {
-                res.should.have.status(200);   
-            done();
-            })
-        })
-        it('the logout should have incremented the tokenVersion', () => {
-            const user = UserModel.default.findOne({ email: "testmail123@test.de" })
-            .then(user => {
-                user.tokenVersion.should.eql(tokenVer +1);
             })     
         })
     })
@@ -234,7 +180,7 @@ describe('Authentication', () => {
 
         })
         it('should succeed and return a new accessToken', (done) => {
-            let refreshToken = createRefreshToken("testmail123@test.de", 2)
+            let refreshToken = createRefreshToken("testmail123@test.de", 0)
             chai.request(server)
             .post('/refresh_token')
             .set('Cookie', `jid=${refreshToken}`)
@@ -245,5 +191,47 @@ describe('Authentication', () => {
                 done();
             })
         })
+        it('should fail because the token verion is invalid', (done) => {
+            let refreshToken = createRefreshToken("testmail123@test.de", 2)
+            chai.request(server)
+            .post('/refresh_token')
+            .set('Cookie', `jid=${refreshToken}`)
+            .send()
+            .end((err, res) => {
+                res.should.have.status(401);
+                res.body.should.have.property("message").eql("Invalid refresh token version");
+                done();
+            })
+        })
     })
+    describe('/Logout user', () => {
+        it('should fail because the jwt is invalid', (done) => {
+            let loginData = {
+                "email": "testmail@test.de",
+                "password": "Test_pass1!",
+            }
+            chai.request(server)
+            .post('/logout')
+            .set({ "Authorization": `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3R1c2VyQHRlc3QuZGUiLCJpYXQiOjE2MTY1ODI3MjksImV4cCI6MTYxNzE4NzUyOX0.PBf0yNGC705vwFkvbMH1vCyUa--V1adrWfIK6GBvfOk`})
+            .send(loginData)
+            .end((err, res) => {
+                res.should.have.status(401);
+                res.body.should.have.property('message').eql('Invalid refresh token');                
+            done();
+            })
+        })
+        it('should logout a user', (done) => {
+            const refreshToken = createRefreshToken("testmail123@test.de", 0)
+            const cookieValue =  'jid=' + JSON.stringify(refreshToken)
+            chai.request(server)
+            .post('/logout')
+            .set('Cookie', cookieValue)
+            .send()
+            .end((err, res) => {
+                res.should.have.status(200);   
+            done();
+            })
+        })
+    })
+   
 })
