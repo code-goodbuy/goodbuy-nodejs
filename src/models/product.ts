@@ -20,9 +20,9 @@ const productSchema = new mongoose.Schema({
         min: 2,
         max: 50,
     },
-    barcode: {
+    ean: {
         type: String,
-        required: "No Barcode error message",
+        required: "No Ean error message",
         min: 4,
         max: 18,
     },

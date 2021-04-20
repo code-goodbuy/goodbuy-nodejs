@@ -19,7 +19,7 @@ const rabbit_pass = process.env.RABBITMQ_USER_PW
 const rabbit_host =  process.env.RABBITMQ_DEV_HOST
 const rabbit_port =  process.env.RABBITMQ_PORT
 
-export function sendBarcodeToRabbitMQ(barcode: string) {
+export function sendEanToRabbitMQ(ean: string) {
     amqp.connect(`amqp://${rabbit_user}:${rabbit_pass}@${rabbit_host}:${rabbit_port}`, function(error0: Error, connection: ConnectionType) {
         if (error0) {
             throw error0;
@@ -28,9 +28,9 @@ export function sendBarcodeToRabbitMQ(barcode: string) {
             if (error1) {
                 throw error1;
             }
-            console.log("Sending Barcode ", barcode)
+            console.log("Sending Ean ", ean)
             let queue = 'buycott';
-            let msg = barcode;
+            let msg = ean;
 
             channel.assertQueue(queue, {
                 durable: true

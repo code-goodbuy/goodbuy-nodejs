@@ -4,8 +4,8 @@ import { getAllProducts, createProduct, getProduct } from '../controllers/produc
 import { createProductValidator, getProductValidator } from '../validator/product';
 const router = express.Router();
 
-router.get('/', getAllProducts);
+router.get('/products', getAllProducts);
 router.post('/product', authenticateToken, createProductValidator, createProduct);
-router.get('/product/:barcode', getProductValidator, getProduct);
+router.get('/product/:ean', getProduct);
 
 export default router;

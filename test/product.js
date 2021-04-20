@@ -17,7 +17,7 @@ describe('Product', () => {
             name: "testproduct",
             brand: "testproduct",
             corporation: "testcorp",
-            barcode: "123456789",
+            ean: "123456789",
             state: "unverified"
           }
           const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET
@@ -41,18 +41,18 @@ describe('Product', () => {
     /*
   * Test the /GET route
   */
-  describe('/GET/:barcode product', () => {
-    it('it should GET the product by the given barcode', (done) => {
+  describe('/GET/:ean product', () => {
+    it('it should GET the product by the given ean', (done) => {
         let product = new Product.default({
             name: "testproduct",
             brand: "testproduct",
             corporation: "testcorp",
-            barcode: "99999999",
+            ean: "123456789",
             state: "unverified"
           });
           product.save((err, product) => {
             chai.request(server)
-          .get('/product/'+ product.barcode)
+          .get('/product/'+ product.ean)
           .send(product)
           .end((err, res) => {
                 res.should.have.status(200);
@@ -61,7 +61,7 @@ describe('Product', () => {
                 res.body.product[0].should.have.property('brand');
                 res.body.product[0].should.have.property('corporation');
                 res.body.product[0].should.have.property('state');
-                res.body.product[0].should.have.property('barcode').eql(product.barcode);
+                res.body.product[0].should.have.property('ean').eql(product.ean);
             done();
           });
         });

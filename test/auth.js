@@ -34,7 +34,6 @@ describe('Authentication', () => {
                 "password": "Test_pass1!",
                 "acceptedTerms": true,
                 "hasRequiredAge": true,
-
             }
             chai.request(server)
                 .post('/register')
@@ -71,7 +70,6 @@ describe('Authentication', () => {
               .then((user) => {
                 user.active = true;
                 user.save((err) => {
-
             chai.request(server)
             .post('/login')
             .send(loginData)
