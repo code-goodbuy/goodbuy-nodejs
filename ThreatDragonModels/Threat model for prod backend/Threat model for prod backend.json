@@ -377,6 +377,15 @@
               "id": "0b956087-3024-4f46-acfb-cff1bf67daed",
               "z": 10,
               "hasOpenThreats": false,
+              "threats": [
+                {
+                  "status": "Mitigated",
+                  "severity": "Medium",
+                  "type": "Information disclosure",
+                  "title": "Restricted to Backend, Nginx or VPN",
+                  "description": "The RabbitMQ Services is only receiving messages from Backend or through VPN (for testing reasons), the manager UI is only available through Nginx or through VPN."
+                }
+              ],
               "attrs": {
                 ".element-shape": {
                   "class": "element-shape hasNoOpenThreats isInScope"
