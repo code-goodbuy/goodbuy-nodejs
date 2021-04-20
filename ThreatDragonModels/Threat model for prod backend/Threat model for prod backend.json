@@ -938,16 +938,26 @@
               "angle": 0,
               "id": "c33102ca-15b1-4df1-baa1-127f8a811c95",
               "z": 31,
-              "hasOpenThreats": false,
+              "hasOpenThreats": true,
+              "threats": [
+                {
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Tampering",
+                  "title": "Altering or Deleting Logs",
+                  "description": "An attacker could try to clean up behind himself by altering or deleting the logs.",
+                  "mitigation": "Create a user with limited rights, so the user can't change or delete the logs, only can start the service."
+                }
+              ],
               "attrs": {
                 ".element-shape": {
-                  "class": "element-shape hasNoOpenThreats isInScope"
+                  "class": "element-shape hasOpenThreats isInScope"
                 },
                 "text": {
                   "text": "Grafana /\nPrometheus"
                 },
                 ".element-text": {
-                  "class": "element-text hasNoOpenThreats isInScope"
+                  "class": "element-text hasOpenThreats isInScope"
                 }
               }
             },
