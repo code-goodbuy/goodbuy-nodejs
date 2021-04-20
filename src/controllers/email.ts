@@ -26,7 +26,6 @@ const transport = nodemailer.createTransport({
     };
   
   export const confirmUser = (req: Request, res: Response) => {
-      console.log(req.params.confirmationCode)
       UserModel.findOne({
           confirmationCode: req.params.confirmationCode,
         })
@@ -41,6 +40,7 @@ const transport = nodemailer.createTransport({
                 res.status(500).send({ message: err });
                 return;
               }
+              res.status(200).send({ message: "Successfully activated account!"})
             });
           })
           .catch((e) => console.log("error", e));
