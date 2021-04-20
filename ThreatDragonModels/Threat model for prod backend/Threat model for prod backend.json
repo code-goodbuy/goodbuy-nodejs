@@ -1093,16 +1093,42 @@
               "angle": 0,
               "id": "486cf73d-4b12-4431-905b-82d0aa5505f0",
               "z": 35,
-              "hasOpenThreats": false,
+              "hasOpenThreats": true,
+              "threats": [
+                {
+                  "status": "Open",
+                  "severity": "Low",
+                  "type": "Information disclosure",
+                  "title": "Restrict to Backend",
+                  "description": "The S3 bucket should only communicate to the backend.",
+                  "mitigation": "Restrict the IP in- and out-bound to the backend."
+                },
+                {
+                  "status": "Open",
+                  "severity": "Low",
+                  "type": "Tampering",
+                  "title": "Uploading fake database",
+                  "mitigation": "Having a hash to identify our own database archive zip",
+                  "description": "If an attacker replaces our zip with an empty one or worse, we could lose our database on a rollback."
+                },
+                {
+                  "status": "Open",
+                  "severity": "Medium",
+                  "title": "Loggin actions Database",
+                  "type": "Repudiation",
+                  "description": "Tracking what a user does with the database.",
+                  "mitigation": "Keeping a log of all operations."
+                }
+              ],
               "attrs": {
                 ".element-shape": {
-                  "class": "element-shape hasNoOpenThreats isInScope"
+                  "class": "element-shape hasOpenThreats isInScope"
                 },
                 "text": {
                   "text": "S3 Bucket"
                 },
                 ".element-text": {
-                  "class": "element-text hasNoOpenThreats isInScope"
+                  "class": "element-text hasOpenThreats isInScope"
                 }
               }
             },
