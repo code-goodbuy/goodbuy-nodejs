@@ -118,7 +118,8 @@ export const authenticateToken = (req: Request, res: Response, next: NextFunctio
             }
         }
         catch (err) {
-            return res.status(401).json({ err })
+            console.log(err)
+            return res.status(401).json({ message: "Invalid Access Token" })
         }
 
     }

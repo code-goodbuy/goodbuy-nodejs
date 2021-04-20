@@ -1,12 +1,14 @@
 let UserModel = require('../dist/models/user.model');
-const { createRefreshToken } = require('../dist/controllers/auth')
+const { createRefreshToken, createAccessToken } = require('../dist/controllers/auth')
 let chai = require('chai');
 let chaiHttp = require('chai-http');
 let chaiCookie = require('chai-expected-cookie');
 let server = require('../dist/server');
 let expect = chai.expect;
+let jwt = require('jsonwebtoken');
 chai.use(chaiHttp);
 chai.use(chaiCookie);
+
 
 describe('Authentication', () => {
     describe('/POST register', () => {
@@ -143,10 +145,6 @@ describe('Authentication', () => {
             .send(product)
             .end((err, res) => {
                 res.should.have.status(401);
-                res.body.should.have.property('err').eql({
-                    "name": "JsonWebTokenError",
-                    "message": "invalid signature"
-                });
                 done();
             })     
         })
@@ -204,26 +202,26 @@ describe('Authentication', () => {
     })
     describe('/Logout user', () => {
         it('should fail because the jwt is invalid', (done) => {
-            let loginData = {
-                "email": "testmail@test.de",
-                "password": "Test_pass1!",
-            }
             chai.request(server)
             .post('/logout')
             .set({ "Authorization": `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRlc3R1c2VyQHRlc3QuZGUiLCJpYXQiOjE2MTY1ODI3MjksImV4cCI6MTYxNzE4NzUyOX0.PBf0yNGC705vwFkvbMH1vCyUa--V1adrWfIK6GBvfOk`})
-            .send(loginData)
+            .send()
             .end((err, res) => {
                 res.should.have.status(401);
-                res.body.should.have.property('message').eql('Invalid refresh token');                
+                res.body.should.have.property('message').eql('Invalid Access Token');                
             done();
             })
         })
         it('should logout a user', (done) => {
-            const refreshToken = createRefreshToken("testmail123@test.de", 0)
+            const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET
+            const accessToken = jwt.sign({email: "testmail123@test.de"}, accessTokenSecret, { expiresIn: '1m' })
+            let refreshToken = createRefreshToken("testmail123@test.de", 0)
             const cookieValue =  'jid=' + JSON.stringify(refreshToken)
+            console.log(accessToken)
             chai.request(server)
             .post('/logout')
-            .set('Cookie', cookieValue)
+            .set({ "Authorization": `Bearer ${accessToken}`})
+            .set('Cookie', `jid=${refreshToken}`)
             .send()
             .end((err, res) => {
                 res.should.have.status(200);   
