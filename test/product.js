@@ -17,7 +17,7 @@ describe('Product', () => {
             name: "testproduct",
             brand: "testproduct",
             corporation: "testcorp",
-            barcode: "123456789",
+            ean: "123456789",
             state: "unverified"
           }
           const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET

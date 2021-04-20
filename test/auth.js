@@ -23,7 +23,7 @@ describe('Authentication', () => {
                 .send(user)
                 .end((err, res) => {
                     res.should.have.status(200);
-                    res.body.should.have.property('message').eql("User was successfully created");
+                    res.body.should.have.property('message').eql("User was successfully created, please check your email");
                     done();
                 })
         })
@@ -34,7 +34,6 @@ describe('Authentication', () => {
                 "password": "Test_pass1!",
                 "acceptedTerms": true,
                 "hasRequiredAge": true,
-
             }
             chai.request(server)
                 .post('/register')
@@ -52,6 +51,7 @@ describe('Authentication', () => {
                 "email": "testmail123@test.de",
                 "password": "Test_pass1!",
             }
+            
             chai.request(server)
             .post('/login')
             .send(loginData)

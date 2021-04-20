@@ -41,7 +41,7 @@ export const registerUser = (req: Request, res: Response) => {
                         if (success) {
                             registerCounter.inc()
                             return res.status(200).json({
-                                message: "User was successfully created"
+                                message: "User was successfully created, please check your email"
                             })
                         }
                         return res.status(500).json({
