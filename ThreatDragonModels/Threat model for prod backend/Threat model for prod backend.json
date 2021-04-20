@@ -947,6 +947,14 @@
                   "title": "Altering or Deleting Logs",
                   "description": "An attacker could try to clean up behind himself by altering or deleting the logs.",
                   "mitigation": "Create a user with limited rights, so the user can't change or delete the logs, only can start the service."
+                },
+                {
+                  "status": "Open",
+                  "severity": "Medium",
+                  "type": "Information disclosure",
+                  "title": "Dashboard",
+                  "description": "The dashboard should be only accessible through Nginx or for the time of development through VPN.",
+                  "mitigation": "Restrict the inbound IP to Nginx (and VPN)"
                 }
               ],
               "attrs": {
