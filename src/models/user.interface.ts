@@ -4,6 +4,8 @@ interface User {
     password: string;
     hasRequiredAge: boolean;
     tokenVersion: number;
+    active: boolean;
+    confirmationCode: string;
 }
 
 export default User;

@@ -46,12 +46,30 @@ describe('Authentication', () => {
         })
     })
     describe('/POST login', () => {
+        it('should fail because the email is not verified', (done) => {
+            let loginData = {
+                "email": "testmail123@test.de",
+                "password": "Test_pass1!",
+            }
+            chai.request(server)
+            .post('/login')
+            .send(loginData)
+            .end((err, res) => {
+                res.should.have.status(401);
+                done();
+            })
+        })
         it('should login a user', (done) => {
             let loginData = {
                 "email": "testmail123@test.de",
                 "password": "Test_pass1!",
             }
-            
+            UserModel.default.findOne({
+                email: "testmail123@test.de",
+              })
+              .then((user) => {
+                user.active = true;
+                user.save((err) => {
             chai.request(server)
             .post('/login')
             .send(loginData)
@@ -61,6 +79,8 @@ describe('Authentication', () => {
                 expect(res).to.have.cookie('jid');
                 done();
             })
+        });
+    })
         })
         it('should fail because the email doesnt exist', (done) => {
             let loginData = {

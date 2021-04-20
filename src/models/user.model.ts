@@ -31,6 +31,14 @@ const userSchema = new mongoose.Schema({
     tokenVersion: {
         type: Number,
         required: "Missing tokenVersion",
+    },
+    active: {
+        type: Boolean,
+        required: "Has no status",
+    },
+    confirmationCode: {
+        type: String,
+        required: "Has no confirmation code",
     }
 })
 
