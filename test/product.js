@@ -47,7 +47,7 @@ describe('Product', () => {
             name: "testproduct",
             brand: "testproduct",
             corporation: "testcorp",
-            barcode: "99999999",
+            ean: "123456789",
             state: "unverified"
           });
           product.save((err, product) => {
