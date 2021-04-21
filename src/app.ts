@@ -68,8 +68,8 @@ class App {
     private connectToDatabase() {
         let db = '';
 
-        if (process.env.DBHOST) {
-            db = process.env.DBHOST;
+        if (process.env.DBHost) {
+            db = process.env.DBHost;
         }
         mongoose
             .connect(db, {
