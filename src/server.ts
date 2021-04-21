@@ -33,8 +33,8 @@
 //
 // let db = "";
 //
-// if (process.env.DBHost) {
-//   db = process.env.DBHost;
+// if (process.env.DBHOST) {
+//   db = process.env.DBHOST;
 // }
 //
 // mongoose

@@ -49,7 +49,6 @@ class App {
         this.app.use(morgan("dev" ,{ skip: (req, res) => process.env.NODE_ENV === 'test' })); // Logging HTTP Requests and Errors
         this.app.use(morgan("custom", { stream: this.accessLogStream })); // writing log stream in 'log/access'
         this.app.use(bodyParser.json({limit: 1000, type: "application/json"})); // The size limit of request in bytes + content type
-        this.app.use(expressValidator()); // Validate incoming data
         this.app.use(promBundle({
             autoregister: true,
             includeStatusCode: true,
@@ -60,9 +59,10 @@ class App {
     }
 
     private initRoutes() {
-        console.log('Routes initiated.');
+        this.app.use(expressValidator()); // Validate incoming data
         this.app.use('/', authRoutes);
         this.app.use('/', productRoutes);
+        console.log('Routes initiated.');
     }
 
     private connectToDatabase() {
