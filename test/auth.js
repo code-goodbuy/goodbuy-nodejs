@@ -119,7 +119,7 @@ describe('Authentication', () => {
                 name: "testproduct",
                 brand: "testproduct",
                 corporation: "testcorp",
-                barcode: "123456789",
+                ean: "123456789",
                 state: "unverified"
             }
             chai.request(server)
@@ -136,7 +136,7 @@ describe('Authentication', () => {
                 name: "testproduct",
                 brand: "testproduct",
                 corporation: "testcorp",
-                barcode: "123456789",
+                ean: "123456789",
                 state: "unverified"
             }
             chai.request(server)
