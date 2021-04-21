@@ -14,7 +14,7 @@ const metricsMiddleware = promBundle({
   includeMethod: true,
   includeUp: true,
 });
-import job from "./utils/dbCronJob";
+import job from "./utils/db_cronjob";
 import rt from "file-stream-rotator";
 
 // log formatting
