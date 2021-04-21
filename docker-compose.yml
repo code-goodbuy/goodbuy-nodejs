@@ -10,6 +10,9 @@ services:
       - RABBITMQ_USER=$RABBITMQ_USER
       - RABBITMQ_USER_PW=$RABBITMQ_USER_PW
       - REFRESH_TOKEN_SECRET=$REFRESH_TOKEN_SECRET
+      - EMAIL_CONFIRMATION_SECRET=$EMAIL_CONFIRMATION_SECRET
+      - EMAIL_USER=$EMAIL_USER
+      - EMAIL_PASS=$EMAIL_PASS
     container_name: server
     image: goodbuy/nodejs-webserver:dev
     ports:
