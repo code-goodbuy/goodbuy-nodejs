@@ -4,4 +4,4 @@ const app = new App();
 
 app.listen();
 
-module.exports = app.app;
+module.exports = app.app; // needed to access the app
