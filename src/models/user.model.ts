@@ -39,6 +39,12 @@ const userSchema = new mongoose.Schema({
     confirmationCode: {
         type: String,
         required: "Has no confirmation code",
+    },
+    description: {
+        type: String,
+    },
+    imageURL: {
+        type: String,
     }
 })
 
