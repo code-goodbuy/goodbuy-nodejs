@@ -8,6 +8,7 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import promBundle from "express-prom-bundle";
 const metricsMiddleware = promBundle({
+  metricsPath: '/api/metrics',
   autoregister: true,
   includeStatusCode: true,
   includePath: true,
@@ -67,9 +68,10 @@ app.use(morgan("custom", { stream: accessLogStream })); // writing log stream in
 app.use(bodyParser.json({ limit: 1000, type: "application/json" })); // The size limit of request in bytes + content type 
 app.use(expressValidator()); // Validate incoming data
 app.use(metricsMiddleware); // Prometheus logging
-app.use("/", authRoutes);
-app.use("/", productRoutes);
-app.use("/", profileRoutes);
+app.use("/api", authRoutes);
+app.use("/api", productRoutes);
+app.use("/api", profileRoutes);
+
 
 const port = 8080;
 module.exports = app.listen(port, () => {

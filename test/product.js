@@ -23,7 +23,7 @@ describe('Product', () => {
           const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET
           const accessToken = jwt.sign({email: "testmail123@test.de"}, accessTokenSecret, { expiresIn: '5m' })
         chai.request(server)
-            .post('/product')
+            .post('/api/product')
             .set({ "Authorization": `Bearer ${accessToken}`})
             .send(product)
             .end((err, res) => {
@@ -52,7 +52,7 @@ describe('Product', () => {
           });
           product.save((err, product) => {
             chai.request(server)
-          .get('/product/'+ product.ean)
+          .get('/api/product/'+ product.ean)
           .send(product)
           .end((err, res) => {
                 res.should.have.status(200);
