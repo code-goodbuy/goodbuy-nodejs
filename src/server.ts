@@ -8,6 +8,7 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import promBundle from "express-prom-bundle";
 const metricsMiddleware = promBundle({
+  metricsPath: '/api/metrics',
   autoregister: true,
   includeStatusCode: true,
   includePath: true,
