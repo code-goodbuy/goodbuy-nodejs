@@ -12,7 +12,7 @@ let jwt = require("jsonwebtoken");
 chai.use(chaiHttp);
 chai.use(chaiCookie);
 
-describe("Authorization", () => {
+describe("Profile Authorization", () => {
   describe("/GET user information", () => {
     const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET;
     const accessToken = jwt.sign(
