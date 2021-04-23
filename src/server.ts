@@ -66,8 +66,8 @@ app.use(morgan("custom", { stream: accessLogStream })); // writing log stream in
 app.use(bodyParser.json({limit: 1000, type: "application/json"})); // The size limit of request in bytes + content type 
 app.use(expressValidator()); // Validate incoming data
 app.use(metricsMiddleware); // Prometheus logging
-app.use("/", authRoutes);
-app.use("/", productRoutes);
+app.use("/api", authRoutes);
+app.use("/api", productRoutes);
 
 const port = 8080;
 module.exports = app.listen(port, () => {
