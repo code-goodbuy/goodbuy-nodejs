@@ -12,13 +12,15 @@ let jwt = require("jsonwebtoken");
 chai.use(chaiHttp);
 chai.use(chaiCookie);
 
-describe("Profile Authorization", () => {
+// FIXME need to mock user login for not using actual user info in the local db
+
+describe("Authorization", () => {
   describe("/GET user information", () => {
     const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET;
     const accessToken = jwt.sign(
-      { email: "testmail123@test.de" },
+      { email: "testmail12345@test.de" },
       accessTokenSecret,
-      { expiresIn: "1m" }
+      { expiresIn: "5m" }
     );
 
     it("login user should get user profile result", (done) => {
@@ -30,7 +32,7 @@ describe("Profile Authorization", () => {
         .get("/api/profile")
         .set({ Authorization: `Bearer ${accessToken}` })
         .send(userInfo)
-        .end((err, res) => {
+        .end((res) => {
           res.should.have.status(200);
           res.body.should.be.a("object");
           res.body.product.should.have.property("_id");
