@@ -2,6 +2,8 @@ import UserModel from "../models/user.model";
 import { Request, Response, NextFunction } from "express";
 
 // TODO add api doc to swagger
+// TODO better statuscode for error handling
+// NOTE should profile page have param route?
 
 export const getProfile = (
   req: Request,
@@ -10,24 +12,26 @@ export const getProfile = (
 ) => {
   const { email } = req.body;
   const user = new UserModel({
-    email: email
-  })
+    email: email,
+  });
   UserModel.find({ email: email }, function (err, results) {
-    return res.status(200).send({ results: results, message: "profile received" });
+    return res
+      .status(200)
+      .send({ results: results, message: "profile received" });
   })
-    .select('username email description imageURL')
+    .select("username email description imageURL")
     .then((success) => {
       if (success) {
       } else {
         return res.status(500).json({
-          message: "internal error"
-        })
+          message: "internal error",
+        });
       }
     })
     .catch((err: Error) => {
       console.log(err);
-    })
-}
+    });
+};
 
 export const updateProfile = (
   req: Request,
@@ -49,15 +53,14 @@ export const updateProfile = (
       if (success) {
         return res.status(200).json({
           message: "profile updated",
-        })
+        });
       } else {
         return res.status(500).json({
-          message: "internal error"
-        })
+          message: "internal error",
+        });
       }
     })
     .catch((err: Error) => {
       console.log(err);
     });
 };
-
