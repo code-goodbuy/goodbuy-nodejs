@@ -12,8 +12,6 @@ let jwt = require("jsonwebtoken");
 chai.use(chaiHttp);
 chai.use(chaiCookie);
 
-// FIXME need to mock user login for not using actual user info in the local db
-
 describe("Authorization", () => {
   const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET;
   const accessToken = jwt.sign(
@@ -34,7 +32,6 @@ describe("Authorization", () => {
         .send(userInfo)
         .end((res) => {
           res.should.have.status(200);
-          // res.body.should.be.a("object");
           res.body.product.should.have.property("_id");
           res.body.product.should.have.property("username");
           res.body.product.should.have.property("email");
@@ -76,7 +73,6 @@ describe("Authorization", () => {
         .post("/api/profile")
         .set({ Authorization: `Bearer ${accessToken}` })
         .send(userInfo, userContent)
-        // .send(userContent)
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.have.property("username");
