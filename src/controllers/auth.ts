@@ -31,19 +31,19 @@ export const registerUser = (req: Request, res: Response) => {
                 req.body.password = hash
                 // TODO add this on EC2 and travis
                 let confirmationCode = ""
-                if(process.env.EMAIL_CONFIRMATION_SECRET){
-                    confirmationCode = sign({email: req.body.email}, process.env.EMAIL_CONFIRMATION_SECRET)
+                if (process.env.EMAIL_CONFIRMATION_SECRET) {
+                    confirmationCode = sign({ email: req.body.email }, process.env.EMAIL_CONFIRMATION_SECRET)
                     const user = new UserModel({
                         username: req.body.username,
-                        email:  req.body.email,
+                        email: req.body.email,
                         password: req.body.password,
                         acceptedTerms: req.body.acceptedTerms,
                         hasRequiredAge: req.body.hasRequiredAge,
                         tokenVersion: 0,
                         active: false,
                         confirmationCode: confirmationCode
-                        })
-                        user.save()
+                    })
+                    user.save()
                         .then(success => {
                             if (success) {
                                 sendConfirmationEmail(req.body.username, req.body.email, confirmationCode)
@@ -51,7 +51,7 @@ export const registerUser = (req: Request, res: Response) => {
                                 return res.status(200).json({
                                     message: "User was successfully created, please check your email"
                                 })
-                            } 
+                            }
                             return res.status(500).json({
                                 message: "internal server error"
                             })
@@ -69,7 +69,7 @@ export const registerUser = (req: Request, res: Response) => {
 export const loginUser = (req: Request, res: Response) => {
     const email: string = req.body.email
     const password: string = req.body.password
-    const user = UserModel.findOne({ email: email })
+    UserModel.findOne({ email: email })
         .then(user => {
             if (user === null) {
                 return res.status(409).json({ message: "User does not exist or password/email is wrong" })
@@ -79,7 +79,7 @@ export const loginUser = (req: Request, res: Response) => {
             }
             if (user.active != true) {
                 return res.status(401).send({
-                message: "Pending Account. Please Verify Your Email!",
+                    message: "Pending Account. Please Verify Your Email!",
                 });
             }
             bcrypt.compare(password, user.password, function (err: Error, result: Boolean) {
@@ -90,7 +90,7 @@ export const loginUser = (req: Request, res: Response) => {
                         })
                     const accessToken = createAccessToken(email)
                     return res.status(200).json(
-                        { "jwtAccessToken": accessToken })
+                        { "jwtAccessToken": accessToken, "username": user.username })
                 }
                 else {
                     return res.status(409).json({ message: "User does not exist or password/email is wrong" })
@@ -188,12 +188,12 @@ export const revokeRefreshToken = (req: Request, res: Response, next: NextFuncti
                                 { email: payload.email },
                                 { tokenVersion: newTokenVersion }
                             )
-                            .then(() => {
-                                return res.status(200).json({
-                                    message: "Revoked refresh_token successfully"
-                                })
-                            }
-                            )
+                                .then(() => {
+                                    return res.status(200).json({
+                                        message: "Revoked refresh_token successfully"
+                                    })
+                                }
+                                )
                         }
                         catch (err) {
                             console.log(err)
