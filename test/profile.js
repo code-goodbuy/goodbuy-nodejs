@@ -15,15 +15,15 @@ chai.use(chaiCookie);
 // FIXME need to mock user login for not using actual user info in the local db
 
 describe("Authorization", () => {
-  describe("/GET user information", () => {
-    const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET;
-    const accessToken = jwt.sign(
-      { email: "testmail12345@test.de" },
-      accessTokenSecret,
-      { expiresIn: "5m" }
-    );
+  const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET;
+  const accessToken = jwt.sign(
+    { email: "testmail12345@test.de" },
+    accessTokenSecret,
+    { expiresIn: "5m" }
+  );
 
-    it("login user should get user profile result", (done) => {
+  describe("/GET user information", () => {
+    it("should get user profile result", (done) => {
       let userInfo = {
         email: "testmail12345@test.de",
       };
@@ -45,16 +45,41 @@ describe("Authorization", () => {
     });
 
     it("should fail without token", (done) => {
-      let userInfo = {
-        email: "testmail12345@test.de",
+      const userInfo = { email: "testmail12345@test.de" };
+      const userContent = {
+        description: "some test",
+        imageURL: "http://someurl.com/image.jpg",
       };
       chai
         .request(server)
         .get("/api/profile")
-        // .set({ Authorization: `Bearer ${accessToken}` })
         .send(userInfo)
         .end((err, res) => {
           res.should.have.status(401);
+        });
+      done();
+    });
+  });
+
+  describe("/POST user information", () => {
+    it("should post user info with token", (done) => {
+      const userInfo = {
+        email: "testmail12345@test.de",
+      };
+      const userContent = {
+        description: "some test",
+        imageURL: "http://test.com/some-image.jpeg",
+      };
+      chai
+        .request(server)
+        .post("/api/profile")
+        .set({ Authorization: `Bearer ${accessToken}` })
+        .send(userInfo)
+        .send(userContent)
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.have.property("description");
+          res.body.should.have.property("imageURL");
         });
       done();
     });
