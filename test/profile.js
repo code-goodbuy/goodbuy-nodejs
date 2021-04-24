@@ -19,12 +19,15 @@ describe("Authorization", () => {
     accessTokenSecret,
     { expiresIn: "5m" }
   );
+  const userInfo = {
+    email: "testmail12345@test.de",
+    description: "edit some words",
+    imageURL:
+      "https://i.kym-cdn.com/entries/icons/original/000/022/649/url.png",
+  };
 
   describe("/GET user information", () => {
     it("should get user profile result", (done) => {
-      let userInfo = {
-        email: "testmail12345@test.de",
-      };
       chai
         .request(server)
         .get("/api/profile")
@@ -35,22 +38,15 @@ describe("Authorization", () => {
           res.body.product.should.have.property("_id");
           res.body.product.should.have.property("username");
           res.body.product.should.have.property("email");
-          res.body.product.should.have.property("description");
-          res.body.product.should.have.property("imageURL");
         });
       done();
     });
 
     it("should fail without token", (done) => {
-      const userInfo = { email: "testmail12345@test.de" };
-      const userContent = {
-        description: "some test",
-        imageURL: "http://someurl.com/image.jpg",
-      };
       chai
         .request(server)
         .get("/api/profile")
-        .send(userInfo, userContent)
+        .send(userInfo)
         .end((err, res) => {
           res.should.have.status(401);
         });
@@ -59,22 +55,15 @@ describe("Authorization", () => {
   });
 
   describe("/POST user information", () => {
-    const userInfo = {
-      email: "testmail12345@test.de",
-    };
-    const userContent = {
-      description: "some test",
-      imageURL: "http://test.com/some-image.jpeg",
-    };
-
     it("should post user info with token", (done) => {
       chai
         .request(server)
         .post("/api/profile")
         .set({ Authorization: `Bearer ${accessToken}` })
-        .send(userInfo, userContent)
+        .send(userInfo)
         .end((err, res) => {
           res.should.have.status(200);
+          res.body.should.have.property("_id");
           res.body.should.have.property("username");
           res.body.should.have.property("email");
           res.body.should.have.property("description");
@@ -88,7 +77,6 @@ describe("Authorization", () => {
         .request(server)
         .post("/api/profile")
         .send(userInfo)
-        .send(userContent)
         .end((err, res) => {
           res.should.have.status(401);
         });
