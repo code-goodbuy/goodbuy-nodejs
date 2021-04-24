@@ -41,13 +41,11 @@ export const updateProfile = (
     (err, results) => {
       if (results) {
         res.status(200).json({
-          results: {
-            _id: results._id,
-            username: results.username,
-            email: results.email,
-            description: results.description,
-            imageURL: results.imageURL
-          },
+          _id: results._id,
+          username: results.username,
+          email: results.email,
+          description: results.description,
+          imageURL: results.imageURL
         });
       } else {
         return res.status(500).json({
@@ -57,6 +55,7 @@ export const updateProfile = (
     }
   ).catch((err: Error) => {
     console.log(err);
+    return res.status(501).json({ message: "internal server error" })
   });
   next()
 };
