@@ -90,7 +90,13 @@ export const loginUser = (req: Request, res: Response) => {
                         })
                     const accessToken = createAccessToken(email)
                     return res.status(200).json(
-                        { "jwtAccessToken": accessToken, "username": user.username })
+                        {
+                            "username": user.username,
+                            "email": user.email,
+                            "description": user.description,
+                            "imageURL": user.imageURL,
+                            "jwtAccessToken": accessToken,
+                        })
                 }
                 else {
                     return res.status(409).json({ message: "User does not exist or password/email is wrong" })
