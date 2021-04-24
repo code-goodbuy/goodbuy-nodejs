@@ -34,7 +34,7 @@ describe("Authorization", () => {
         .send(userInfo)
         .end((res) => {
           res.should.have.status(200);
-          res.body.should.be.a("object");
+          // res.body.should.be.a("object");
           res.body.product.should.have.property("_id");
           res.body.product.should.have.property("username");
           res.body.product.should.have.property("email");
@@ -53,7 +53,7 @@ describe("Authorization", () => {
       chai
         .request(server)
         .get("/api/profile")
-        .send(userInfo)
+        .send(userInfo, userContent)
         .end((err, res) => {
           res.should.have.status(401);
         });
@@ -75,8 +75,8 @@ describe("Authorization", () => {
         .request(server)
         .post("/api/profile")
         .set({ Authorization: `Bearer ${accessToken}` })
-        .send(userInfo)
-        .send(userContent)
+        .send(userInfo, userContent)
+        // .send(userContent)
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.have.property("username");
