@@ -7,13 +7,10 @@ import { Request, Response, NextFunction } from "express";
 
 export const getProfile = (req: Request, res: Response, next: NextFunction) => {
   const { email } = req.body;
-  // const user = new User({
-  //   email: email,
-  // });
   User.find({ email: email }, function (err, results) {
     return res
       .status(200)
-      .send({ message: "profile received", results: results });
+      .send({ results: results });
   })
     .select("username email description imageURL")
     .then((success) => {
@@ -27,6 +24,7 @@ export const getProfile = (req: Request, res: Response, next: NextFunction) => {
     .catch((err: Error) => {
       console.log(err);
     });
+  next();
 };
 
 export const updateProfile = (
@@ -47,7 +45,6 @@ export const updateProfile = (
     (err, results) => {
       if (results) {
         res.status(200).json({
-          message: "profile updated",
           results: {
             _id: results._id,
             username: results.username,
@@ -65,4 +62,5 @@ export const updateProfile = (
   ).catch((err: Error) => {
     console.log(err);
   });
+  next()
 };
