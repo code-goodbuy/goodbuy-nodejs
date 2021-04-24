@@ -5,11 +5,7 @@ import { Request, Response, NextFunction } from "express";
 // TODO better statuscode for error handling
 // NOTE should profile page have param route?
 
-export const getProfile = (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
+export const getProfile = (req: Request, res: Response, next: NextFunction) => {
   const { email } = req.body;
   const user = new UserModel({
     email: email,
@@ -47,20 +43,25 @@ export const updateProfile = (
     // filter, update, option
     { email: email },
     { description: description, imageURL: imageURL },
-    { new: true, useFindAndModify: false, multi: true }
-  )
-    .then((success) => {
-      if (success) {
-        return res.status(200).json({
-          message: "profile updated",
+    { new: true, useFindAndModify: false, multi: true },
+    (err, results) => {
+      if (results) {
+        res.status(200).json({
+          results: {
+            _id: results._id,
+            username: results.username,
+            email: results.email,
+            description: results.description,
+            imageURL: results.imageURL
+          },
         });
       } else {
         return res.status(500).json({
           message: "internal error",
         });
       }
-    })
-    .catch((err: Error) => {
-      console.log(err);
-    });
+    }
+  ).catch((err: Error) => {
+    console.log(err);
+  });
 };
