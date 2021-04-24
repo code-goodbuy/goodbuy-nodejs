@@ -1,4 +1,4 @@
-import UserModel from "../models/user.model";
+import User from "../models/user.model";
 import { Request, Response, NextFunction } from "express";
 
 // TODO add api doc to swagger
@@ -7,10 +7,10 @@ import { Request, Response, NextFunction } from "express";
 
 export const getProfile = (req: Request, res: Response, next: NextFunction) => {
   const { email } = req.body;
-  const user = new UserModel({
-    email: email,
-  });
-  UserModel.find({ email: email }, function (err, results) {
+  // const user = new User({
+  //   email: email,
+  // });
+  User.find({ email: email }, function (err, results) {
     return res
       .status(200)
       .send({ message: "profile received", results: results });
@@ -35,11 +35,11 @@ export const updateProfile = (
   next: NextFunction
 ) => {
   const { email, description, imageURL } = req.body;
-  const user = new UserModel({
+  const user = new User({
     description: description,
     imageURL: imageURL,
   });
-  UserModel.findOneAndUpdate(
+  User.findOneAndUpdate(
     // filter, update, option
     { email: email },
     { description: description, imageURL: imageURL },
