@@ -13,7 +13,7 @@ export const getProfile = (req: Request, res: Response, next: NextFunction) => {
   UserModel.find({ email: email }, function (err, results) {
     return res
       .status(200)
-      .send({ results: results, message: "profile received" });
+      .send({ message: "profile received", results: results });
   })
     .select("username email description imageURL")
     .then((success) => {
@@ -47,6 +47,7 @@ export const updateProfile = (
     (err, results) => {
       if (results) {
         res.status(200).json({
+          message: "profile updated",
           results: {
             _id: results._id,
             username: results.username,
