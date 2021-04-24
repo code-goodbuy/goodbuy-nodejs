@@ -62,14 +62,15 @@ describe("Authorization", () => {
   });
 
   describe("/POST user information", () => {
+    const userInfo = {
+      email: "testmail12345@test.de",
+    };
+    const userContent = {
+      description: "some test",
+      imageURL: "http://test.com/some-image.jpeg",
+    };
+
     it("should post user info with token", (done) => {
-      const userInfo = {
-        email: "testmail12345@test.de",
-      };
-      const userContent = {
-        description: "some test",
-        imageURL: "http://test.com/some-image.jpeg",
-      };
       chai
         .request(server)
         .post("/api/profile")
@@ -78,8 +79,22 @@ describe("Authorization", () => {
         .send(userContent)
         .end((err, res) => {
           res.should.have.status(200);
+          res.body.should.have.property("username");
+          res.body.should.have.property("email");
           res.body.should.have.property("description");
           res.body.should.have.property("imageURL");
+        });
+      done();
+    });
+
+    it("should fail to post user info without token ", (done) => {
+      chai
+        .request(server)
+        .post("/api/profile")
+        .send(userInfo)
+        .send(userContent)
+        .end((err, res) => {
+          res.should.have.status(401);
         });
       done();
     });
