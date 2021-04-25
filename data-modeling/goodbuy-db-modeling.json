@@ -19,9 +19,6 @@
                     "foreignField": [
                         "3323f640-9b17-11eb-8b24-af62e469055e",
                         "3c2801a0-9b17-11eb-8b24-af62e469055e"
-                    ],
-                    "childRelationships": [
-                        "68a4e8a0-9b7c-11eb-bc5d-dd8ece1c4357"
                     ]
                 },
                 {
@@ -80,37 +77,73 @@
                     }
                 },
                 {
-                    "type": "string",
-                    "name": "some attr",
+                    "type": "document",
+                    "properties": [
+                        {
+                            "type": "objectId",
+                            "name": "_id",
+                            "hackoladeMeta": {},
+                            "isActivated": true,
+                            "GUID": "b18a7d70-a606-11eb-a8ad-27a8b5ac05ea",
+                            "error": {
+                                "name": false,
+                                "code": false
+                            }
+                        },
+                        {
+                            "type": "date",
+                            "primaryKey": false,
+                            "name": "created_at",
+                            "hackoladeMeta": {},
+                            "isActivated": true,
+                            "GUID": "d78e8bb0-a606-11eb-a8ad-27a8b5ac05ea",
+                            "error": {
+                                "name": false,
+                                "code": false
+                            }
+                        },
+                        {
+                            "type": "date",
+                            "primaryKey": false,
+                            "name": "deleted_at",
+                            "hackoladeMeta": {},
+                            "isActivated": true,
+                            "GUID": "d9b9a910-a606-11eb-a8ad-27a8b5ac05ea",
+                            "error": {
+                                "name": false,
+                                "code": false
+                            }
+                        },
+                        {
+                            "type": "document",
+                            "properties": [
+                                {
+                                    "type": "objectId",
+                                    "name": "New Field",
+                                    "hackoladeMeta": {},
+                                    "isActivated": true,
+                                    "GUID": "f5e5e130-a606-11eb-a8ad-27a8b5ac05ea",
+                                    "error": {
+                                        "name": false,
+                                        "code": false
+                                    }
+                                }
+                            ],
+                            "name": "user",
+                            "hackoladeMeta": {},
+                            "isActivated": true,
+                            "GUID": "eabb4c50-a606-11eb-a8ad-27a8b5ac05ea",
+                            "error": {
+                                "name": false,
+                                "code": false
+                            }
+                        }
+                    ],
+                    "name": "review",
                     "hackoladeMeta": {},
                     "isActivated": true,
-                    "GUID": "34d29b30-9b18-11eb-8b24-af62e469055e",
-                    "error": {
-                        "name": false,
-                        "code": false
-                    }
-                },
-                {
-                    "type": "string",
-                    "name": "another attr",
-                    "hackoladeMeta": {},
-                    "isActivated": true,
-                    "GUID": "36833160-9b18-11eb-8b24-af62e469055e",
-                    "error": {
-                        "name": false,
-                        "code": false
-                    }
-                },
-                {
-                    "type": "string",
-                    "name": "...",
-                    "hackoladeMeta": {},
-                    "isActivated": true,
-                    "GUID": "40508030-9b18-11eb-8b24-af62e469055e",
-                    "error": {
-                        "name": false,
-                        "code": false
-                    }
+                    "GUID": "93673040-a606-11eb-a8ad-27a8b5ac05ea",
+                    "error": {}
                 }
             ],
             "definitions": {
@@ -537,12 +570,7 @@
                     "error": {
                         "name": false,
                         "code": false
-                    },
-                    "foreignCollection": "a6fd8370-9b16-11eb-8b24-af62e469055e",
-                    "foreignField": [
-                        "a6fd8370-9b16-11eb-8b24-af62e469055e",
-                        "c5e09e30-9b16-11eb-8b24-af62e469055e"
-                    ]
+                    }
                 },
                 {
                     "type": "string",
@@ -585,6 +613,74 @@
             },
             "GUID": "2c3c3cc0-9b7b-11eb-bc5d-dd8ece1c4357",
             "bucketId": "9dc3e920-9b16-11eb-8b24-af62e469055e"
+        },
+        {
+            "collectionName": "brand",
+            "type": "object",
+            "properties": [
+                {
+                    "type": "objectId",
+                    "name": "_id",
+                    "hackoladeMeta": {},
+                    "isActivated": true,
+                    "GUID": "ceb75220-a605-11eb-a8ad-27a8b5ac05ea",
+                    "error": {
+                        "name": false,
+                        "code": false
+                    }
+                },
+                {
+                    "type": "string",
+                    "name": "name",
+                    "hackoladeMeta": {},
+                    "isActivated": true,
+                    "GUID": "d9e78c50-a605-11eb-a8ad-27a8b5ac05ea",
+                    "error": {
+                        "name": false,
+                        "code": false
+                    }
+                },
+                {
+                    "type": "string",
+                    "name": "attr1",
+                    "hackoladeMeta": {},
+                    "isActivated": true,
+                    "GUID": "de300b70-a605-11eb-a8ad-27a8b5ac05ea",
+                    "error": {
+                        "name": false,
+                        "code": false
+                    }
+                },
+                {
+                    "type": "string",
+                    "name": "attr2",
+                    "hackoladeMeta": {},
+                    "isActivated": true,
+                    "GUID": "e21d9950-a605-11eb-a8ad-27a8b5ac05ea",
+                    "error": {
+                        "name": false,
+                        "code": false
+                    }
+                }
+            ],
+            "definitions": {
+                "type": "definitions",
+                "properties": [],
+                "GUID": "b88eb6a0-a605-11eb-a8ad-27a8b5ac05ea"
+            },
+            "isActivated": true,
+            "validationLevel": "Off",
+            "validationAction": "Warn",
+            "storageEngineName": "WiredTiger",
+            "collectionUsers": [],
+            "indexes": [],
+            "collation": {},
+            "sharding": {
+                "unique": true,
+                "collation": "null"
+            },
+            "GUID": "b889ad90-a605-11eb-a8ad-27a8b5ac05ea",
+            "bucketId": "9dc3e920-9b16-11eb-8b24-af62e469055e"
         }
     ],
     "buckets": [
@@ -596,7 +692,8 @@
                 "3323f640-9b17-11eb-8b24-af62e469055e",
                 "5d6b5380-9b17-11eb-8b24-af62e469055e",
                 "3dc7bd00-9b19-11eb-8b24-af62e469055e",
-                "2c3c3cc0-9b7b-11eb-bc5d-dd8ece1c4357"
+                "2c3c3cc0-9b7b-11eb-bc5d-dd8ece1c4357",
+                "b889ad90-a605-11eb-a8ad-27a8b5ac05ea"
             ],
             "backgroundColor": {
                 "r": 216,
@@ -721,27 +818,6 @@
             "GUID": "ea291b50-9b7a-11eb-bc5d-dd8ece1c4357",
             "parentCollection": "3323f640-9b17-11eb-8b24-af62e469055e",
             "childCollection": "a6fd8370-9b16-11eb-8b24-af62e469055e"
-        },
-        {
-            "name": "one product has one corporation",
-            "relationshipType": "",
-            "parentField": [
-                [
-                    "a6fd8370-9b16-11eb-8b24-af62e469055e",
-                    "c5e09e30-9b16-11eb-8b24-af62e469055e"
-                ]
-            ],
-            "parentCardinality": "1",
-            "childField": [
-                [
-                    "2c3c3cc0-9b7b-11eb-bc5d-dd8ece1c4357",
-                    "31a26b70-9b7c-11eb-bc5d-dd8ece1c4357"
-                ]
-            ],
-            "childCardinality": "1",
-            "GUID": "68a4e8a0-9b7c-11eb-bc5d-dd8ece1c4357",
-            "parentCollection": "a6fd8370-9b16-11eb-8b24-af62e469055e",
-            "childCollection": "2c3c3cc0-9b7b-11eb-bc5d-dd8ece1c4357"
         }
     ],
     "users": [],
@@ -767,9 +843,6 @@
         "83b21010-9b17-11eb-8b24-af62e469055e": "body",
         "86687d80-9b17-11eb-8b24-af62e469055e": "version",
         "895452d0-9b17-11eb-8b24-af62e469055e": "date",
-        "34d29b30-9b18-11eb-8b24-af62e469055e": "some attr",
-        "36833160-9b18-11eb-8b24-af62e469055e": "another attr",
-        "40508030-9b18-11eb-8b24-af62e469055e": "...",
         "a9815d40-9b18-11eb-8b24-af62e469055e": "one user has many terms&conditions",
         "3dc7bd00-9b19-11eb-8b24-af62e469055e": "review",
         "47af98b0-9b19-11eb-8b24-af62e469055e": "_id",
@@ -795,7 +868,17 @@
         "31a26b70-9b7c-11eb-bc5d-dd8ece1c4357": "_id",
         "35c735f0-9b7c-11eb-bc5d-dd8ece1c4357": "rating",
         "3c634200-9b7c-11eb-bc5d-dd8ece1c4357": "comment",
-        "68a4e8a0-9b7c-11eb-bc5d-dd8ece1c4357": "one product has one corporation"
+        "b889ad90-a605-11eb-a8ad-27a8b5ac05ea": "brand",
+        "ceb75220-a605-11eb-a8ad-27a8b5ac05ea": "_id",
+        "d9e78c50-a605-11eb-a8ad-27a8b5ac05ea": "name",
+        "de300b70-a605-11eb-a8ad-27a8b5ac05ea": "attr1",
+        "e21d9950-a605-11eb-a8ad-27a8b5ac05ea": "attr2",
+        "93673040-a606-11eb-a8ad-27a8b5ac05ea": "review",
+        "b18a7d70-a606-11eb-a8ad-27a8b5ac05ea": "_id",
+        "d78e8bb0-a606-11eb-a8ad-27a8b5ac05ea": "created_at",
+        "d9b9a910-a606-11eb-a8ad-27a8b5ac05ea": "deleted_at",
+        "eabb4c50-a606-11eb-a8ad-27a8b5ac05ea": "user",
+        "f5e5e130-a606-11eb-a8ad-27a8b5ac05ea": "New Field"
     },
     "definitions": {
         "type": "definitions",
@@ -841,7 +924,7 @@
     "creationTS": "2021-04-11T22:38:04.779Z",
     "GUID": "947dcbb0-9b16-11eb-8b24-af62e469055e",
     "isLineageEnabled": false,
-    "lastModifTS": "2021-04-20T21:22:35.909Z",
+    "lastModifTS": "2021-04-25T20:44:19.440Z",
     "persistenceSchemaVersion": "4",
     "isCreatedByPlugin": true,
     "pluginInformation": {
@@ -858,9 +941,9 @@
                     {
                         "GUID": "a6fd8370-9b16-11eb-8b24-af62e469055e",
                         "x": 293.73809523809507,
-                        "y": 632.5000000000002,
-                        "width": 221,
-                        "height": 159,
+                        "y": 629.5000000000002,
+                        "width": 255,
+                        "height": 201,
                         "color": {
                             "hsl": {
                                 "h": 3.789473684210526,
@@ -888,7 +971,7 @@
                     {
                         "GUID": "3323f640-9b17-11eb-8b24-af62e469055e",
                         "x": 575.1666666666667,
-                        "y": 516.8333333333334,
+                        "y": 513.8333333333334,
                         "width": 227,
                         "height": 117,
                         "color": {}
@@ -896,7 +979,7 @@
                     {
                         "GUID": "5d6b5380-9b17-11eb-8b24-af62e469055e",
                         "x": 567.571428571428,
-                        "y": 363.9999999999999,
+                        "y": 360.9999999999999,
                         "width": 240,
                         "height": 89,
                         "color": {}
@@ -904,7 +987,7 @@
                     {
                         "GUID": "3dc7bd00-9b19-11eb-8b24-af62e469055e",
                         "x": 897.3333333333342,
-                        "y": 503.3333333333346,
+                        "y": 500.3333333333346,
                         "width": 247,
                         "height": 229,
                         "color": {
@@ -933,10 +1016,40 @@
                     },
                     {
                         "GUID": "2c3c3cc0-9b7b-11eb-bc5d-dd8ece1c4357",
-                        "x": 310.4444376627603,
-                        "y": 484.4444376627602,
+                        "x": 291.4444376627603,
+                        "y": 401.4444376627602,
                         "width": 188,
                         "height": 75,
+                        "color": {
+                            "hsl": {
+                                "h": 3.789473684210526,
+                                "s": 0.904761904761905,
+                                "l": 0.5882352941176471,
+                                "a": 1
+                            },
+                            "hex": "#f54337",
+                            "rgb": {
+                                "r": 245,
+                                "g": 67,
+                                "b": 55,
+                                "a": 1
+                            },
+                            "hsv": {
+                                "h": 3.789473684210526,
+                                "s": 0.7755102040816326,
+                                "v": 0.9607843137254902,
+                                "a": 1
+                            },
+                            "oldHue": 206.57142857142858,
+                            "source": "hex"
+                        }
+                    },
+                    {
+                        "GUID": "b889ad90-a605-11eb-a8ad-27a8b5ac05ea",
+                        "x": 293,
+                        "y": 505.79999923706055,
+                        "width": 156,
+                        "height": 89,
                         "color": {
                             "hsl": {
                                 "h": 3.789473684210526,
@@ -964,8 +1077,8 @@
                 ],
                 "buckets": [
                     {
-                        "x": 252,
-                        "y": 233.3333333333332,
+                        "x": 210,
+                        "y": 230.3333333333332,
                         "GUID": "9dc3e920-9b16-11eb-8b24-af62e469055e"
                     }
                 ],
@@ -991,8 +1104,8 @@
                 "decorativeSymbols": [
                     {
                         "GUID": "de8f2f00-9b1b-11eb-8b24-af62e469055e",
-                        "x": 292,
-                        "y": 810,
+                        "x": 250,
+                        "y": 919,
                         "height": 128,
                         "width": 332,
                         "color": {
@@ -1022,7 +1135,7 @@
                     {
                         "GUID": "10e8bd90-9b1c-11eb-8b24-af62e469055e",
                         "x": 490.33333333333337,
-                        "y": 273.3333333333332,
+                        "y": 270.3333333333332,
                         "height": 76,
                         "width": 407,
                         "color": {
@@ -1052,7 +1165,7 @@
                     {
                         "GUID": "38089c10-9b1c-11eb-8b24-af62e469055e",
                         "x": 894,
-                        "y": 771,
+                        "y": 768,
                         "height": 120,
                         "width": 293
                     }
