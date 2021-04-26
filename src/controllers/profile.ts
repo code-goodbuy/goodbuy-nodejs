@@ -43,7 +43,7 @@ export const updateProfile = (
         res.status(200).json({
           _id: results._id,
           username: results.username,
-          email: results.email,
+          // email: results.email,
           description: results.description,
           imageURL: results.imageURL
         });

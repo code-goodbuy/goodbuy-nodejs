@@ -92,7 +92,7 @@ export const loginUser = (req: Request, res: Response) => {
                     return res.status(200).json(
                         {
                             "username": user.username,
-                            "email": user.email,
+                            // "email": user.email,
                             "description": user.description,
                             "imageURL": user.imageURL,
                             "jwtAccessToken": accessToken,
