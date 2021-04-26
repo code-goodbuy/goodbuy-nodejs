@@ -23,10 +23,10 @@ class App {
     constructor() {
         this.app = express();
 
-        this.initRoutes();
         this.connectToDatabase();
         this.startBackupService();
         this.initMiddlewares();
+        this.initRoutes();
 
         // log formatting
         morgan.token(
@@ -44,7 +44,7 @@ class App {
     }
 
     private initMiddlewares() {
-        this.app.use(cors);
+        //this.app.use(cors);
         this.app.use(cookieParser());
         this.app.use(morgan("dev" ,{ skip: (req, res) => process.env.NODE_ENV === 'test' })); // Logging HTTP Requests and Errors
         this.app.use(morgan("custom", { stream: this.accessLogStream })); // writing log stream in 'log/access'
