@@ -44,11 +44,11 @@ class App {
     }
 
     private initMiddlewares() {
-        //this.app.use(cors);
         this.app.use(cookieParser());
         this.app.use(morgan("dev" ,{ skip: (req, res) => process.env.NODE_ENV === 'test' })); // Logging HTTP Requests and Errors
         this.app.use(morgan("custom", { stream: this.accessLogStream })); // writing log stream in 'log/access'
         this.app.use(bodyParser.json({limit: 1000, type: "application/json"})); // The size limit of request in bytes + content type
+        this.app.use(expressValidator());
         this.app.use(promBundle({
             autoregister: true,
             includeStatusCode: true,
@@ -58,10 +58,10 @@ class App {
         })); // Prometheus logging
     }
 
-    private initRoutes() {
-        this.app.use(expressValidator()); // Validate incoming data
+    private initRoutes() {// Validate incoming data
         this.app.use('/', authRoutes);
         this.app.use('/', productRoutes);
+        this.app.use(cors);
         console.log('Routes initiated.');
     }
 
