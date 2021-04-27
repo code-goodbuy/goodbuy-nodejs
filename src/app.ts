@@ -59,8 +59,8 @@ class App {
     }
 
     private initRoutes() {// Validate incoming data
-        this.app.use('/', authRoutes);
-        this.app.use('/', productRoutes);
+        this.app.use('/api', authRoutes);
+        this.app.use('/api', productRoutes);
         console.log('Routes initiated.');
     }
 
