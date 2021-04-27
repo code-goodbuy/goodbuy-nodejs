@@ -37,8 +37,8 @@ export const createProductValidator = (req: Request , res: Response, next: NextF
     next();
 }
 export const getProductValidator = (req: Request , res: Response, next: NextFunction) => {
-    req.check('barcode', "Barcode is invalid").notEmpty().isString().isNumeric()
-    req.check('barcode', "Barcode must be between 4 to 18 Characters").isLength({
+    req.check('ean', "ean is invalid").notEmpty().isString().isNumeric()
+    req.check('ean', "ean must be between 4 to 18 Characters").isLength({
         min:8, 
         max:13,
     });
