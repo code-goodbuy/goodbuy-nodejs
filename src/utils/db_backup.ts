@@ -44,7 +44,7 @@ export function dbAutoBackup() {
         if (process.env.DBHost) {
             db = process.env.DBHost;
         } else {
-            console.log("DBHost not define in dbBackup.ts")
+            console.log("DBHost not define in db_backup.ts")
         }
 
         let currentDate: Date = stringToDate(date);

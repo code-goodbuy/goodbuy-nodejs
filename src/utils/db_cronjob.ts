@@ -1,5 +1,5 @@
 import * as schedule from "node-schedule";
-import { dbAutoBackup } from "./dbBackup";
+import { dbAutoBackup } from "./db_backup";
 
 
 class job {
