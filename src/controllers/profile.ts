@@ -29,7 +29,6 @@ export const getProfile = (req: Request, res: Response, next: NextFunction) => {
     .catch((err: Error) => {
       return res.status(500).json({ message: 'internal error'})
     });
-  
 };
 
 export const updateProfile = (

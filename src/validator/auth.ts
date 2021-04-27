@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
+
 export const createUserValidator = (req: Request , res: Response, next: NextFunction) => {
     req.check('username', "Username is invalid").notEmpty().isAlphanumeric()
     req.check('username', "Username must be between 5 to 22 Characters").isLength({

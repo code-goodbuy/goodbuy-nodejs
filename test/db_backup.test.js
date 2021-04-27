@@ -1,9 +1,9 @@
-let dbBackup = require('../dist/utils/dbBackup');
+let dbBackup = require('../dist/utils/db_backup');
 const path = require('path');
 const {stringToDate,
        generateBackupFolder,
        generateBackupPath,
-       generateOldBackupPath} = require("../dist/utils/dbBackup");
+       generateOldBackupPath} = require("../dist/utils/db_backup");
 
 let chai = require('chai');
 let expect = chai.expect;
