@@ -8,10 +8,11 @@ import { sign, verify } from 'jsonwebtoken';
 export const getProfile = (req: Request, res: Response, next: NextFunction) => {
   const { email } = req.body;
   const payload = res.locals.payload;
-
-  UserModel.findOne({ email: email })
+  console.log(req.body.email)
+  console.log(payload.email)
+  UserModel.findOne({ email: payload.email })
     .then((user) => {
-      if (user && email === payload.email) {
+      if (user) {
         return res.status(200).json({
           _id: user._id,
           username: user.username,
