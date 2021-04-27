@@ -24,7 +24,7 @@ const transport = nodemailer.createTransport({
             </div>`,
       }).catch((err: Error) => console.log(err));
     };
-  
+  //TODO validate confirmation code
   export const confirmUser = (req: Request, res: Response) => {
       UserModel.findOne({
           confirmationCode: req.params.confirmationCode,

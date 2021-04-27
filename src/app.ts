@@ -8,6 +8,7 @@ import promBundle from 'express-prom-bundle';
 import cookieParser from "cookie-parser";
 import authRoutes from "./routes/auth";
 import productRoutes from "./routes/product";
+import profileRoutes from "./routes/profile";
 import job from "./utils/db_cronjob";
 import rt from "file-stream-rotator";
 
@@ -61,6 +62,7 @@ class App {
     private initRoutes() {// Validate incoming data
         this.app.use('/api', authRoutes);
         this.app.use('/api', productRoutes);
+        this.app.use('/api', profileRoutes);
         console.log('Routes initiated.');
     }
 
