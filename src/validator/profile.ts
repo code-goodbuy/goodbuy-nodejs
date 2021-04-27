@@ -4,7 +4,7 @@ export const updateProfileValidator = (req: Request, res: Response, next: NextFu
     min: 0,
     max: 256
   });
-  req.check("imageURL", "Image URL is invalid").isURL;
+  req.check("imageURL", "Image URL is invalid").isURL();
   const errors = req.validationErrors();
   if (errors) {
     const firstError = errors.map((error: { msg: string; }) => error.msg)[0];
