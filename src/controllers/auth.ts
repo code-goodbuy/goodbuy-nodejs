@@ -120,6 +120,7 @@ export const authenticateToken = (req: Request, res: Response, next: NextFunctio
             let payload: any = null
             payload = verify(token, accessTokenSecret)
             if (payload) {
+                res.locals.payload = payload;
                 next()
             }
         }
