@@ -8,7 +8,7 @@ export const getAllProducts = (req: Request, res: Response) => {
     const products = ProductModel.find().limit(5)
     .select("name brand corporation ean state")
     .then(products => {
-        res.status(200).json({products: products})
+        return res.status(200).json({products: products})
     })
     .catch(err => console.log(err));
 };
@@ -18,9 +18,9 @@ export const getProduct = (req: Request, res: Response) => {
     const product = ProductModel.find({ean: ean})
     .then(product => {
         if (product.length > 0) {
-            res.status(200).json({product: product})
+            return res.status(200).json({product: product})
         } else {
-            res.status(204).json({product: product})
+            return res.status(204).json({product: product})
             console.log("Product gets scraped")
             sendEanToRabbitMQ(ean)
         }
@@ -29,11 +29,32 @@ export const getProduct = (req: Request, res: Response) => {
 }
 
 export const createProduct =  (req: Request, res: Response) => {
-    const product = new ProductModel(req.body)
-    product.save()
-    .then(result => {
-        res.status(200).json({
-            product: result
+    ProductModel.findOne({ean: req.body.ean})
+    .then(product => {
+        if(product){
+            return res.status(401).json({message: "Product already exists"})
+        }
+        else {
+            const product = new ProductModel(req.body)
+            product.save()
+            .then(result => {
+                return res.status(200).json({
+                    product: result
+                })
+            })
+            .catch((err: Error) => {
+                console.log(err)
+                return res.status(500).json({
+                    message: "Product couldn't be created"
+                })
+            })
+        }
+    })
+    .catch((err: Error) => {
+        console.log(err)
+        return res.status(500).json({
+            message: "Product couldn't be created"
         })
     })
+
 };
