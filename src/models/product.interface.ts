@@ -2,7 +2,7 @@ interface IProduct {
     name: string;
     brand: string;
     corporation: string;
-    ean: string;
+    ean: number;
     state: string;
 }
 

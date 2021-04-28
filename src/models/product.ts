@@ -21,10 +21,8 @@ const productSchema = new mongoose.Schema({
         max: 50,
     },
     ean: {
-        type: String,
-        required: "No Ean error message",
-        min: 4,
-        max: 18,
+        type: Number,
+        required: "No Ean error message"
     },
     state: {
         type: String,
