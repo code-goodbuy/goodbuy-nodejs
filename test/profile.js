@@ -71,7 +71,6 @@ describe("Authorization", () => {
         .put('/api/profile')
         .send(userInfo)
         .end((err, res) => {
-          console.log(res)
           res.should.have.status(401);
         })
       done();

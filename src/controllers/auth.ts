@@ -196,7 +196,6 @@ export const revokeRefreshToken = (req: Request, res: Response, next: NextFuncti
                     if (user?.tokenVersion === tokenVersion) {
                         try {
                             let newTokenVersion: number = tokenVersion + 1
-                            console.log(newTokenVersion)
                             let updatedUser = UserModel.updateOne(
                                 { email: payload.email },
                                 { tokenVersion: newTokenVersion }

@@ -16,8 +16,7 @@ export const getAllProducts = (req: Request, res: Response) => {
 export const getProduct = (req: Request, res: Response) => {
     try{
         let ean = parseInt(req.params.ean, 10);
-        console.log(ean)
-        console.log(req.params.ean.length)
+
         if((req.params.ean.length !== 8 && req.params.ean.length !== 13)){
             return res.status(401).json({message: "Invalid ean code"})
         }
@@ -52,7 +51,6 @@ export const getProduct = (req: Request, res: Response) => {
         .catch(err => console.log(err));
         }
     catch{
-        console.log("wtf")
         return res.status(401).json({message: "Invalid ean code"})
     }
 }

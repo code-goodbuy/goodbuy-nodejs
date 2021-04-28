@@ -217,7 +217,6 @@ describe('Authentication', () => {
             const accessToken = jwt.sign({email: "testmail123@test.de"}, accessTokenSecret, { expiresIn: '1m' })
             let refreshToken = createRefreshToken("testmail123@test.de", 0)
             const cookieValue =  'jid=' + JSON.stringify(refreshToken)
-            console.log(accessToken)
             chai.request(server)
             .post('/api/logout')
             .set({ "Authorization": `Bearer ${accessToken}`})
