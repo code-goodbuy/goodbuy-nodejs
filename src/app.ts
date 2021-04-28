@@ -52,6 +52,7 @@ class App {
         this.app.use(bodyParser.json({limit: 1000, type: "application/json"})); // The size limit of request in bytes + content type
         this.app.use(expressValidator());
         this.app.use(promBundle({
+            metricsPath: '/api/metrics',
             autoregister: true,
             includeStatusCode: true,
             includePath: true,
