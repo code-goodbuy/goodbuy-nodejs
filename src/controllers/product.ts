@@ -53,7 +53,10 @@ export const createProduct =  (req: Request, res: Response) => {
             product.save()
             .then(result => {
                 return res.status(200).json({
-                    product: result
+                    name: result.name,
+                    brand: result.brand, 
+                    corporation: result.corporation,
+                    ean: result.ean
                 })
             })
             .catch((err: Error) => {
