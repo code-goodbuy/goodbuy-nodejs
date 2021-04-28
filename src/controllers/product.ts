@@ -20,9 +20,17 @@ export const getProduct = (req: Request, res: Response) => {
         if (product.length > 0) {
             return res.status(200).json({product: product})
         } else {
-            return res.status(204).json({product: product})
             console.log("Product gets scraped")
-            sendEanToRabbitMQ(ean)
+            try{
+                sendEanToRabbitMQ(ean)
+                return res.status(409).json({message: "Product will be available soon!"})
+            }
+            catch(err){
+                console.log(err)
+                return res.status(500).json({
+                    message: "Product couldn't be created"
+                })
+            }
         }
     })
     .catch(err => console.log(err));
