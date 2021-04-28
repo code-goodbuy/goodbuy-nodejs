@@ -21,11 +21,6 @@ export const createProductValidator = (req: Request , res: Response, next: NextF
         min:4, 
         max:18,
     });
-    req.check('state', "Product state is missing").notEmpty().isAlpha()
-    req.check('state', "Product state must be between 3 and 20 Characters").isLength({
-        min:3, 
-        max:20,
-    });
     // check for errors
     const errors = req.validationErrors();
     // if error occur show the first one as they happen

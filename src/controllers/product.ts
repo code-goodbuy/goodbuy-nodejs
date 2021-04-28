@@ -43,7 +43,13 @@ export const createProduct =  (req: Request, res: Response) => {
             return res.status(401).json({message: "Product already exists"})
         }
         else {
-            const product = new ProductModel(req.body)
+            const product = new ProductModel({
+                name: req.body.name, 
+                brand: req.body.brand, 
+                corporation: req.body.corporation, 
+                ean: req.body.ean,
+                state: "unverified"
+            })
             product.save()
             .then(result => {
                 return res.status(200).json({
