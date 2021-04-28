@@ -15,15 +15,25 @@ export const getAllProducts = (req: Request, res: Response) => {
 
 export const getProduct = (req: Request, res: Response) => {
     const ean = req.params.ean
-    const product = ProductModel.find({ean: ean})
+    ProductModel.findOne({ean: ean})
     .then(product => {
-        if (product.length > 0) {
-            return res.status(200).json({product: product})
+        if (product) {
+            if(product.state == "verified"){
+                return res.status(200).json({
+                    name: product.name,
+                    brand: product.brand, 
+                    corporation: product.corporation,
+                    ean: product.ean
+                })
+            }
+            else {
+                return res.status(409).json({message: "Product is not available yet!"})
+            }
         } else {
             console.log("Product gets scraped")
             try{
                 sendEanToRabbitMQ(ean)
-                return res.status(409).json({message: "Product will be available soon!"})
+                return res.status(409).json({message: "Product is not available yet!"})
             }
             catch(err){
                 console.log(err)
