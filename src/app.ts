@@ -7,6 +7,7 @@ import cors from 'cors';
 import promBundle from 'express-prom-bundle';
 import cookieParser from "cookie-parser";
 import authRoutes from "./routes/auth";
+import documentationRoutes from "./routes/documentation";
 import productRoutes from "./routes/product";
 import profileRoutes from "./routes/profile";
 import job from "./utils/db_cronjob";
@@ -63,6 +64,7 @@ class App {
         this.app.use('/api', authRoutes);
         this.app.use('/api', productRoutes);
         this.app.use('/api', profileRoutes);
+        this.app.use('/api', documentationRoutes)
         console.log('Routes initiated.');
     }
 
