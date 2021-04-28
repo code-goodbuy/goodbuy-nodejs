@@ -22,6 +22,11 @@ export const registerUser = (req: Request, res: Response) => {
             if (userDoc) return res.status(409).json({
                 message: "User does not exist or password/email is wrong"
             })
+            UserModel.findOne({ username: req.body.username})
+            .then(userDoc => {
+                if (userDoc) return res.status(409).json({
+                    message: "User does not exist or password/email is wrong"
+                })
             let password: string = req.body.password
             const saltRounds: number = 10;
             bcrypt.hash(password, saltRounds, function (err: Error, hash: String) {
@@ -37,8 +42,8 @@ export const registerUser = (req: Request, res: Response) => {
                         username: req.body.username,
                         email: req.body.email,
                         password: req.body.password,
-                        acceptedTerms: req.body.acceptedTerms,
-                        hasRequiredAge: req.body.hasRequiredAge,
+                        acceptedTerms: true,
+                        hasRequiredAge: true,
                         tokenVersion: 0,
                         active: false,
                         confirmationCode: confirmationCode
@@ -64,6 +69,7 @@ export const registerUser = (req: Request, res: Response) => {
             })
         })
         .catch((err: Error) => console.log(err));
+    })
 }
 
 export const loginUser = (req: Request, res: Response) => {
