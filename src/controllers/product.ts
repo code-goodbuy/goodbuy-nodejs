@@ -6,7 +6,7 @@ import { sendEanToRabbitMQ } from "../utils/send_ean";
 // Create some kind of product and user validator that acts as a middleware
 export const getAllProducts = (req: Request, res: Response) => {
     const products = ProductModel.find({state: "verified"}).limit(5)
-    .select("name brand corporation ean state")
+    .select("name brand corporation ean -_id")
     .then(products => {
         return res.status(200).json({products: products})
     })
