@@ -28,10 +28,6 @@ describe('Product', () => {
             .send(product)
             .end((err, res) => {
                   res.should.have.status(200);
-                  // res.body.should.be.a('object');
-                  // res.body.product.should.have.property('name');
-                  // res.body.product.should.have.property('brand');
-                  // res.body.product.should.have.property('corporation');
               done();
             });
       });
