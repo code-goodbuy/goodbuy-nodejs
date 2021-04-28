@@ -12,10 +12,10 @@ const registerCounter = new client.Counter({
 
 export const registerUser = (req: Request, res: Response) => {
 
-    // we have to send a email that bestätigt that it is ur email
     // send better responses 
     const email: string = req.body.email;
     const password: string = req.body.password;
+    if(!req.body.acceptedTerms || !req.body.hasRequiredAge){return res.status(401).json({message: "You have to agree to our term of condition and have the required age to register as user!"})}
     // Should probably also check if username already exists but that is not important right now
     const userAlreadyExist = UserModel.findOne({ email: email })
         .then(userDoc => {
