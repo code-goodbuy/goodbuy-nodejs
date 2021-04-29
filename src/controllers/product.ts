@@ -1,6 +1,7 @@
 import ProductModel from "../models/product";
 import { Request, Response, NextFunction } from 'express';
 import { sendEanToRabbitMQ } from "../utils/send_ean";
+const configcat = require("configcat-node");
 
 // Todo review all inputs and validate them same as in auth.ts 
 // Create some kind of product and user validator that acts as a middleware
@@ -97,3 +98,27 @@ export const createProduct =  (req: Request, res: Response) => {
     })
 
 };
+
+export const configCatClient = configcat.createClient(process.env.CONFIG_CAT_KEY);
+
+export const deleteProduct = (req: Request, res: Response) => {
+    configCatClient.getValue("deleteproduct", false, (value: boolean) => {
+        if(value) {
+            ProductModel.findOneAndDelete(req.body.ean)
+            .then(productDoc => {
+                if(productDoc){
+                    res.status(200).json({message: "Product was deleted"})
+                }
+                else{
+                    res.status(409).json({message: "Product doesn't exist"})
+                }
+            })
+            .catch((err: Error) =>{
+                console.log(err)
+                res.status(500).json({message: "There was a problem deleting the product"})
+            })
+        } else {
+            res.status(404).json({message: "This feature doesn't exist yet"})
+        }
+    }); 
+}

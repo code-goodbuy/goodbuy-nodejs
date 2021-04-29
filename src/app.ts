@@ -3,7 +3,6 @@ import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import expressValidator from 'express-validator';
-import cors from 'cors';
 import promBundle from 'express-prom-bundle';
 import cookieParser from "cookie-parser";
 import authRoutes from "./routes/auth";
