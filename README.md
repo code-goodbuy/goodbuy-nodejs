@@ -33,9 +33,9 @@ $ cd goodbuy-nodejs
 ```
 $ git checkout dev
 ```
-3. Add global ENV variables (*list shared via PassCamp*)
+3. Add global ENV variables (*list shared via PassCamp*) - **mandatory**
 4. Install Node.js (will also install NPM)
-5. Install MongoDB as local DB
+5. Install MongoDB as local DB and run it **mandatory**
 6. Install project dependencies:
 ```
 $ npm install
@@ -46,7 +46,7 @@ $ npx tsc -w -p .
 ```
 8. Run the dev branch:
 ```
-$ npm run dev
+$ npm run local
 ```
 
 ## API Reference
