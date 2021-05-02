@@ -16,9 +16,7 @@ The current repository reflects the work done on the backend for the GoodBuy pro
 ![Issues](https://img.shields.io/github/issues-pr/code-goodbuy/goodbuy-nodejs.svg)
 ![Issues](https://img.shields.io/github/issues-pr-closed/code-goodbuy/goodbuy-nodejs.svg)
 
-## Tech / Framework used
-
-**Built with:**
+## Built with
 
 ![ts](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
 ![nodejs](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)
