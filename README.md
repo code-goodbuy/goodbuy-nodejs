@@ -9,18 +9,24 @@ The current repository reflects the work done on the backend for the GoodBuy pro
 
 ## Build status
 
-Travis CI - [![Build Status](https://travis-ci.com/code-goodbuy/goodbuy-nodejs.svg?branch=dev)](https://travis-ci.com/code-goodbuy/goodbuy-nodejs)
+[![Build Status](https://travis-ci.com/code-goodbuy/goodbuy-nodejs.svg?branch=dev)](https://travis-ci.com/code-goodbuy/goodbuy-nodejs)
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://github.com/code-goodbuy/goodbuy-nodejs)
+![Issues](https://img.shields.io/github/issues/code-goodbuy/goodbuy-nodejs.svg)
+![Issues](https://img.shields.io/github/issues-closed/code-goodbuy/goodbuy-nodejs.svg)
+![Issues](https://img.shields.io/github/issues-pr/code-goodbuy/goodbuy-nodejs.svg)
+![Issues](https://img.shields.io/github/issues-pr-closed/code-goodbuy/goodbuy-nodejs.svg)
 
 ## Tech / Framework used
 
 **Built with:**
-- Typescript
-- Node.js
-- Express
-- Docker
-- MongoDB
-- AWS
-- RabbitMQ
+
+![ts](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
+![nodejs](https://img.shields.io/badge/Node.js-43853D?style=for-the-badge&logo=node.js&logoColor=white)
+![express](https://img.shields.io/badge/Express.js-404D59?style=for-the-badge)
+![mongodb](https://img.shields.io/badge/MongoDB-4EA94B?style=for-the-badge&logo=mongodb&logoColor=white)
+![aws](https://img.shields.io/badge/Amazon_AWS-232F3E?style=for-the-badge&logo=amazon-aws&logoColor=white)
+
+..and RabbitMQ, Docker too! (can't find the badge :D)
 
 ## Installation
 
