@@ -11,6 +11,7 @@ import productRoutes from "./routes/product";
 import profileRoutes from "./routes/profile";
 import job from "./utils/db_cronjob";
 import rt from "file-stream-rotator";
+import cors from "cors";
 
 class App {
     public app: express.Application;
