@@ -8,8 +8,6 @@ import { sign, verify } from 'jsonwebtoken';
 export const getProfile = (req: Request, res: Response, next: NextFunction) => {
   const { email } = req.body;
   const payload = res.locals.payload;
-  // console.log(req.body.email)
-  // console.log(payload.email)
   UserModel.findOne({ email: payload.email })
     .then((user) => {
       if (user) {
@@ -64,28 +62,3 @@ export const updateProfile = (
     return res.status(501).json({ message: "internal server error" })
   });
 };
-
-// export const authenticateEmailAndToken = (req: Request, res: Response, next: NextFunction) => {
-//   const authHeader = req.headers['authorization']
-//   const token = authHeader && authHeader.split(' ')[1]
-//   if (token == null) return res.status(401).json({ message: "JWT is missing, access denied" })
-//   if (process.env.ACCESS_TOKEN_SECRET) {
-//       const accessTokenSecret: string = process.env.ACCESS_TOKEN_SECRET
-//       try {
-//           let payload: any = null
-//           payload = verify(token, accessTokenSecret)
-//           if (payload.email === req.body.email) {
-//               next()
-//           } else {
-//             return res.status(409).json({
-//               message: "User credential is wrong"
-//             })
-//           }
-//       }
-//       catch (err) {
-//           console.log(err)
-//           return res.status(401).json({ message: "Invalid Access Token" })
-//       }
-
-//   }
-// }

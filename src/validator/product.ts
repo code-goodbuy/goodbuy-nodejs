@@ -16,16 +16,7 @@ export const createProductValidator = (req: Request , res: Response, next: NextF
         min:2, 
         max:50,
     });
-    req.check('ean', "Ean is missing").notEmpty().isString().isNumeric()
-    req.check('ean', "Ean must be between 4 to 18 Characters").isLength({
-        min:4, 
-        max:18,
-    });
-    req.check('state', "Product state is missing").notEmpty().isAlpha()
-    req.check('state', "Product state must be between 3 and 20 Characters").isLength({
-        min:3, 
-        max:20,
-    });
+    req.check('ean', "Ean is missing").notEmpty().isNumeric()
     // check for errors
     const errors = req.validationErrors();
     // if error occur show the first one as they happen
@@ -36,12 +27,8 @@ export const createProductValidator = (req: Request , res: Response, next: NextF
     // proceed to next middleware
     next();
 }
-export const getProductValidator = (req: Request , res: Response, next: NextFunction) => {
-    req.check('ean', "ean is invalid").notEmpty().isString().isNumeric()
-    req.check('ean', "ean must be between 4 to 18 Characters").isLength({
-        min:8, 
-        max:13,
-    });
+export const deleteProductValidator = (req: Request , res: Response, next: NextFunction) => {
+    req.check('ean', "Ean is missing").notEmpty().isNumeric()
     // check for errors
     const errors = req.validationErrors();
     // if error occur show the first one as they happen

@@ -3,10 +3,10 @@ import mongoose from 'mongoose';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import expressValidator from 'express-validator';
-import cors from 'cors';
 import promBundle from 'express-prom-bundle';
 import cookieParser from "cookie-parser";
 import authRoutes from "./routes/auth";
+import documentationRoutes from "./routes/documentation";
 import productRoutes from "./routes/product";
 import profileRoutes from "./routes/profile";
 import job from "./utils/db_cronjob";
@@ -51,6 +51,7 @@ class App {
         this.app.use(bodyParser.json({limit: 1000, type: "application/json"})); // The size limit of request in bytes + content type
         this.app.use(expressValidator());
         this.app.use(promBundle({
+            metricsPath: '/api/metrics',
             autoregister: true,
             includeStatusCode: true,
             includePath: true,
@@ -63,6 +64,7 @@ class App {
         this.app.use('/api', authRoutes);
         this.app.use('/api', productRoutes);
         this.app.use('/api', profileRoutes);
+        this.app.use('/api', documentationRoutes)
         console.log('Routes initiated.');
     }
 
