@@ -15,8 +15,4 @@ script:
   - mocha tests.js --timeout 5000 --exit
 
 after_success:
-  - docker build -t goodbuy/nodejs-webserver:dev .
-
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-
-  - docker push goodbuy/nodejs-webserver:dev
+  - if [ "$TRAVIS_BRANCH" = "dev" ]; then docker build -t goodbuy/nodejs-webserver:dev . && echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin && docker push goodbuy/nodejs-webserver:dev; fi
