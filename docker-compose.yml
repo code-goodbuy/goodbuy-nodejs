@@ -1,8 +1,8 @@
-version: "2"
+version: "3"
 services:
   backend:
     environment:
-      - ACCESS_TOKEN_SECRET="$ACCESS_TOKEN_SECRET"
+      - ACCESS_TOKEN_SECRET=$ACCESS_TOKEN_SECRET
       - DBHost=$DBHost
       - MONGODB_DEV_URI=$MONGODB_DEV_URI
       - RABBITMQ_DEV_HOST=$RABBITMQ_DEV_HOST
@@ -18,3 +18,15 @@ services:
     ports:
       - "80:8080"
     command: "node dist/server.js"
+  watchtower:
+    image: containrrr/watchtower
+    container_name: watchtower
+    environment:
+      - WATCHTOWER_CLEANUP="true"
+      - TZ=Europe/Berlin
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /root/.docker/config.json:/config.json
+    command: --interval 900 --debug --cleanup
+    depends_on:
+      - backend

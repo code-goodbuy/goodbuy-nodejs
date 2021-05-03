@@ -23,5 +23,3 @@ RUN unzip awscliv2.zip
 RUN ./aws/install
 
 RUN npx tsc
-
-EXPOSE 8080
