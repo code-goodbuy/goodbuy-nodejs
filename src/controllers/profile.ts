@@ -1,6 +1,6 @@
 import UserModel from "../models/user.model";
 import { Request, Response, NextFunction } from "express";
-import { sign, verify } from 'jsonwebtoken';
+// import { sign, verify } from 'jsonwebtoken';
 
 
 // TODO add api doc to swagger
