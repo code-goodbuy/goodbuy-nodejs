@@ -29,13 +29,6 @@ class App {
         this.startBackupService();
         this.initMiddlewares();
         this.initRoutes();
-
-        // log formatting
-        morgan.token(
-            "custom",
-            // @ts-ignore
-            "[:date[iso]] [:user-agent] [:http-version] [:method] [:url] [:status] [:total-time ms]"
-        );
     }
 
     public listen() {
@@ -47,10 +40,15 @@ class App {
 
     private initMiddlewares() {
         this.app.use(cookieParser());
-        this.app.use(morgan("dev" ,{ skip: (req, res) => process.env.NODE_ENV === 'test' })); // Logging HTTP Requests and Errors
+        morgan.token(
+            "custom",
+            // @ts-ignore
+            "[:date[iso]] [:user-agent] [:http-version] [:method] [:url] [:status] [:total-time ms]"
+        );
+        this.app.use(morgan("custom", { skip: (req, res) => process.env.NODE_ENV === 'test' })); // Logging HTTP Requests and Errors
         this.app.use(morgan("custom", { stream: this.accessLogStream })); // writing log stream in 'log/access'
-        this.app.use(bodyParser.json({limit: 1000, type: "application/json"})); // The size limit of request in bytes + content type
-        this.app.use(cors({origin: /https:\/\/goodbuy-[\w\d-]*.vercel.app$/}));
+        this.app.use(bodyParser.json({ limit: 1000, type: "application/json" })); // The size limit of request in bytes + content type
+        this.app.use(cors({ origin: /https:\/\/goodbuy-[\w\d-]*.vercel.app$/ }));
         this.app.use(expressValidator());
         this.app.use(promBundle({
             metricsPath: '/api/metrics',
@@ -84,7 +82,7 @@ class App {
             })
             .then((res) => {
                 console.log('Database connected!');
-                }
+            }
             )
             .catch((err) => console.log(err));
     }
