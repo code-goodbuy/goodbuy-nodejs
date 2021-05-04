@@ -1,4 +1,5 @@
-FROM goodbuy/nodejs-webserver-baseimage:anthony
+# Goobuy's own base image containing: Node 14, nodemon, mongotools, awscli
+FROM goodbuy/nodejs-webserver-baseimage
 
 # Create app directory
 WORKDIR /usr/src/app
