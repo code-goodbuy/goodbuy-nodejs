@@ -45,6 +45,10 @@ const userSchema = new mongoose.Schema({
     },
     imageURL: {
         type: String,
+    },
+    created_at: {
+        type: Date,
+        required: "No timestamp",
     }
 })
 

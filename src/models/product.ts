@@ -30,6 +30,10 @@ const productSchema = new mongoose.Schema({
         min: 3,
         max: 20,
     },
+    created_at: {
+        type: Date,
+        required: "No timestamp",
+    }
 })
 
 const ProductModel = mongoose.model<IProduct & mongoose.Document>('Product', productSchema);

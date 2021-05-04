@@ -8,6 +8,7 @@ interface User {
     confirmationCode: string;
     description: string;
     imageURL: string;
+    created_at: Date;
 }
 
 export default User;
