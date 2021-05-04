@@ -51,7 +51,7 @@ describe("Authorization", () => {
     it("should get user profile with parameter without token", (done) => {
       chai
         .request(server)
-        .get('/api/profile/testuser')
+        .get('/api/user/testuser')
         .end((err, res) => {
           res.should.have.status(200);
           res.body.should.have.property("_id")
