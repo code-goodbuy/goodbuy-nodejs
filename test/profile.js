@@ -16,6 +16,7 @@ describe("Authorization", () => {
 
   const userInfo = {
     email: "testmail123@test.de",
+    username: "testuser12345",
     imageURL: "https://picsum.photos/1200/1400.jpg",
     description: "some description"
   }
@@ -44,6 +45,17 @@ describe("Authorization", () => {
         .send(userInfo.email)
         .end((err, res) => {
           res.should.have.status(401);
+        })
+      done();
+    })
+    it("should get user profile with parameter without token", (done) => {
+      chai
+        .request(server)
+        .get('/api/profile/testuser')
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.should.have.property("_id")
+          res.body.should.have.property("email")
         })
       done();
     })
