@@ -71,7 +71,8 @@ export const createProduct =  (req: Request, res: Response) => {
                 brand: req.body.brand, 
                 corporation: req.body.corporation, 
                 ean: req.body.ean,
-                state: "unverified"
+                state: "unverified",
+                created_at: new Date().getTime()
             })
             product.save()
             .then(result => {

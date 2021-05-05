@@ -10,13 +10,22 @@ const registerCounter = new client.Counter({
     help: 'The total number of registered Users'
 });
 
-export const registerUser = (req: Request, res: Response) => {
+//  ************** //
+//  RESPONSE CODES 
+//  200 -> OK -> GET: Die Ressource wurde geholt und wird im Nachrichtentext übertragen. 
+//            -> POST: Die Ressource, die das Ergebnis der Aktion beschreibt, wird im Hauptteil der Nachricht übertragen.
+//  401 -> Unauthorized
+//  403 -> Forbidden
+//  409 -> Conflict
+//  500 -> Internal Server Error
 
+
+
+export const registerUser = (req: Request, res: Response) => {
     // send better responses 
     const email: string = req.body.email;
     const password: string = req.body.password;
     if(!req.body.acceptedTerms || !req.body.hasRequiredAge){return res.status(401).json({message: "You have to agree to our term of condition and have the required age to register as user!"})}
-    // Should probably also check if username already exists but that is not important right now
     const userAlreadyExist = UserModel.findOne({ email: email })
         .then(userDoc => {
             if (userDoc) return res.status(409).json({
@@ -34,7 +43,6 @@ export const registerUser = (req: Request, res: Response) => {
                     message: "internal server error"
                 });
                 req.body.password = hash
-                // TODO add this on EC2 and travis
                 let confirmationCode = ""
                 if (process.env.EMAIL_CONFIRMATION_SECRET) {
                     confirmationCode = sign({ email: req.body.email }, process.env.EMAIL_CONFIRMATION_SECRET)
@@ -46,7 +54,8 @@ export const registerUser = (req: Request, res: Response) => {
                         hasRequiredAge: true,
                         tokenVersion: 0,
                         active: false,
-                        confirmationCode: confirmationCode
+                        confirmationCode: confirmationCode,
+                        created_at: new Date().getTime()
                     })
                     user.save()
                         .then(success => {
@@ -98,7 +107,6 @@ export const loginUser = (req: Request, res: Response) => {
                     return res.status(200).json(
                         {
                             "username": user.username,
-                            // "email": user.email,
                             "description": user.description,
                             "imageURL": user.imageURL,
                             "jwtAccessToken": accessToken,
@@ -111,7 +119,7 @@ export const loginUser = (req: Request, res: Response) => {
         })
         .catch(err => {
             console.log(err)
-            return res.status(501).json({ message: "internal server error" })
+            return res.status(500).json({ message: "internal server error" })
         }
         );
 }
