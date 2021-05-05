@@ -40,12 +40,12 @@ class App {
     }
 
     private initMiddlewares() {
-        this.app.use(cookieParser());
         morgan.token(
             "custom",
             // @ts-ignore
             "[:date[iso]] [:user-agent] [:http-version] [:method] [:url] [:status] [:total-time ms]"
         );
+        this.app.use(cookieParser());
         this.app.use(morgan("custom", { skip: (req, res) => process.env.NODE_ENV === 'test' })); // Logging HTTP Requests and Errors
         this.app.use(morgan("custom", { stream: this.accessLogStream })); // writing log stream in 'log/access'
         this.app.use(bodyParser.json({ limit: 1000, type: "application/json" })); // The size limit of request in bytes + content type
