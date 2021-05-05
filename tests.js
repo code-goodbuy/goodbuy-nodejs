@@ -3,6 +3,7 @@ require('./test/rabbitmq');
 require('./test/product');
 require('./test/db_backup.test');
 require("./test/profile");
+require("./test/user");
 require('./test/cleanup');
 
 // Add the test files in the order you want them executed.
