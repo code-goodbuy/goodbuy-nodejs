@@ -24,11 +24,9 @@ const productSchema = new mongoose.Schema({
         type: Number,
         required: "No Ean error message"
     },
-    state: {
-        type: String,
-        required: "No state error message",
-        min: 3,
-        max: 20,
+    verified: {
+        type: Boolean,
+        required: "No verification error message"
     },
     created_at: {
         type: Date,

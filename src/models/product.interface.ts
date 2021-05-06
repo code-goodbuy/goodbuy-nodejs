@@ -3,7 +3,7 @@ interface IProduct {
     brand: string;
     corporation: string;
     ean: number;
-    state: string;
+    verified: boolean;
     created_at: Date;
 }
 

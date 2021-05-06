@@ -3,10 +3,9 @@ import { Request, Response, NextFunction } from 'express';
 import { sendEanToRabbitMQ } from "../utils/send_ean";
 const configcat = require("configcat-node");
 
-// Todo review all inputs and validate them same as in auth.ts 
-// Create some kind of product and user validator that acts as a middleware
+
 export const getAllProducts = (req: Request, res: Response) => {
-    const products = ProductModel.find({state: "verified"}).limit(5)
+    const products = ProductModel.find({verified: true}).limit(5)
     .select("name brand corporation ean -_id")
     .then(products => {
         return res.status(200).json({products: products})
@@ -24,7 +23,7 @@ export const getProduct = (req: Request, res: Response) => {
         ProductModel.findOne({ean: ean})
         .then(product => {
             if (product) {
-                if(product.state == "verified"){
+                if(product.verified){
                     return res.status(200).json({
                         name: product.name,
                         brand: product.brand, 
@@ -71,7 +70,7 @@ export const createProduct =  (req: Request, res: Response) => {
                 brand: req.body.brand, 
                 corporation: req.body.corporation, 
                 ean: req.body.ean,
-                state: "unverified",
+                verified: false,
                 created_at: new Date().getTime()
             })
             product.save()

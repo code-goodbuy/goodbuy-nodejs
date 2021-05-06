@@ -18,7 +18,8 @@ describe('Product', () => {
             brand: "testrand", 
             corporation: "testcorp", 
             ean: 12345678,
-            state: "unverified"
+            verified: false,
+            created_at: new Date().getTime()
         }
           const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET
           const accessToken = jwt.sign({email: "testmail123@test.de"}, accessTokenSecret, { expiresIn: '5m' })
