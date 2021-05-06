@@ -11,7 +11,7 @@ export const createUserValidator = (req: Request , res: Response, next: NextFunc
         min:6, 
         max:40,
     });
-    req.check('password', "Password is invalid").notEmpty().isString()
+    req.check('password', "Password is invalid").notEmpty().matches('^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$')
     req.check('password', "Password must be between 8 to 50 Characters").isLength({
         min:8, 
         max:50,
