@@ -11,11 +11,7 @@ export const createUserValidator = (req: Request , res: Response, next: NextFunc
         min:6, 
         max:40,
     });
-    req.check('password', "Password is invalid").notEmpty().matches('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$')
-    req.check('password', "Password must be between 8 to 50 Characters").isLength({
-        min:8, 
-        max:50,
-    });
+    req.check('password', "Password is invalid").notEmpty().matches('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,50}$')
     req.check('acceptedTerms', "acceptedTerms is missing").notEmpty().isBoolean()
     req.check('hasRequiredAge', "hasRequiredAge is missing").notEmpty().isBoolean()
     // check for errors
