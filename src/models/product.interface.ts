@@ -2,7 +2,7 @@ interface IProduct {
     name: string;
     brand: string;
     corporation: string;
-    ean: number;
+    ean: string;
     verified: boolean;
     created_at: Date;
 }

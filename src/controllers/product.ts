@@ -15,12 +15,11 @@ export const getAllProducts = (req: Request, res: Response) => {
 
 export const getProduct = (req: Request, res: Response) => {
     try{
-        let ean = parseInt(req.params.ean, 10);
 
         if((req.params.ean.length !== 8 && req.params.ean.length !== 13)){
             return res.status(401).json({message: "Invalid ean code"})
         }
-        ProductModel.findOne({ean: ean})
+        ProductModel.findOne({ean: req.params.ean})
         .then(product => {
             if (product) {
                 if(product.verified){
@@ -37,7 +36,7 @@ export const getProduct = (req: Request, res: Response) => {
             } else {
                 console.log("Product gets scraped")
                 try{
-                    sendEanToRabbitMQ(ean.toString())
+                    sendEanToRabbitMQ(req.params.ean)
                     return res.status(409).json({message: "Product is not available yet!"})
                 }
                 catch(err){
@@ -56,7 +55,7 @@ export const getProduct = (req: Request, res: Response) => {
 }
 
 export const createProduct =  (req: Request, res: Response) => {
-    if((req.body.ean.toString().length !== 8 && req.body.ean.toString().length !== 13)){
+    if((req.body.ean.length !== 8 && req.body.ean.length !== 13)){
         return res.status(401).json({message: "Invalid ean code"})
     }
     ProductModel.findOne({ean: req.body.ean})

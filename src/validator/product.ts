@@ -16,8 +16,8 @@ export const createProductValidator = (req: Request , res: Response, next: NextF
         min:2, 
         max:50,
     });
-    req.check('ean', "Ean is invalid").notEmpty().isNumeric()
-    req.check('ean', "Ean mus be 8 or 13 Characters").isLength({
+    req.check('ean', "Ean is invalid").notEmpty().isString().matches('^[0-9]+$')
+    req.check('ean', "Ean must be 8 or 13 Characters").isLength({
         min: 8,
         max: 13
     })
@@ -32,7 +32,11 @@ export const createProductValidator = (req: Request , res: Response, next: NextF
     next();
 }
 export const deleteProductValidator = (req: Request , res: Response, next: NextFunction) => {
-    req.check('ean', "Ean is missing").notEmpty().isNumeric()
+    req.check('ean', "Ean is invalid").notEmpty().isString().matches('^[0-9]+$')
+    req.check('ean', "Ean must be 8 or 13 Characters").isLength({
+        min: 8,
+        max: 13
+    })
     // check for errors
     const errors = req.validationErrors();
     // if error occur show the first one as they happen

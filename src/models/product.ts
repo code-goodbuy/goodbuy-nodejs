@@ -21,7 +21,7 @@ const productSchema = new mongoose.Schema({
         max: 50,
     },
     ean: {
-        type: Number,
+        type: String,
         required: "No Ean error message"
     },
     verified: {
