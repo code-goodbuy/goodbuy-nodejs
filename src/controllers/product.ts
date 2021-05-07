@@ -1,6 +1,7 @@
 import ProductModel from "../models/product";
 import { Request, Response, NextFunction } from 'express';
 import { sendEanToRabbitMQ } from "../utils/send_ean";
+import { ObjectID } from "mongodb";
 const configcat = require("configcat-node");
 
 
@@ -65,6 +66,7 @@ export const createProduct =  (req: Request, res: Response) => {
         }
         else {
             const product = new ProductModel({
+                _id: req.body.ean,
                 name: req.body.name, 
                 brand: req.body.brand, 
                 corporation: req.body.corporation, 

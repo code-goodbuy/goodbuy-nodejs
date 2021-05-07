@@ -2,6 +2,12 @@ import mongoose from 'mongoose';
 import IProduct from './product.interface'
 
 const productSchema = new mongoose.Schema({
+    _id: {
+        type: String,
+        required: "No _id error message",
+        min: 8,
+        max: 13,
+    },
     name: {
         type: String,
         required: "No name error message",
@@ -22,7 +28,9 @@ const productSchema = new mongoose.Schema({
     },
     ean: {
         type: String,
-        required: "No Ean error message"
+        required: "No Ean error message",
+        min: 8,
+        max: 13,
     },
     verified: {
         type: Boolean,
