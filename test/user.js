@@ -26,7 +26,16 @@ describe("/GET user info", () => {
       .request(server)
       .get('/api/user/some-non-existing-user')
       .end((err, res) => {
-        res.should.have.status(503);
+        res.should.have.status(409);
+      })
+    done();
+  })
+  it("should fail when invalid username being requested", (done) => {
+    chai
+      .request(server)
+      .get('/api/user/!U@S#E_R')
+      .end((err, res) => {
+        res.body.should.have.property('message').eql("User does not exist or password/email is wrong");
       })
     done();
   })
