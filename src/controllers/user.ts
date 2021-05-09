@@ -2,9 +2,12 @@ import UserModel from "../models/user.model";
 import { Request, Response, NextFunction } from "express";
 
 export const getOtherProfile = (req: Request, res: Response, next: NextFunction) => {
-  UserModel.findOne({ username: req.params.username })
+  const username: string = req.params.username
+  UserModel.findOne({ username: username })
     .then((user) => {
-      if (user) {
+      if (user === null) {
+        return res.status(409).json({ message: "user does not exist" })
+      } else if (user) {
         return res.status(200).json({
           _id: user.id,
           email: user.email,
