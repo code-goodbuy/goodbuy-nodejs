@@ -14,11 +14,7 @@ export const getOtherProfile = (req: Request, res: Response, next: NextFunction)
           description: user.description,
           imageURL: user.imageURL
         })
-      } else {
-        return res.status(503).json({
-          message: "data not found"
-        })
-      }
+      } 
     })
     .catch((err: Error) => {
       return res.status(500).json({ message: "internal error" })
