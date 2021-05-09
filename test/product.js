@@ -17,8 +17,7 @@ describe('Product', () => {
             name: "testname", 
             brand: "testrand", 
             corporation: "testcorp", 
-            ean: 12345678,
-            state: "unverified"
+            ean: "12345678"
         }
           const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET
           const accessToken = jwt.sign({email: "testmail123@test.de"}, accessTokenSecret, { expiresIn: '5m' })
@@ -40,7 +39,7 @@ describe('Product', () => {
     it('it should GET the product by the given ean', (done) => {
 
             chai.request(server)
-          .get('/api/product/'+ 12345678)
+          .get('/api/product/'+ "12345678")
           .send()
           .end((err, res) => {
                 res.should.have.status(409);

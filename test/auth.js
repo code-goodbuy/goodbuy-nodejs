@@ -120,7 +120,7 @@ describe('Authentication', () => {
                 brand: "testproduct",
                 corporation: "testcorp",
                 ean: "123456789",
-                state: "unverified"
+                verified: false
             }
             chai.request(server)
             .post('/api/product')
@@ -137,7 +137,7 @@ describe('Authentication', () => {
                 brand: "testproduct",
                 corporation: "testcorp",
                 ean: "123456789",
-                state: "unverified"
+                verified: false
             }
             chai.request(server)
             .post('/api/product')
