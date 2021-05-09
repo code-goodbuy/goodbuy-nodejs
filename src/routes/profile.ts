@@ -4,6 +4,7 @@ import { authenticateToken } from '../controllers/auth';
 import { updateProfileValidator } from '../validator/profile';
 const router = express.Router();
 
+
 router.get('/profile', authenticateToken, getProfile)
 router.put('/profile', updateProfileValidator, authenticateToken, updateProfile)
 

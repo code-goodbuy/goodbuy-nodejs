@@ -1,6 +1,5 @@
 import UserModel from "../models/user.model";
 import { Request, Response, NextFunction } from "express";
-import { sign, verify } from 'jsonwebtoken';
 
 
 // TODO add api doc to swagger
@@ -25,7 +24,7 @@ export const getProfile = (req: Request, res: Response, next: NextFunction) => {
       }
     })
     .catch((err: Error) => {
-      return res.status(500).json({ message: 'internal error'})
+      return res.status(500).json({ message: 'internal error' })
     });
 };
 

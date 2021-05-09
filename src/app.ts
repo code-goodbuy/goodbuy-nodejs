@@ -9,6 +9,7 @@ import authRoutes from "./routes/auth";
 import documentationRoutes from "./routes/documentation";
 import productRoutes from "./routes/product";
 import profileRoutes from "./routes/profile";
+import userRoutes from "./routes/user";
 import job from "./utils/db_cronjob";
 import rt from "file-stream-rotator";
 import cors from "cors";
@@ -29,13 +30,6 @@ class App {
         this.startBackupService();
         this.initMiddlewares();
         this.initRoutes();
-
-        // log formatting
-        morgan.token(
-            "custom",
-            // @ts-ignore
-            "[:date[iso]] [:user-agent] [:http-version] [:method] [:url] [:status] [:total-time ms]"
-        );
     }
 
     public listen() {
@@ -46,8 +40,13 @@ class App {
     }
 
     private initMiddlewares() {
+        morgan.token(
+            "custom",
+            // @ts-ignore
+            "[:date[iso]] [:user-agent] [:http-version] [:method] [:url] [:status] [:total-time ms]"
+        );
         this.app.use(cookieParser());
-        this.app.use(morgan("dev" ,{ skip: (req, res) => process.env.NODE_ENV === 'test' })); // Logging HTTP Requests and Errors
+        this.app.use(morgan("custom", { skip: (req, res) => process.env.NODE_ENV === 'test' })); // Logging HTTP Requests and Errors
         this.app.use(morgan("custom", { stream: this.accessLogStream })); // writing log stream in 'log/access'
         this.app.use(bodyParser.json({limit: 1000, type: "application/json"})); // The size limit of request in bytes + content type
         this.app.use(cors({origin: /https:\/\/goodbuy-*[\w\d-]*.vercel.app$/}));
@@ -67,6 +66,7 @@ class App {
         this.app.use('/api', productRoutes);
         this.app.use('/api', profileRoutes);
         this.app.use('/api', documentationRoutes)
+        this.app.use('/api', userRoutes)
         console.log('Routes initiated.');
     }
 
@@ -84,7 +84,7 @@ class App {
             })
             .then((res) => {
                 console.log('Database connected!');
-                }
+            }
             )
             .catch((err) => console.log(err));
     }
