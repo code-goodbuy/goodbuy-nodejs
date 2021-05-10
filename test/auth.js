@@ -176,16 +176,34 @@ describe('Authentication', () => {
 
         })
         it('should succeed and return a new accessToken', (done) => {
-            let refreshToken = createRefreshToken("6099157870b70d0e077b7c63", 0)
-            chai.request(server)
-            .post('/api/refresh_token')
-            .set('Cookie', `jid=${refreshToken}`)
-            .send()
-            .end((err, res) => {
-                res.should.have.status(200);
-                res.body.should.have.property('accessToken');
-                done();
-            })
+            let user = new UserModel.default({
+                    "_id": "6099378003382e1813cd78c0",
+                    username: "username",
+                    email: "test@test.de",
+                    password: "eifjwJAIj123!",
+                    acceptedTerms: true,
+                    hasRequiredAge: true,
+                    tokenVersion: 0,
+                    active: true,
+                    confirmationCode: "confirmationCode",
+                    created_at: new Date().getTime()
+                })
+                user.save()
+                .then(() => {
+                    let refreshToken = createRefreshToken("6099378003382e1813cd78c0", 0)
+                    chai.request(server)
+                    .post('/api/refresh_token')
+                    .set('Cookie', `jid=${refreshToken}`)
+                    .send()
+                    .end((err, res) => {
+                        res.should.have.status(200);
+                        res.body.should.have.property('accessToken');
+                        done();
+                    })
+                })
+                .catch((err) => {
+                    console.log(err)
+                })
         })
         it('should fail because the token verion is invalid', (done) => {
             let refreshToken = createRefreshToken("6099157870b70d0e077b7c63", 2)
@@ -214,8 +232,8 @@ describe('Authentication', () => {
         })
         it('should logout a user', (done) => {
             const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET
-            const accessToken = jwt.sign({_id: "6099157870b70d0e077b7c63"}, accessTokenSecret, { expiresIn: '1m' })
-            let refreshToken = createRefreshToken("6099157870b70d0e077b7c63", 0)
+            const accessToken = jwt.sign({_id: "6099378003382e1813cd78c0"}, accessTokenSecret, { expiresIn: '1m' })
+            let refreshToken = createRefreshToken("6099378003382e1813cd78c0", 0)
             const cookieValue =  'jid=' + JSON.stringify(refreshToken)
             chai.request(server)
             .post('/api/logout')
