@@ -177,7 +177,7 @@ describe('Authentication', () => {
         })
         it('should succeed and return a new accessToken', (done) => {
             let user = new UserModel.default({
-                    "_id": "6099378003382e1813cd78c0",
+                    _id: "6099378003382e1813cd78c0",
                     username: "username",
                     email: "test@test.de",
                     password: "eifjwJAIj123!",

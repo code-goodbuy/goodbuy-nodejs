@@ -4,11 +4,10 @@ import { Request, Response, NextFunction } from "express";
 
 // TODO add api doc to swagger
 
-// TODO UPDATE PROFILE QUERIES WITH USER ID INSTAED OF EMAIL
 export const getProfile = (req: Request, res: Response, next: NextFunction) => {
   const { email } = req.body;
   const payload = res.locals.payload;
-  UserModel.findOne({ email: payload.email })
+  UserModel.findOne({ _id: payload._id })
     .then((user) => {
       if (user) {
         return res.status(200).json({
@@ -40,11 +39,11 @@ export const updateProfile = (
 
   UserModel.findOneAndUpdate(
     // filter, update, option
-    { email: email },
+    { _id: payload._id },
     { description: description, imageURL: imageURL },
     { new: true, useFindAndModify: false, upsert: true },
     (err, results) => {
-      if (results && payload.email === req.body.email) {
+      if (results) {
         res.status(200).json({
           _id: results._id,
           username: results.username,
