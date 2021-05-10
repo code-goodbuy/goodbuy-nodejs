@@ -22,7 +22,6 @@ const registerCounter = new client.Counter({
 
 
 export const registerUser = (req: Request, res: Response) => {
-    // send better responses 
     const email: string = req.body.email;
     const password: string = req.body.password;
     if(!req.body.acceptedTerms || !req.body.hasRequiredAge){return res.status(401).json({message: "You have to agree to our term of condition and have the required age to register as user!"})}
@@ -99,11 +98,11 @@ export const loginUser = (req: Request, res: Response) => {
             }
             bcrypt.compare(password, user.password, function (err: Error, result: Boolean) {
                 if (result) {
-                    res.cookie('jid', createRefreshToken(email, user.tokenVersion),
+                    res.cookie('jid', createRefreshToken(user._id, user.tokenVersion),
                         {
                             httpOnly: true,
                         })
-                    const accessToken = createAccessToken(email)
+                    const accessToken = createAccessToken(user._id)
                     return res.status(200).json(
                         {
                             "username": user.username,
@@ -155,11 +154,13 @@ export const authenticateRefreshToken = (req: Request, res: Response, next: Next
         try {
             payload = verify(token, refreshTokenSecret)
             const tokenVersion = payload.tokenVersion
-            const user = UserModel.findOne({ email: payload.email })
+            // TODO Here we query for the ID just so you are aware
+            const user = UserModel.findOne({ _id: payload._id })
                 .then(user => {
                     if (user?.tokenVersion === tokenVersion) {
                         return res.status(200).json({
-                            accessToken: createAccessToken(payload.email)
+                            // TODO Here we query for the ID just so you are aware
+                            accessToken: createAccessToken(payload._id)
                         })
                     }
                     else {
@@ -177,18 +178,18 @@ export const authenticateRefreshToken = (req: Request, res: Response, next: Next
     }
 
 }
-
-export const createAccessToken = (email: string) => {
+// TODO Here we query for the ID just so you are aware
+export const createAccessToken = (_id: string) => {
     if (process.env.ACCESS_TOKEN_SECRET) {
         const accessTokenSecret: string = process.env.ACCESS_TOKEN_SECRET
-        return sign({ email: email }, accessTokenSecret, { expiresIn: '5m' })
+        return sign({ _id: _id }, accessTokenSecret, { expiresIn: '5m' })
     }
 }
-
-export const createRefreshToken = (email: string, tokenVersion: number) => {
+// TODO Here we query for the ID just so you are aware
+export const createRefreshToken = (_id: string, tokenVersion: number) => {
     if (process.env.REFRESH_TOKEN_SECRET) {
         const refreshTokenSecret: string = process.env.REFRESH_TOKEN_SECRET
-        return sign({ email: email, tokenVersion: tokenVersion }, refreshTokenSecret, { expiresIn: '168h' })
+        return sign({ _id: _id, tokenVersion: tokenVersion }, refreshTokenSecret, { expiresIn: '168h' })
     }
 }
 
@@ -199,13 +200,15 @@ export const revokeRefreshToken = (req: Request, res: Response, next: NextFuncti
         try {
             let payload: any = verify(token, refreshTokenSecret)
             const tokenVersion = payload.tokenVersion
-            const user = UserModel.findOne({ email: payload.email })
+            // TODO findoneAndUpdate -> Can we write a better query so we can just use one?
+            // TODO Here we query for the ID just so you are aware
+            const user = UserModel.findOne({ _id: payload._id })
                 .then(user => {
                     if (user?.tokenVersion === tokenVersion) {
                         try {
                             let newTokenVersion: number = tokenVersion + 1
                             let updatedUser = UserModel.updateOne(
-                                { email: payload.email },
+                                { _id: payload._id },
                                 { tokenVersion: newTokenVersion }
                             )
                                 .then(() => {

@@ -176,7 +176,7 @@ describe('Authentication', () => {
 
         })
         it('should succeed and return a new accessToken', (done) => {
-            let refreshToken = createRefreshToken("testmail123@test.de", 0)
+            let refreshToken = createRefreshToken("6099157870b70d0e077b7c63", 0)
             chai.request(server)
             .post('/api/refresh_token')
             .set('Cookie', `jid=${refreshToken}`)
@@ -188,7 +188,7 @@ describe('Authentication', () => {
             })
         })
         it('should fail because the token verion is invalid', (done) => {
-            let refreshToken = createRefreshToken("testmail123@test.de", 2)
+            let refreshToken = createRefreshToken("6099157870b70d0e077b7c63", 2)
             chai.request(server)
             .post('/api/refresh_token')
             .set('Cookie', `jid=${refreshToken}`)
@@ -214,8 +214,8 @@ describe('Authentication', () => {
         })
         it('should logout a user', (done) => {
             const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET
-            const accessToken = jwt.sign({email: "testmail123@test.de"}, accessTokenSecret, { expiresIn: '1m' })
-            let refreshToken = createRefreshToken("testmail123@test.de", 0)
+            const accessToken = jwt.sign({_id: "6099157870b70d0e077b7c63"}, accessTokenSecret, { expiresIn: '1m' })
+            let refreshToken = createRefreshToken("6099157870b70d0e077b7c63", 0)
             const cookieValue =  'jid=' + JSON.stringify(refreshToken)
             chai.request(server)
             .post('/api/logout')

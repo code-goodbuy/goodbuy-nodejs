@@ -20,6 +20,7 @@ export const getProduct = (req: Request, res: Response) => {
         if((req.params.ean.length !== 8 && req.params.ean.length !== 13)){
             return res.status(401).json({message: "Invalid ean code"})
         }
+        // TODO look here if(product.verified) in query and  then create compound index for that and delete if
         ProductModel.findOne({ean: req.params.ean})
         .then(product => {
             if (product) {
@@ -59,6 +60,7 @@ export const createProduct =  (req: Request, res: Response) => {
     if((req.body.ean.length !== 8 && req.body.ean.length !== 13)){
         return res.status(401).json({message: "Invalid ean code"})
     }
+    // TODO update with _id because thats indexed its also ean
     ProductModel.findOne({ean: req.body.ean})
     .then(product => {
         if(product){
@@ -105,6 +107,7 @@ export const configCatClient = configcat.createClient(process.env.CONFIG_CAT_KEY
 export const deleteProduct = (req: Request, res: Response) => {
     configCatClient.getValue("deleteproduct", false, (value: boolean) => {
         if(value) {
+            // TODO update with _id because thats indexed its also ean
             ProductModel.findOneAndDelete(req.body.ean)
             .then(productDoc => {
                 if(productDoc){

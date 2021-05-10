@@ -4,6 +4,7 @@ import { Request, Response, NextFunction } from "express";
 
 // TODO add api doc to swagger
 
+// TODO UPDATE PROFILE QUERIES WITH USER ID INSTAED OF EMAIL
 export const getProfile = (req: Request, res: Response, next: NextFunction) => {
   const { email } = req.body;
   const payload = res.locals.payload;

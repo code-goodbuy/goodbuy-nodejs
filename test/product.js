@@ -20,7 +20,7 @@ describe('Product', () => {
             ean: "12345678"
         }
           const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET
-          const accessToken = jwt.sign({email: "testmail123@test.de"}, accessTokenSecret, { expiresIn: '5m' })
+          const accessToken = jwt.sign({_id: "6099157870b70d0e077b7c63"}, accessTokenSecret, { expiresIn: '5m' })
         chai.request(server)
             .post('/api/product')
             .set({ "Authorization": `Bearer ${accessToken}`})
