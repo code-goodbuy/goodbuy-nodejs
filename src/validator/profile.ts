@@ -6,7 +6,7 @@ export const updateProfileValidator = (req: Request, res: Response, next: NextFu
     max: 256
   });
   // allow alphabet, number, -, _, . only 
-  req.check("description", "description doesn't allow special character").matches(/^[a-z\d\-_.\s]+$/i)
+  req.check("description", "description contains invalid character").matches(/^[a-z\d\-_.!@#\s]+$/i)
   req.check("imageURL", "Image URL is invalid").isURL();
   const errors = req.validationErrors();
   if (errors) {
