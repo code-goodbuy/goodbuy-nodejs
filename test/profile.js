@@ -12,13 +12,13 @@ chai.use(chaiCookie);
 describe("Authorization", () => {
 
   const userInfo = {
-    email: "testmail123@test.de",
     username: "testuser12345",
+    email: "test@test.de",
     imageURL: "https://picsum.photos/1200/1400.jpg",
     description: "some description"
   }
 
-  const accessToken = createAccessToken(userInfo.email)
+  const accessToken = createAccessToken("6099378003382e1813cd78c0")
 
   describe("/GET profile", () => {
     it("should get profile result", (done) => {
