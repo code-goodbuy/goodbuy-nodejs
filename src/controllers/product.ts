@@ -113,28 +113,25 @@ export const createProduct =  (req: Request, res: Response) => {
 
 };
 
-export const configCatClient = configcat.createClient(process.env.CONFIG_CAT_KEY);
-
 export const deleteProduct = (req: Request, res: Response) => {
-    configCatClient.getValue("deleteproduct", false, (value: boolean) => {
-        if(value) {
-            // TODO update with _id because thats indexed its also ean
-            ProductModel.findOneAndDelete({_id: req.body.ean})
-            .select("_id")
-            .then(productDoc => {
-                if(productDoc){
-                    res.status(200).json({message: "Product was deleted"})
-                }
-                else{
-                    res.status(409).json({message: "Product doesn't exist"})
-                }
-            })
-            .catch((err: Error) =>{
-                console.log(err)
-                res.status(500).json({message: "There was a problem deleting the product"})
-            })
-        } else {
-            res.status(404).json({message: "This feature doesn't exist yet"})
-        }
-    }); 
+            if((req.params.ean.length !== 8 && req.params.ean.length !== 13)){
+                return res.status(400).json({message: "Invalid ean code"})
+            } 
+            else{
+                ProductModel.findOneAndDelete({_id: req.params.ean})
+                .select("_id")
+                .then(productDoc => {
+                    if(productDoc){
+                        res.status(200).json({message: "Product was deleted"})
+                    }
+                    else{
+                        res.status(409).json({message: "Product doesn't exist"})
+                    }
+                })
+                .catch((err: Error) =>{
+                    console.log(err)
+                    res.status(500).json({message: "There was a problem deleting the product"})
+                })
+            }      
+
 }
