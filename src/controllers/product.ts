@@ -113,12 +113,7 @@ export const createProduct =  (req: Request, res: Response) => {
 
 };
 
-export const configCatClient = configcat.createClient(process.env.CONFIG_CAT_KEY);
-
 export const deleteProduct = (req: Request, res: Response) => {
-    configCatClient.getValue("deleteproduct", false, (value: boolean) => {
-        if(value) {
-            // TODO update with _id because thats indexed its also ean
             ProductModel.findOneAndDelete({_id: req.body.ean})
             .select("_id")
             .then(productDoc => {
@@ -133,8 +128,4 @@ export const deleteProduct = (req: Request, res: Response) => {
                 console.log(err)
                 res.status(500).json({message: "There was a problem deleting the product"})
             })
-        } else {
-            res.status(404).json({message: "This feature doesn't exist yet"})
-        }
-    }); 
 }
