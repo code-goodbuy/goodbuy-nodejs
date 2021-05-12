@@ -16,7 +16,6 @@ const registerCounter = new client.Counter({
 //            -> POST: Die Ressource, die das Ergebnis der Aktion beschreibt, wird im Hauptteil der Nachricht übertragen.
 //  400 -> Bad Request
 //  401 -> Unauthorized
-//  403 -> Forbidden
 //  409 -> Conflict
 //  500 -> Something went wrong
 
