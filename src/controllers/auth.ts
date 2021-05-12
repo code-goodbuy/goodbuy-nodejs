@@ -21,10 +21,8 @@ const registerCounter = new client.Counter({
 //  500 -> Something went wrong
 
 export const registerUser = (req: Request, res: Response) => {
-    const email: string = req.body.email;
-    const password: string = req.body.password;
     if(!req.body.acceptedTerms || !req.body.hasRequiredAge){return res.status(400).json({message: "You have to agree to our term of condition and have the required age to register as user!"})}
-    const userAlreadyExist = UserModel.findOne({ email: email })
+    UserModel.findOne({ email: req.body.email })
         .select("_id")
         .then(userDoc => {
             if (userDoc) return res.status(409).json({
@@ -86,10 +84,11 @@ export const registerUser = (req: Request, res: Response) => {
             })
         })
         .catch((err: Error) => {
-            console.log(err)});
+            console.log(err)
             return res.status(500).json({
                 message: "Something went wrong"
             })
+        });
     })
 }
 
@@ -162,19 +161,16 @@ export const authenticateToken = (req: Request, res: Response, next: NextFunctio
 export const authenticateRefreshToken = (req: Request, res: Response, next: NextFunction) => {
     const token = req.cookies.jid;
     if (token == null) return res.status(401).json({ message: "Invalid refresh Token" })
-    let payload: any = null
     if (process.env.REFRESH_TOKEN_SECRET) {
         const refreshTokenSecret: string = process.env.REFRESH_TOKEN_SECRET
         try {
-            payload = verify(token, refreshTokenSecret)
+            let payload: any = verify(token, refreshTokenSecret)
             const tokenVersion = payload.tokenVersion
-            // TODO Here we query for the ID just so you are aware
             const user = UserModel.findOne({ _id: payload._id })
                 .select("tokenVersion")
                 .then(user => {
                     if (user?.tokenVersion === tokenVersion) {
                         return res.status(200).json({
-                            // TODO Here we query for the ID just so you are aware
                             accessToken: createAccessToken(payload._id)
                         })
                     }
@@ -192,17 +188,17 @@ export const authenticateRefreshToken = (req: Request, res: Response, next: Next
             return res.status(401).json({ message: "Invalid refresh Token" })
         }
     }
-    return res.status(500).json({ message: "Something went wrong"})
+    else{
+        return res.status(500).json({ message: "Something went wrong"})
+    }
 
 }
-// TODO Here we query for the ID just so you are aware
 export const createAccessToken = (_id: string) => {
     if (process.env.ACCESS_TOKEN_SECRET) {
         const accessTokenSecret: string = process.env.ACCESS_TOKEN_SECRET
         return sign({ _id: _id }, accessTokenSecret, { expiresIn: '5m' })
     }
 }
-// TODO Here we query for the ID just so you are aware
 export const createRefreshToken = (_id: string, tokenVersion: number) => {
     if (process.env.REFRESH_TOKEN_SECRET) {
         const refreshTokenSecret: string = process.env.REFRESH_TOKEN_SECRET
@@ -218,7 +214,6 @@ export const revokeRefreshToken = (req: Request, res: Response, next: NextFuncti
             let payload: any = verify(token, refreshTokenSecret)
             const tokenVersion = payload.tokenVersion
             // TODO findoneAndUpdate -> Can we write a better query so we can just use one?
-            // TODO Here we query for the ID just so you are aware
             const user = UserModel.findOne({ _id: payload._id })
                 .select("tokenVersion")
                 .then(user => {

@@ -2,7 +2,6 @@ import UserModel from "../models/user.model";
 import { Request, Response, NextFunction } from "express";
 
 
-// TODO add api doc to swagger
 
 export const getProfile = (req: Request, res: Response, next: NextFunction) => {
   const { email } = req.body;

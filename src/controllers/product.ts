@@ -32,7 +32,7 @@ export const getProduct = (req: Request, res: Response) => {
         }
         // TODO look here if(product.verified) in query and  then create compound index for that and delete if
         ProductModel.findOne({_id: req.params.ean})
-        .select("name brand corporation ean -_id")
+        .select("name brand corporation ean verified -_id")
         .then(product => {
             if (product) {
                 if(product.verified){
@@ -61,10 +61,11 @@ export const getProduct = (req: Request, res: Response) => {
             }
         })
         .catch((err) => {
-            console.log(err)});
+            console.log(err)
             return res.status(500).json({
                 message: "Something went wrong"
             })
+        });
 }
 
 export const createProduct =  (req: Request, res: Response) => {
