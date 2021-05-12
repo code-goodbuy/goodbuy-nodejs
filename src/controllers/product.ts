@@ -4,6 +4,15 @@ import { sendEanToRabbitMQ } from "../utils/send_ean";
 import { ObjectID } from "mongodb";
 const configcat = require("configcat-node");
 
+//  ************** //
+//  RESPONSE CODES 
+//  200 -> OK -> GET: Die Ressource wurde geholt und wird im Nachrichtentext übertragen. 
+//            -> POST: Die Ressource, die das Ergebnis der Aktion beschreibt, wird im Hauptteil der Nachricht übertragen.
+//  400 -> Bad Request
+//  401 -> Unauthorized
+//  403 -> Forbidden
+//  409 -> Conflict
+//  500 -> Something went wrong
 
 export const getAllProducts = (req: Request, res: Response) => {
     const products = ProductModel.find({verified: true}).limit(5)
@@ -11,17 +20,19 @@ export const getAllProducts = (req: Request, res: Response) => {
     .then(products => {
         return res.status(200).json({products: products})
     })
-    .catch(err => console.log(err));
+    .catch((err) => {
+        console.log(err)
+        return res.status(500).json({message: "Something went wrong"})
+    });
 };
 
 export const getProduct = (req: Request, res: Response) => {
-    try{
-
         if((req.params.ean.length !== 8 && req.params.ean.length !== 13)){
-            return res.status(401).json({message: "Invalid ean code"})
+            return res.status(400).json({message: "Invalid ean code"})
         }
         // TODO look here if(product.verified) in query and  then create compound index for that and delete if
-        ProductModel.findOne({ean: req.params.ean})
+        ProductModel.findOne({_id: req.params.ean})
+        .select("name brand corporation ean -_id")
         .then(product => {
             if (product) {
                 if(product.verified){
@@ -44,27 +55,27 @@ export const getProduct = (req: Request, res: Response) => {
                 catch(err){
                     console.log(err)
                     return res.status(500).json({
-                        message: "Product couldn't be found"
+                        message: "Something went wrong"
                     })
                 }
             }
         })
-        .catch(err => console.log(err));
-        }
-    catch{
-        return res.status(401).json({message: "Invalid ean code"})
-    }
+        .catch((err) => {
+            console.log(err)});
+            return res.status(500).json({
+                message: "Something went wrong"
+            })
 }
 
 export const createProduct =  (req: Request, res: Response) => {
     if((req.body.ean.length !== 8 && req.body.ean.length !== 13)){
-        return res.status(401).json({message: "Invalid ean code"})
+        return res.status(400).json({message: "Invalid ean code"})
     }
-    // TODO update with _id because thats indexed its also ean
-    ProductModel.findOne({ean: req.body.ean})
+    ProductModel.findOne({_id: req.body.ean})
+    .select("_id")
     .then(product => {
         if(product){
-            return res.status(401).json({message: "Product already exists"})
+            return res.status(409).json({message: "Product already exists"})
         }
         else {
             const product = new ProductModel({
@@ -108,7 +119,8 @@ export const deleteProduct = (req: Request, res: Response) => {
     configCatClient.getValue("deleteproduct", false, (value: boolean) => {
         if(value) {
             // TODO update with _id because thats indexed its also ean
-            ProductModel.findOneAndDelete(req.body.ean)
+            ProductModel.findOneAndDelete({_id: req.body.ean})
+            .select("_id")
             .then(productDoc => {
                 if(productDoc){
                     res.status(200).json({message: "Product was deleted"})

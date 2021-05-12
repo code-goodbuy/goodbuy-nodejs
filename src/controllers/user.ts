@@ -17,6 +17,6 @@ export const getOtherProfile = (req: Request, res: Response, next: NextFunction)
       } 
     })
     .catch((err: Error) => {
-      return res.status(500).json({ message: "internal error" })
+      return res.status(500).json({ message: "Something went wrong" })
     })
 }
