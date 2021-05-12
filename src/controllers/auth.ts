@@ -255,3 +255,16 @@ export const revokeRefreshToken = (req: Request, res: Response, next: NextFuncti
 
     }
 }
+export const isAuthorizied = (req: Request, res: Response,  next: NextFunction) => {
+    UserModel.findOne({_id: res.locals.payload._id})
+    .select("role _id")
+    .then(( UserDoc )=> {
+        if(UserDoc?.role === "Admin"){
+            next()
+        }
+        else {
+            return res.status(401).json({ message: "You are not authorized to perform this action"})
+        }
+    })
+
+}

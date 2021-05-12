@@ -114,18 +114,24 @@ export const createProduct =  (req: Request, res: Response) => {
 };
 
 export const deleteProduct = (req: Request, res: Response) => {
-            ProductModel.findOneAndDelete({_id: req.body.ean})
-            .select("_id")
-            .then(productDoc => {
-                if(productDoc){
-                    res.status(200).json({message: "Product was deleted"})
-                }
-                else{
-                    res.status(409).json({message: "Product doesn't exist"})
-                }
-            })
-            .catch((err: Error) =>{
-                console.log(err)
-                res.status(500).json({message: "There was a problem deleting the product"})
-            })
+            if((req.params.ean.length !== 8 && req.params.ean.length !== 13)){
+                return res.status(400).json({message: "Invalid ean code"})
+            } 
+            else{
+                ProductModel.findOneAndDelete({_id: req.params.ean})
+                .select("_id")
+                .then(productDoc => {
+                    if(productDoc){
+                        res.status(200).json({message: "Product was deleted"})
+                    }
+                    else{
+                        res.status(409).json({message: "Product doesn't exist"})
+                    }
+                })
+                .catch((err: Error) =>{
+                    console.log(err)
+                    res.status(500).json({message: "There was a problem deleting the product"})
+                })
+            }      
+
 }
