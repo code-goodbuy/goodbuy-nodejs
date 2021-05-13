@@ -3,7 +3,7 @@ services:
   backend:
     depends_on:
       - mongodb
-    command: "npm run test" # TODO: break the loop to package.json
+    command: "npm run test"
   mongodb:
     container_name: goodbuy_database
     image: mongo

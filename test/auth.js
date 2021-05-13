@@ -156,7 +156,7 @@ describe('Authentication', () => {
             .send()
             .end((err, res) => {
                 res.should.have.status(401);
-                res.body.should.have.property('message').eql( "JWT Refresh Token is missing, access denied");
+                res.body.should.have.property('message').eql("Invalid refresh Token");
                 done();
             })
         })
@@ -167,10 +167,6 @@ describe('Authentication', () => {
             .send()
             .end((err, res) => {
                 res.should.have.status(401);
-                res.body.should.have.property('err').eql({
-                    "name": "JsonWebTokenError",
-                    "message": "invalid signature"
-                });
                 done();
             })
 
@@ -213,7 +209,7 @@ describe('Authentication', () => {
             .send()
             .end((err, res) => {
                 res.should.have.status(401);
-                res.body.should.have.property("message").eql("Invalid refresh token version");
+                res.body.should.have.property("message").eql("Invalid refresh Token");
                 done();
             })
         })

@@ -49,6 +49,9 @@ const userSchema = new mongoose.Schema({
     created_at: {
         type: Date,
         required: "No timestamp",
+    },
+    role: {
+        type: String,
     }
 })
 

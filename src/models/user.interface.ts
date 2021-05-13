@@ -9,6 +9,7 @@ interface User {
     description: string;
     imageURL: string;
     created_at: Date;
+    role: string
 }
 
 export default User;

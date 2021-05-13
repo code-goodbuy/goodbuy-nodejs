@@ -14,23 +14,21 @@ const registerCounter = new client.Counter({
 //  RESPONSE CODES 
 //  200 -> OK -> GET: Die Ressource wurde geholt und wird im Nachrichtentext übertragen. 
 //            -> POST: Die Ressource, die das Ergebnis der Aktion beschreibt, wird im Hauptteil der Nachricht übertragen.
+//  400 -> Bad Request
 //  401 -> Unauthorized
-//  403 -> Forbidden
 //  409 -> Conflict
-//  500 -> Internal Server Error
-
-
+//  500 -> Something went wrong
 
 export const registerUser = (req: Request, res: Response) => {
-    const email: string = req.body.email;
-    const password: string = req.body.password;
-    if(!req.body.acceptedTerms || !req.body.hasRequiredAge){return res.status(401).json({message: "You have to agree to our term of condition and have the required age to register as user!"})}
-    const userAlreadyExist = UserModel.findOne({ email: email })
+    if(!req.body.acceptedTerms || !req.body.hasRequiredAge){return res.status(400).json({message: "You have to agree to our term of condition and have the required age to register as user!"})}
+    UserModel.findOne({ email: req.body.email })
+        .select("_id")
         .then(userDoc => {
             if (userDoc) return res.status(409).json({
                 message: "User does not exist or password/email is wrong"
             })
             UserModel.findOne({ username: req.body.username})
+            .select("_id")
             .then(userDoc => {
                 if (userDoc) return res.status(409).json({
                     message: "User does not exist or password/email is wrong"
@@ -39,7 +37,7 @@ export const registerUser = (req: Request, res: Response) => {
             const saltRounds: number = 10;
             bcrypt.hash(password, saltRounds, function (err: Error, hash: String) {
                 if (err) return res.status(500).json({
-                    message: "internal server error"
+                    message: "Something went wrong"
                 });
                 req.body.password = hash
                 let confirmationCode = ""
@@ -66,17 +64,30 @@ export const registerUser = (req: Request, res: Response) => {
                                 })
                             }
                             return res.status(500).json({
-                                message: "internal server error"
+                                message: "Something went wrong"
                             })
                         })
-                        .catch((err: Error) => (console.log(err)));
+                        .catch((err: Error) => {
+                            console.log(err)
+                            return res.status(500).json({
+                                message: "Something went wrong"
+                            })
+                        });
                 }
                 else {
                     console.log("Confirmation secret not found")
+                    return res.status(500).json({
+                        message: "Something went wrong"
+                    })
                 }
             })
         })
-        .catch((err: Error) => console.log(err));
+        .catch((err: Error) => {
+            console.log(err)
+            return res.status(500).json({
+                message: "Something went wrong"
+            })
+        });
     })
 }
 
@@ -84,12 +95,13 @@ export const loginUser = (req: Request, res: Response) => {
     const email: string = req.body.email
     const password: string = req.body.password
     UserModel.findOne({ email: email })
+        .select("username description imageURL tokenVersion active password")
         .then(user => {
             if (user === null) {
                 return res.status(409).json({ message: "User does not exist or password/email is wrong" })
             }
             if (user.tokenVersion == null) {
-                return res.status(401).json({ message: "Missing Token Version" })
+                return res.status(400).json({ message: "Missing Token Version" })
             }
             if (user.active != true) {
                 return res.status(401).send({
@@ -118,7 +130,7 @@ export const loginUser = (req: Request, res: Response) => {
         })
         .catch(err => {
             console.log(err)
-            return res.status(500).json({ message: "internal server error" })
+            return res.status(500).json({ message: "Something went wrong" })
         }
         );
 }
@@ -147,45 +159,45 @@ export const authenticateToken = (req: Request, res: Response, next: NextFunctio
 
 export const authenticateRefreshToken = (req: Request, res: Response, next: NextFunction) => {
     const token = req.cookies.jid;
-    if (token == null) return res.status(401).json({ message: "JWT Refresh Token is missing, access denied" })
-    let payload: any = null
+    if (token == null) return res.status(401).json({ message: "Invalid refresh Token" })
     if (process.env.REFRESH_TOKEN_SECRET) {
         const refreshTokenSecret: string = process.env.REFRESH_TOKEN_SECRET
         try {
-            payload = verify(token, refreshTokenSecret)
+            let payload: any = verify(token, refreshTokenSecret)
             const tokenVersion = payload.tokenVersion
-            // TODO Here we query for the ID just so you are aware
             const user = UserModel.findOne({ _id: payload._id })
+                .select("tokenVersion")
                 .then(user => {
                     if (user?.tokenVersion === tokenVersion) {
                         return res.status(200).json({
-                            // TODO Here we query for the ID just so you are aware
                             accessToken: createAccessToken(payload._id)
                         })
                     }
                     else {
-                        return res.status(401).json({ message: "Invalid refresh token version" })
+                        return res.status(401).json({ message: "Invalid refresh Token" })
                     }
                 })
                 .catch(err => {
                     console.log(err)
-                    return res.status(500).json({ message: "Internal server error" })
+                    return res.status(500).json({ message: "Something went wrong"})
                 })
         }
         catch (err) {
-            return res.status(401).json({ err })
+            console.log(err)
+            return res.status(401).json({ message: "Invalid refresh Token" })
         }
+    }
+    else{
+        return res.status(500).json({ message: "Something went wrong"})
     }
 
 }
-// TODO Here we query for the ID just so you are aware
 export const createAccessToken = (_id: string) => {
     if (process.env.ACCESS_TOKEN_SECRET) {
         const accessTokenSecret: string = process.env.ACCESS_TOKEN_SECRET
         return sign({ _id: _id }, accessTokenSecret, { expiresIn: '5m' })
     }
 }
-// TODO Here we query for the ID just so you are aware
 export const createRefreshToken = (_id: string, tokenVersion: number) => {
     if (process.env.REFRESH_TOKEN_SECRET) {
         const refreshTokenSecret: string = process.env.REFRESH_TOKEN_SECRET
@@ -201,8 +213,8 @@ export const revokeRefreshToken = (req: Request, res: Response, next: NextFuncti
             let payload: any = verify(token, refreshTokenSecret)
             const tokenVersion = payload.tokenVersion
             // TODO findoneAndUpdate -> Can we write a better query so we can just use one?
-            // TODO Here we query for the ID just so you are aware
             const user = UserModel.findOne({ _id: payload._id })
+                .select("tokenVersion")
                 .then(user => {
                     if (user?.tokenVersion === tokenVersion) {
                         try {
@@ -213,7 +225,7 @@ export const revokeRefreshToken = (req: Request, res: Response, next: NextFuncti
                             )
                                 .then(() => {
                                     return res.status(200).json({
-                                        message: "Revoked refresh_token successfully"
+                                        message: "Logged out successfully"
                                     })
                                 }
                                 )
@@ -221,17 +233,17 @@ export const revokeRefreshToken = (req: Request, res: Response, next: NextFuncti
                         catch (err) {
                             console.log(err)
                             return res.status(500).json({
-                                message: "Problem with revoking the token"
+                                message: "Something went wrong"
                             })
                         }
                     }
                     else {
-                        return res.status(401).json({ message: "Invalid refresh token version" })
+                        return res.status(401).json({ message: "Invalid refresh token" })
                     }
                 })
                 .catch(err => {
                     console.log(err)
-                    return res.status(500).json({ message: "Internal server error" })
+                    return res.status(500).json({ message: "Something went wrong" })
                 })
         }
         catch (err) {
@@ -242,4 +254,17 @@ export const revokeRefreshToken = (req: Request, res: Response, next: NextFuncti
         }
 
     }
+}
+export const isAuthorizied = (req: Request, res: Response,  next: NextFunction) => {
+    UserModel.findOne({_id: res.locals.payload._id})
+    .select("role _id")
+    .then(( UserDoc )=> {
+        if(UserDoc?.role === "Admin"){
+            next()
+        }
+        else {
+            return res.status(401).json({ message: "You are not authorized to perform this action"})
+        }
+    })
+
 }

@@ -31,7 +31,7 @@ export const createProductValidator = (req: Request , res: Response, next: NextF
     // proceed to next middleware
     next();
 }
-export const deleteProductValidator = (req: Request , res: Response, next: NextFunction) => {
+export const eanProductValidator = (req: Request , res: Response, next: NextFunction) => {
     req.check('ean', "Ean is invalid").notEmpty().isString().matches('^[0-9]+$')
     req.check('ean', "Ean must be 8 or 13 Characters").isLength({
         min: 8,
