@@ -150,7 +150,6 @@ export const authenticateToken = (req: Request, res: Response, next: NextFunctio
             }
         }
         catch (err) {
-            console.log(err)
             return res.status(401).json({ message: "Invalid Access Token" })
         }
 
@@ -183,7 +182,6 @@ export const authenticateRefreshToken = (req: Request, res: Response, next: Next
                 })
         }
         catch (err) {
-            console.log(err)
             return res.status(401).json({ message: "Invalid refresh Token" })
         }
     }
