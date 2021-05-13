@@ -1,3 +1,5 @@
+process.env.DBHost= 'mongodb://127.0.0.1:27017/testing';
+
 let UserModel = require('../dist/models/user.model');
 const { createRefreshToken, createAccessToken } = require('../dist/controllers/auth')
 let chai = require('chai');
