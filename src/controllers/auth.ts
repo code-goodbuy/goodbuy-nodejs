@@ -143,7 +143,7 @@ export const authenticateToken = (req: Request, res: Response, next: NextFunctio
         const accessTokenSecret: string = process.env.ACCESS_TOKEN_SECRET
         try {
             let payload: any = null
-            payload = verify(token, accessTokenSecret)
+            payload = verify(token, accessTokenSecret, { issuer: "https://gb-be.de/" })
             if (payload) {
                 res.locals.payload = payload;
                 next()
@@ -162,7 +162,7 @@ export const authenticateRefreshToken = (req: Request, res: Response, next: Next
     if (process.env.REFRESH_TOKEN_SECRET) {
         const refreshTokenSecret: string = process.env.REFRESH_TOKEN_SECRET
         try {
-            let payload: any = verify(token, refreshTokenSecret)
+            let payload: any = verify(token, refreshTokenSecret, {issuer: "https://gb-be.de/"} )
             const tokenVersion = payload.tokenVersion
             const user = UserModel.findOne({ _id: payload._id })
                 .select("tokenVersion")
@@ -193,13 +193,13 @@ export const authenticateRefreshToken = (req: Request, res: Response, next: Next
 export const createAccessToken = (_id: string) => {
     if (process.env.ACCESS_TOKEN_SECRET) {
         const accessTokenSecret: string = process.env.ACCESS_TOKEN_SECRET
-        return sign({ _id: _id }, accessTokenSecret, { expiresIn: '5m' })
+        return sign({ _id: _id }, accessTokenSecret, { expiresIn: '15m', issuer: "https://gb-be.de/"})
     }
 }
 export const createRefreshToken = (_id: string, tokenVersion: number) => {
     if (process.env.REFRESH_TOKEN_SECRET) {
         const refreshTokenSecret: string = process.env.REFRESH_TOKEN_SECRET
-        return sign({ _id: _id, tokenVersion: tokenVersion }, refreshTokenSecret, { expiresIn: '168h' })
+        return sign({ _id: _id, tokenVersion: tokenVersion }, refreshTokenSecret, { expiresIn: '168h', issuer: "https://gb-be.de/" })
     }
 }
 
@@ -208,7 +208,7 @@ export const revokeRefreshToken = (req: Request, res: Response, next: NextFuncti
     if (process.env.REFRESH_TOKEN_SECRET) {
         const refreshTokenSecret: string = process.env.REFRESH_TOKEN_SECRET
         try {
-            let payload: any = verify(token, refreshTokenSecret)
+            let payload: any = verify(token, refreshTokenSecret, { issuer: "https://gb-be.de/" })
             const tokenVersion = payload.tokenVersion
             // TODO findoneAndUpdate -> Can we write a better query so we can just use one?
             const user = UserModel.findOne({ _id: payload._id })

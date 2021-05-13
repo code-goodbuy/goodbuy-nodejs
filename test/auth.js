@@ -229,8 +229,7 @@ describe('Authentication', () => {
             })
         })
         it('should logout a user', (done) => {
-            const accessTokenSecret = process.env.ACCESS_TOKEN_SECRET
-            const accessToken = jwt.sign({_id: "6099378003382e1813cd78c0"}, accessTokenSecret, { expiresIn: '1m' })
+            const accessToken = createAccessToken("6099378003382e1813cd78c0")
             let refreshToken = createRefreshToken("6099378003382e1813cd78c0", 0)
             const cookieValue =  'jid=' + JSON.stringify(refreshToken)
             chai.request(server)
