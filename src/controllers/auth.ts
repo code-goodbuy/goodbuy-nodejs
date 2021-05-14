@@ -2,23 +2,10 @@ import UserModel from '../models/user.model';
 import { Request, Response, NextFunction } from 'express';
 import { sign, verify } from 'jsonwebtoken';
 import bcrypt from 'bcrypt';
-import client from 'prom-client';
 import { sendConfirmationEmail } from './email';
+import { createAccessToken, createRefreshToken } from './jwt';
 const ApiError = require('../error/ApiError');
 
-const registerCounter = new client.Counter({
-    name: 'total_user_registered',
-    help: 'The total number of registered Users'
-});
-
-//  ************** //
-//  RESPONSE CODES 
-//  200 -> OK -> GET: Die Ressource wurde geholt und wird im Nachrichtentext übertragen. 
-//            -> POST: Die Ressource, die das Ergebnis der Aktion beschreibt, wird im Hauptteil der Nachricht übertragen.
-//  400 -> Bad Request
-//  401 -> Unauthorized
-//  409 -> Conflict
-//  500 -> Something went wrong
 
 export const registerUser = (req: Request, res: Response, next: NextFunction) => {
     if (!req.body.acceptedTerms || !req.body.hasRequiredAge) {
@@ -59,13 +46,13 @@ export const registerUser = (req: Request, res: Response, next: NextFunction) =>
                                 tokenVersion: 0,
                                 active: false,
                                 confirmationCode: confirmationCode,
+                                isAdmin: false,
                                 created_at: new Date().getTime()
                             })
                             user.save()
                                 .then(success => {
                                     if (success) {
                                         sendConfirmationEmail(req.body.username, req.body.email, confirmationCode)
-                                        registerCounter.inc()
                                         return res.status(200).json({
                                             message: "User was successfully created, please check your email"
                                         })
@@ -114,11 +101,11 @@ export const loginUser = (req: Request, res: Response, next: NextFunction) => {
             }
             bcrypt.compare(password, user.password, function (err: Error, result: Boolean) {
                 if (result) {
-                    res.cookie('jid', createRefreshToken(user._id, user.tokenVersion),
+                    res.cookie('jid', createRefreshToken(user._id, user.tokenVersion, false),
                         {
                             httpOnly: true,
                         })
-                    const accessToken = createAccessToken(user._id)
+                    const accessToken = createAccessToken(user._id, false)
                     return res.status(200).json(
                         {
                             "username": user.username,
@@ -139,85 +126,6 @@ export const loginUser = (req: Request, res: Response, next: NextFunction) => {
             return
         }
         );
-}
-
-export const authenticateToken = (req: Request, res: Response, next: NextFunction) => {
-    const authHeader = req.headers['authorization']
-    const token = authHeader && authHeader.split(' ')[1]
-    if (token == null) {
-        next(ApiError.unauthorized("JWT is missing, access denied"))
-        return
-    }
-    if (process.env.ACCESS_TOKEN_SECRET) {
-        const accessTokenSecret: string = process.env.ACCESS_TOKEN_SECRET
-        try {
-            let payload: any = null
-            payload = verify(token, accessTokenSecret, { issuer: "https://gb-be.de/" })
-            if (payload) {
-                res.locals.payload = payload;
-                next()
-            }
-        }
-        catch (err) {
-            next(ApiError.unauthorized("Invalid Access Token"))
-            return
-        }
-
-    }
-}
-
-export const authenticateRefreshToken = (req: Request, res: Response, next: NextFunction) => {
-    const token = req.cookies.jid;
-    if (token == null) {
-        next(ApiError.unauthorized("Invalid refresh Token"))
-        return
-    }
-    if (process.env.REFRESH_TOKEN_SECRET) {
-        const refreshTokenSecret: string = process.env.REFRESH_TOKEN_SECRET
-        try {
-            let payload: any = verify(token, refreshTokenSecret, { issuer: "https://gb-be.de/" })
-            const tokenVersion = payload.tokenVersion
-            const user = UserModel.findOne({ _id: payload._id })
-                .select("tokenVersion")
-                .then(user => {
-                    if (user?.tokenVersion === tokenVersion) {
-                        return res.status(200).json({
-                            accessToken: createAccessToken(payload._id)
-                        })
-                    }
-                    else {
-                        next(ApiError.unauthorized("Invalid refresh Token"))
-                        return
-                    }
-                })
-                .catch(err => {
-                    console.log(err)
-                    next(ApiError.internal("Something went wrong"))
-                    return
-                })
-        }
-        catch (err) {
-            next(ApiError.unauthorized("Invalid refresh Token"))
-            return
-        }
-    }
-    else {
-        next(ApiError.internal("Something went wrong"))
-        return
-    }
-
-}
-export const createAccessToken = (_id: string) => {
-    if (process.env.ACCESS_TOKEN_SECRET) {
-        const accessTokenSecret: string = process.env.ACCESS_TOKEN_SECRET
-        return sign({ _id: _id }, accessTokenSecret, { expiresIn: '15m', issuer: "https://gb-be.de/" })
-    }
-}
-export const createRefreshToken = (_id: string, tokenVersion: number) => {
-    if (process.env.REFRESH_TOKEN_SECRET) {
-        const refreshTokenSecret: string = process.env.REFRESH_TOKEN_SECRET
-        return sign({ _id: _id, tokenVersion: tokenVersion }, refreshTokenSecret, { expiresIn: '168h', issuer: "https://gb-be.de/" })
-    }
 }
 
 export const revokeRefreshToken = (req: Request, res: Response, next: NextFunction) => {
@@ -269,18 +177,4 @@ export const revokeRefreshToken = (req: Request, res: Response, next: NextFuncti
         }
 
     }
-}
-export const isAuthorizied = (req: Request, res: Response, next: NextFunction) => {
-    UserModel.findOne({ _id: res.locals.payload._id })
-        .select("role _id")
-        .then((UserDoc) => {
-            if (UserDoc?.role === "Admin") {
-                next()
-            }
-            else {
-                next(ApiError.unauthorized("You are not authorized to perform this action"))
-                return
-            }
-        })
-
 }

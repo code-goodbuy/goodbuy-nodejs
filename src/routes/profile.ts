@@ -1,6 +1,6 @@
 import express from 'express';
 import { getProfile, updateProfile } from "../controllers/profile";
-import { authenticateToken } from '../controllers/auth';
+import { authenticateToken } from '../controllers/jwt';
 import { updateProfileValidator } from '../validator/profile';
 const router = express.Router();
 
