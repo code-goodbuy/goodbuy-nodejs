@@ -1,5 +1,5 @@
 let Product = require('../dist/models/product');
-const { createAccessToken } = require('../dist/controllers/auth')
+const { createAccessToken } = require('../dist/controllers/jwt')
 let chai = require('chai');
 let chaiHttp = require('chai-http');
 let server = require('../dist/server');
@@ -19,7 +19,7 @@ describe('Product', () => {
             corporation: "testcorp", 
             ean: "12345678"
         }
-        const accessToken = createAccessToken("6099378003382e1813cd78c0")
+        const accessToken = createAccessToken("6099378003382e1813cd78c0", false)
         chai.request(server)
             .post('/api/product')
             .set({ "Authorization": `Bearer ${accessToken}`})

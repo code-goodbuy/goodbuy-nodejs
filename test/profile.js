@@ -1,7 +1,7 @@
 // let UserModel = require("../dist/models/user.model");
 const {
   createAccessToken,
-} = require("../dist/controllers/auth");
+} = require("../dist/controllers/jwt");
 let chai = require("chai");
 let chaiHttp = require("chai-http");
 let chaiCookie = require("chai-expected-cookie");
@@ -18,7 +18,7 @@ describe("Authorization", () => {
     description: "some description"
   }
 
-  const accessToken = createAccessToken("6099378003382e1813cd78c0")
+  const accessToken = createAccessToken("6099378003382e1813cd78c0", false)
 
   describe("/GET profile", () => {
     it("should get profile result", (done) => {

@@ -1,7 +1,7 @@
 process.env.DBHost= 'mongodb://127.0.0.1:27017/testing';
 
 let UserModel = require('../dist/models/user.model');
-const { createRefreshToken, createAccessToken } = require('../dist/controllers/auth')
+const { createRefreshToken, createAccessToken } = require('../dist/controllers/jwt')
 let chai = require('chai');
 let chaiHttp = require('chai-http');
 let chaiCookie = require('chai-expected-cookie');
@@ -96,7 +96,7 @@ describe('Authentication', () => {
             .send(loginData)
             .end((err, res) => {
                 res.should.have.status(409);
-                res.body.should.have.eql("User does not exist or password/email is wrong");
+                res.body.should.eql("User does not exist or password/email is wrong");
                 done();
             })
         })
@@ -129,7 +129,7 @@ describe('Authentication', () => {
             .send(product)
             .end((err, res) => {
                 res.should.have.status(401);
-                res.body.should.have.eql("JWT is missing, access denied");
+                res.body.should.eql("JWT is missing, access denied");
                 done();
             })    
         })
@@ -158,7 +158,7 @@ describe('Authentication', () => {
             .send()
             .end((err, res) => {
                 res.should.have.status(401);
-                res.body.should.have.eql("Invalid refresh Token");
+                res.body.should.eql("Invalid refresh Token");
                 done();
             })
         })
@@ -188,7 +188,7 @@ describe('Authentication', () => {
                 })
                 user.save()
                 .then(() => {
-                    let refreshToken = createRefreshToken("6099378003382e1813cd78c0", 0)
+                    let refreshToken = createRefreshToken("6099378003382e1813cd78c0", 0, false)
                     chai.request(server)
                     .post('/api/refresh_token')
                     .set('Cookie', `jid=${refreshToken}`)
@@ -204,7 +204,7 @@ describe('Authentication', () => {
                 })
         })
         it('should fail because the token verion is invalid', (done) => {
-            let refreshToken = createRefreshToken("6099157870b70d0e077b7c63", 2)
+            let refreshToken = createRefreshToken("6099157870b70d0e077b7c63", 2, false)
             chai.request(server)
             .post('/api/refresh_token')
             .set('Cookie', `jid=${refreshToken}`)
@@ -224,13 +224,13 @@ describe('Authentication', () => {
             .send()
             .end((err, res) => {
                 res.should.have.status(401);
-                res.body.should.have.eql('Invalid Access Token');                
+                res.body.should.eql('Invalid Access Token');                
             done();
             })
         })
         it('should logout a user', (done) => {
-            const accessToken = createAccessToken("6099378003382e1813cd78c0")
-            let refreshToken = createRefreshToken("6099378003382e1813cd78c0", 0)
+            const accessToken = createAccessToken("6099378003382e1813cd78c0", false)
+            let refreshToken = createRefreshToken("6099378003382e1813cd78c0", 0, false)
             const cookieValue =  'jid=' + JSON.stringify(refreshToken)
             chai.request(server)
             .post('/api/logout')
