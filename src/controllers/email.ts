@@ -1,5 +1,6 @@
 import UserModel from "../models/user.model";
 import { Request, Response, NextFunction } from 'express';
+const ApiError = require('../error/ApiError');
 
 const nodemailer = require("nodemailer");
 
@@ -21,10 +22,10 @@ const transport = nodemailer.createTransport({
             <p>Thank you for subscribing. Please confirm your email by clicking on the following link</p>
             <a href=https://goodbuy.vercel.app/verify?token=${confirmationCode}> Click here</a>
             </div>`,
-      }).catch((err: Error) => console.log(err));
+      }).catch((err: Error) => {console.log(err)});
     };
   //TODO validate confirmation code
-  export const confirmUser = (req: Request, res: Response) => {
+  export const confirmUser = (req: Request, res: Response, next: NextFunction) => {
     // TODO check if this selection over rides or just updates
       UserModel.findOne({
           confirmationCode: req.params.confirmationCode,
@@ -32,13 +33,14 @@ const transport = nodemailer.createTransport({
           .select("_id active")
           .then((user) => {
             if (!user) {
-              return res.status(404).send({ message: "User Not found." });
+              next(ApiError.notFound("User Not found."))
+              return
             }
             user.active = true;
             user.save((err) => {
               if (err) {
                 console.log(err)
-                res.status(500).send({ message: "Something went wrong" });
+                next(ApiError.internal("Something went wrong"))
                 return;
               }
               res.status(200).send({ message: "Successfully activated account!"})

@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
+const ApiError = require('../error/ApiError');
 
 export const findUserValidator = (req: Request, res: Response, next: NextFunction) => {
   req.check('username', "User name is invalid").notEmpty().matches('^[A-Za-z0-9 ]+$')
@@ -9,7 +10,8 @@ export const findUserValidator = (req: Request, res: Response, next: NextFunctio
   const errors = req.validationErrors();
   if (errors) {
     const firstError = errors.map((error: { msg: string; }) => error.msg)[0];
-    return res.status(400).json({ message: "Input validation error", error: firstError });
+    next(ApiError.badRequest(firstError))
+    return
   }
   next();
 }

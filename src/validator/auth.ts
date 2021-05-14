@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
+const ApiError = require('../error/ApiError');
 
 export const createUserValidator = (req: Request , res: Response, next: NextFunction) => {
     req.check('username', "Username is invalid").notEmpty().matches('^[A-Za-z0-9 ]+$')
@@ -40,7 +41,8 @@ export const loginUserValidator = (req: Request , res: Response, next: NextFunct
     // if error occur show the first one as they happen
     if (errors) {
         const firstError = errors.map((error: { msg: string; }) => error.msg)[0];
-        return res.status(400).json({ error: firstError });
+        next(ApiError.badRequest(firstError))
+        return
     }
     // proceed to next middleware
     next();

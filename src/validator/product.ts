@@ -1,4 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
+const ApiError = require('../error/ApiError');
 
 export const createProductValidator = (req: Request , res: Response, next: NextFunction) => {
     req.check('name', "Product name is invalid").notEmpty().matches('^[A-Za-z0-9 ß.é%]+$')
@@ -26,7 +27,8 @@ export const createProductValidator = (req: Request , res: Response, next: NextF
     // if error occur show the first one as they happen
     if (errors) {
         const firstError = errors.map((error: { msg: string; }) => error.msg)[0];
-        return res.status(400).json({ error: firstError });
+        next(ApiError.badRequest(firstError))
+        return
     }
     // proceed to next middleware
     next();
@@ -42,7 +44,8 @@ export const eanProductValidator = (req: Request , res: Response, next: NextFunc
     // if error occur show the first one as they happen
     if (errors) {
         const firstError = errors.map((error: { msg: string; }) => error.msg)[0];
-        return res.status(400).json({ error: firstError });
+        next(ApiError.badRequest(firstError))
+        return
     }
     // proceed to next middleware
     next();

@@ -44,7 +44,7 @@ describe('Authentication', () => {
                 .send(user)
                 .end((err, res) => {
                     res.should.have.status(409);
-                    res.body.should.have.property('message').eql("User does not exist or password/email is wrong");
+                    res.body.should.eql("User does not exist or password/email is wrong");
                     done();
                 })
         })
@@ -96,7 +96,7 @@ describe('Authentication', () => {
             .send(loginData)
             .end((err, res) => {
                 res.should.have.status(409);
-                res.body.should.have.property('message').eql("User does not exist or password/email is wrong");
+                res.body.should.have.eql("User does not exist or password/email is wrong");
                 done();
             })
         })
@@ -110,7 +110,7 @@ describe('Authentication', () => {
             .send(loginData)
             .end((err, res) => {
                 res.should.have.status(409);
-                res.body.should.have.property('message').eql("User does not exist or password/email is wrong");
+                res.body.should.eql("User does not exist or password/email is wrong");
                 done();
             })
         })
@@ -129,7 +129,7 @@ describe('Authentication', () => {
             .send(product)
             .end((err, res) => {
                 res.should.have.status(401);
-                res.body.should.have.property('message').eql("JWT is missing, access denied");
+                res.body.should.have.eql("JWT is missing, access denied");
                 done();
             })    
         })
@@ -158,7 +158,7 @@ describe('Authentication', () => {
             .send()
             .end((err, res) => {
                 res.should.have.status(401);
-                res.body.should.have.property('message').eql("Invalid refresh Token");
+                res.body.should.have.eql("Invalid refresh Token");
                 done();
             })
         })
@@ -211,7 +211,7 @@ describe('Authentication', () => {
             .send()
             .end((err, res) => {
                 res.should.have.status(401);
-                res.body.should.have.property("message").eql("Invalid refresh Token");
+                res.body.should.eql("Invalid refresh Token");
                 done();
             })
         })
@@ -224,7 +224,7 @@ describe('Authentication', () => {
             .send()
             .end((err, res) => {
                 res.should.have.status(401);
-                res.body.should.have.property('message').eql('Invalid Access Token');                
+                res.body.should.have.eql('Invalid Access Token');                
             done();
             })
         })
