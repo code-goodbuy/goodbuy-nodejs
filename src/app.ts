@@ -22,6 +22,7 @@ class App {
         filename: "log/access-%DATE%.log",
         frequency: "daily",
         verbose: true,
+        max_logs: "7d",
     });
 
     constructor() {
@@ -51,9 +52,9 @@ class App {
         this.app.use(morgan("custom", {
             stream: this.accessLogStream,
             skip: (req, res) => { return req.originalUrl.startsWith('/api/metrics') }
-        })); 
-        this.app.use(bodyParser.json({limit: 1000, type: "application/json"})); // The size limit of request in bytes + content type
-        this.app.use(cors({origin: /https:\/\/goodbuy-*[\w\d-]*.vercel.app$/}));
+        }));
+        this.app.use(bodyParser.json({ limit: 1000, type: "application/json" })); // The size limit of request in bytes + content type
+        this.app.use(cors({ origin: /https:\/\/goodbuy-*[\w\d-]*.vercel.app$/ }));
         this.app.use(expressValidator());
         this.app.use(promBundle({
             metricsPath: '/api/metrics',
