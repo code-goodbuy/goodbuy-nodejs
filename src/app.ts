@@ -22,6 +22,7 @@ class App {
         filename: "log/access-%DATE%.log",
         frequency: "daily",
         verbose: true,
+        max_logs: "7d",
     });
 
     constructor() {
@@ -44,13 +45,17 @@ class App {
         morgan.token(
             "custom",
             // @ts-ignore
-            "[:date[iso]] [:user-agent] [:http-version] [:method] [:url] [:status] [:total-time ms]"
+            "[:date[iso]] [:remote-addr] [:user-agent] [:http-version] [:method] [:url] [:status] [:total-time ms]"
         );
         this.app.use(cookieParser());
+        this.app.enable("trust proxy");
         this.app.use(morgan("custom", { skip: (req, res) => process.env.DBHost === 'mongodb://127.0.0.1:27017/testing' })); // Logging HTTP Requests and Errors
-        this.app.use(morgan("custom", { stream: this.accessLogStream })); // writing log stream in 'log/access'
-        this.app.use(bodyParser.json({limit: 1000, type: "application/json"})); // The size limit of request in bytes + content type
-        this.app.use(cors({origin: /https:\/\/goodbuy-*[\w\d-]*.vercel.app$/}));
+        this.app.use(morgan("custom", {
+            stream: this.accessLogStream,
+            skip: (req, res) => { return req.originalUrl.startsWith('/api/metrics') }
+        }));
+        this.app.use(bodyParser.json({ limit: 1000, type: "application/json" })); // The size limit of request in bytes + content type
+        this.app.use(cors({ origin: /https:\/\/goodbuy-*[\w\d-]*.vercel.app$/ }));
         this.app.use(expressValidator());
         this.app.use(promBundle({
             metricsPath: '/api/metrics',
