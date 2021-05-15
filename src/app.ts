@@ -48,7 +48,10 @@ class App {
         );
         this.app.use(cookieParser());
         this.app.use(morgan("custom", { skip: (req, res) => process.env.DBHost === 'mongodb://127.0.0.1:27017/testing' })); // Logging HTTP Requests and Errors
-        this.app.use(morgan("custom", { stream: this.accessLogStream })); // writing log stream in 'log/access'
+        this.app.use(morgan("custom", {
+            stream: this.accessLogStream,
+            skip: (req, res) => { return req.originalUrl.startsWith('/api/metrics') }
+        })); 
         this.app.use(bodyParser.json({limit: 1000, type: "application/json"})); // The size limit of request in bytes + content type
         this.app.use(cors({origin: /https:\/\/goodbuy-*[\w\d-]*.vercel.app$/}));
         this.app.use(expressValidator());
