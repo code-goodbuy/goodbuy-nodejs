@@ -45,9 +45,10 @@ class App {
         morgan.token(
             "custom",
             // @ts-ignore
-            "[:date[iso]] [:user-agent] [:http-version] [:method] [:url] [:status] [:total-time ms]"
+            "[:date[iso]] [:remote-addr] [:user-agent] [:http-version] [:method] [:url] [:status] [:total-time ms]"
         );
         this.app.use(cookieParser());
+        this.app.enable("trust proxy");
         this.app.use(morgan("custom", { skip: (req, res) => process.env.DBHost === 'mongodb://127.0.0.1:27017/testing' })); // Logging HTTP Requests and Errors
         this.app.use(morgan("custom", {
             stream: this.accessLogStream,
