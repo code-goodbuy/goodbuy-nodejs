@@ -50,8 +50,8 @@ const userSchema = new mongoose.Schema({
         type: Date,
         required: "No timestamp",
     },
-    role: {
-        type: String,
+    isAdmin: {
+        type: Boolean,
     }
 })
 

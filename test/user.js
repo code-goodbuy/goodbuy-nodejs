@@ -35,7 +35,7 @@ describe("/GET user info", () => {
       .request(server)
       .get('/api/user/!U@S#E_R%')
       .end((err, res) => {
-        res.body.should.have.property('message').eql("Input validation error");
+        res.body.should.have.eql("User name is invalid");
       })
     done();
   })

@@ -13,6 +13,7 @@ import userRoutes from "./routes/user";
 import job from "./utils/db_cronjob";
 import rt from "file-stream-rotator";
 import cors from "cors";
+const apiErrorHandler = require('./error/api-error-handler');
 
 class App {
     public app: express.Application;
@@ -67,6 +68,7 @@ class App {
         this.app.use('/api', profileRoutes);
         this.app.use('/api', documentationRoutes)
         this.app.use('/api', userRoutes)
+        this.app.use(apiErrorHandler)
         console.log('Routes initiated.');
     }
 

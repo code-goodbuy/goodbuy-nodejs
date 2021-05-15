@@ -1,5 +1,6 @@
 import UserModel from "../models/user.model";
 import { Request, Response, NextFunction } from "express";
+const ApiError = require('../error/ApiError');
 
 
 
@@ -17,13 +18,13 @@ export const getProfile = (req: Request, res: Response, next: NextFunction) => {
           imageURL: user.imageURL,
         })
       } else {
-        return res.status(409).json({
-          message: "user credential is wrong"
-        })
+        next(ApiError.conflict("user credentials are wrong"))
+        return
       }
     })
     .catch((err: Error) => {
-      return res.status(500).json({ message: 'Something went wrong' })
+      next(ApiError.internal('Something went wrong'))
+      return
     });
 };
 
@@ -50,13 +51,13 @@ export const updateProfile = (
           imageURL: results.imageURL
         });
       } else {
-        return res.status(409).json({
-          message: "User credential is wrong",
-        });
+        next(ApiError.conflict("User credentials are wrong"))
+        return
       }
     }
   ).catch((err: Error) => {
     console.log(err);
-    return res.status(501).json({ message: "Something went wrong" })
+    next(ApiError.internal("Something went wrong"))
+    return
   });
 };

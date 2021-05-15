@@ -9,7 +9,7 @@ interface User {
     description: string;
     imageURL: string;
     created_at: Date;
-    role: string
+    isAdmin: boolean;
 }
 
 export default User;
