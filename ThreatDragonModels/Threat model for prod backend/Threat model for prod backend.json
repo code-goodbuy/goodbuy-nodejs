@@ -216,7 +216,7 @@
                   "severity": "High",
                   "title": "HTTP/S",
                   "type": "Information disclosure",
-                  "description": "Traffic is going over the open internet and could be subject to interception.",
+                  "description": "Traffic is going over the open internet and could be subject to interception. s",
                   "mitigation": "Solved:\n- Nginx reverse proxy implemented which handles the HTTPS through certificate\n\n\nHTTP/S should be provided for security and confidentiality. No HTTP allowed."
                 },
                 {
